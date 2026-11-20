@@ -40,7 +40,7 @@ export function lineChart(el, series, { height = 200, yFmt = (v) => v, xFmt = (v
     const all = series.flatMap((s) => s.values.filter((p) => p.y !== null && p.y !== undefined));
     const xs = series.flatMap((s) => s.values.map((p) => p.x));
     if (!xs.length) { el.innerHTML = ""; return; }
-    const x0 = Math.min(...xs), x1 = Math.max(...xs) || x0 + 1;
+    const x0 = Math.min(...xs), x1 = Math.max(Math.max(...xs), x0 + 1);
     const top = nice(yMax ?? Math.max(1, ...all.map((p) => p.y)) * 1.1);
     const X = (x) => pl + ((x - x0) / (x1 - x0 || 1)) * (W - pl - pr), Y = (y) => pt + (1 - (y - minY) / (top - minY)) * (H - pt - pb);
     let g = "";
@@ -50,8 +50,11 @@ export function lineChart(el, series, { height = 200, yFmt = (v) => v, xFmt = (v
         <text x="${pl - 8}" y="${y + 4}" text-anchor="end" font-size="10.5" fill="var(--text-3)">${esc(yFmt(v))}</text>`;
     }
     const ticks = Math.min(6, Math.floor(W / 110));
+    let prevLabel = null;
     for (let i = 0; i <= ticks; i++) {
       const x = x0 + ((x1 - x0) * i) / ticks;
+      if (xFmt(x) === prevLabel) continue;
+      prevLabel = xFmt(x);
       g += `<text x="${X(x)}" y="${H - 6}" text-anchor="${i === 0 ? "start" : i === ticks ? "end" : "middle"}" font-size="10.5" fill="var(--text-3)">${esc(xFmt(x))}</text>`;
     }
     let paths = "";

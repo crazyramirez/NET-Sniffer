@@ -40,7 +40,7 @@ export function eventText(ev) {
   return { title: t(`events.${ev.kind}.title`, p), text: t(`events.${ev.kind}.text`, p) };
 }
 export const EVENT_ICON = {
-  device_new: "radar", device_first_seen: "radar", device_online: "power", device_offline: "power", device_ip_changed: "refresh",
+  device_new: "radar", device_first_seen: "radar", device_unknown_online: "shieldAlert", device_online: "power", device_offline: "power", device_ip_changed: "refresh",
   internet_down: "globe", internet_up: "globe", gateway_down: "t_router", security_issues: "shieldAlert", camera_detected: "t_camera",
   device_blocked: "ban", device_unblocked: "unlock", update_installed: "download",
 };

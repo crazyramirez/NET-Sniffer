@@ -29,7 +29,7 @@ function finding(f) {
 function scoreCard(rep) {
   const c = rep?.counts || {};
   const total = SEV.reduce((a, k) => a + (c[k] || 0), 0);
-  return html`<div class="card hero" style="grid-template-columns:auto 1fr">
+  return html`<div class="card hero">
     <div class="ring-wrap">${raw(ring(rep ? rep.score : 0))}${progress ? html`<div class="radar"></div>` : ""}
       <div class="ring-label"><b class="num">${rep ? rep.score : "—"}</b><span>${rep ? `${t("security.grade")} ${grade(rep.score)}` : t("security.not_run")}</span></div></div>
     <div style="min-width:0;position:relative;z-index:1">

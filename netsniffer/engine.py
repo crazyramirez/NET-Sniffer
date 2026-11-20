@@ -9,6 +9,7 @@ import time
 
 import psutil
 
+from . import demo
 from .db import Database
 from .hub import Hub
 from .net import arp, names, oui
@@ -39,6 +40,8 @@ class Engine:
 
     # ------------------------------------------------------------------ lifecycle
     async def start(self) -> None:
+        if demo.ENABLED:
+            demo.seed(self.db)
         await self.mdns.start()
         await self.refresh_network(public=False)
 
@@ -46,6 +49,10 @@ class Engine:
         await self.mdns.stop()
 
     async def refresh_network(self, public: bool = True) -> dict:
+        if demo.ENABLED:
+            self.net = dict(demo.NETWORK)
+            await self.hub.broadcast("network", self.net)
+            return self.net
         info = await asyncio.to_thread(network_info)
         if public and self.db.get_setting("public_ip_lookup", True):
             info["public"] = await public_info()
@@ -65,6 +72,8 @@ class Engine:
 
     # ------------------------------------------------------------------ scanning
     async def scan(self, full: bool = True, deep: bool = False) -> dict:
+        if demo.ENABLED:
+            return await self._demo_scan()
         if self.lock.locked():
             return self.state
         async with self.lock:
@@ -169,6 +178,7 @@ class Engine:
         gw_prefix = gw_mac[:8] if gw_mac else None
         seen: set[str] = set()
         new, online, offline = [], [], []
+        ip_changes: list[tuple[dict, str]] = []
 
         for ip, mac in alive.items():
             did = mac or f"ip:{ip}"
@@ -234,8 +244,7 @@ class Engine:
             elif not old.get("online"):
                 online.append(rec)
             if old and old.get("ip") != ip and old.get("ip"):
-                self.db.add_event("device_ip_changed", "info", did, {"old": old["ip"], "new": ip,
-                                                                     "name": self._name(rec)})
+                ip_changes.append((rec, old["ip"]))
 
         for did, old in existing.items():
             if not old.get("online") or did in seen or old.get("is_self"):
@@ -257,13 +266,22 @@ class Engine:
                     await self.notifier.alert("camera_detected", "warning", rec["id"], params)
             else:
                 self.db.add_event("device_first_seen", "info", rec["id"], params)
+        s = self.db.settings()
         for rec in online:
-            await self.notifier.alert("device_online", "info", rec["id"],
-                                      {"name": self._name(rec), "ip": rec["ip"]}, notify=bool(rec.get("favorite")))
+            params = {"name": self._name(rec), "ip": rec["ip"], "vendor": rec.get("vendor") or ""}
+            if not rec.get("trusted") and not rec.get("is_self"):
+                # a device you haven't recognised is back on the network
+                await self.notifier.alert("device_unknown_online", "warning", rec["id"], params)
+            else:
+                wanted = s.get("notify_device_online") or (rec.get("favorite") and s.get("notify_favorites", True))
+                await self.notifier.alert("device_online", "info", rec["id"], params, notify=bool(wanted))
         for rec in offline:
+            wanted = s.get("notify_device_offline") or (rec.get("favorite") and s.get("notify_favorites", True))
             await self.notifier.alert("device_offline", "info", rec["id"],
-                                      {"name": self._name(rec), "ip": rec.get("ip")},
-                                      notify=bool(rec.get("favorite")))
+                                      {"name": self._name(rec), "ip": rec.get("ip")}, notify=bool(wanted))
+        for rec, old_ip in ip_changes:
+            await self.notifier.alert("device_ip_changed", "info", rec["id"],
+                                      {"old": old_ip, "new": rec["ip"], "name": self._name(rec)})
         return {"found": len(alive), "new": len(new), "online": len(online), "offline": len(offline)}
 
     @staticmethod
@@ -293,6 +311,17 @@ class Engine:
         return d
 
     # ------------------------------------------------------------------ background loops
+    async def _demo_scan(self) -> dict:
+        now = time.time()
+        for d in self.db.devices():
+            if d["online"]:
+                self.db.update_device(d["id"], last_seen=now)
+        found = sum(1 for d in self.db.devices() if d["online"])
+        self.state.update(running=False, last=now, last_full=now, found=found, duration=6.2, progress=100)
+        await self.hub.broadcast("scan", self.state)
+        await self.hub.broadcast("devices", self.devices())
+        return {"found": found, "new": 0, "online": 0, "offline": 0}
+
     async def auto_loop(self) -> None:
         await asyncio.sleep(2)
         await self.scan(full=True)

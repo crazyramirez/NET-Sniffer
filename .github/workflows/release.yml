@@ -1,7 +1,7 @@
 name: Release builds (macOS & Linux)
 
 # Triggered when the Windows build is published locally with scripts/release.ps1.
-# Builds macOS (arm64 + x64) and Linux (x64 + arm64/Raspberry Pi), attaches them to the
+# Builds the macOS .dmg (arm64 + x64) and Linux .deb + binary (x64 + arm64/Raspberry Pi), attaches them to the
 # same release, then deletes every older release, tag and workflow run: only the latest exists.
 on:
   release:
@@ -18,19 +18,15 @@ concurrency:
 
 jobs:
   build:
-    name: ${{ matrix.asset }}
+    name: ${{ matrix.name }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: macos-latest
-            asset: NETSniffer-macOS-arm64.zip
-          - os: macos-15-intel
-            asset: NETSniffer-macOS-x64.zip
-          - os: ubuntu-22.04
-            asset: NETSniffer-Linux-x64
-          - os: ubuntu-22.04-arm
-            asset: NETSniffer-Linux-arm64
+          - { os: macos-latest, name: macOS arm64 }
+          - { os: macos-15-intel, name: macOS x64 }
+          - { os: ubuntu-22.04, name: Linux x64 }
+          - { os: ubuntu-22.04-arm, name: Linux arm64 }
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -45,7 +41,7 @@ jobs:
         continue-on-error: true   # without it the app falls back to the default browser
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgirepository1.0-dev libcairo2-dev pkg-config gir1.2-webkit2-4.1 gir1.2-gtk-3.0
+          sudo apt-get install -y libgirepository1.0-dev libcairo2-dev pkg-config gir1.2-webkit2-4.1 gir1.2-gtk-3.0 gir1.2-ayatanaappindicator3-0.1
           pip install "PyGObject<3.51" pycairo
 
       - name: Install dependencies
@@ -55,7 +51,7 @@ jobs:
         run: python -m pytest -q
 
       - name: Build
-        run: python scripts/build.py --asset ${{ matrix.asset }}
+        run: python scripts/build.py
 
       - name: Attach to release
         env:
@@ -64,7 +60,7 @@ jobs:
         run: |
           TAG="${{ github.event.release.tag_name }}"
           if [ -z "$TAG" ]; then TAG=$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName -q .tagName); fi
-          gh release upload "$TAG" "dist/${{ matrix.asset }}" --clobber --repo "$GITHUB_REPOSITORY"
+          gh release upload "$TAG" dist/* --clobber --repo "$GITHUB_REPOSITORY"
 
   cleanup:
     name: Keep only the latest version

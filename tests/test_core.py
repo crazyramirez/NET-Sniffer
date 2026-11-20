@@ -66,3 +66,11 @@ def test_netbios_parse():
     names = b"LEGIONPC       \x00" + struct.pack(">H", 0x0400) + b"WORKGROUP      \x00" + struct.pack(">H", 0x8400)
     pkt = b"\x00" * 56 + bytes([2]) + names + b"\x00" * 6
     assert _parse_nbstat(pkt) == ("LEGIONPC", "WORKGROUP")
+
+
+def test_quiet_hours():
+    from netsniffer.notify import in_quiet_hours
+    s = {"notify_quiet": True, "notify_quiet_start": "23:00", "notify_quiet_end": "07:00"}
+    assert in_quiet_hours(s, dt.datetime(2024, 1, 1, 23, 30)) and in_quiet_hours(s, dt.datetime(2024, 1, 2, 6, 0))
+    assert not in_quiet_hours(s, dt.datetime(2024, 1, 2, 12, 0))
+    assert not in_quiet_hours({**s, "notify_quiet": False}, dt.datetime(2024, 1, 1, 23, 30))

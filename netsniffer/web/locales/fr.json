@@ -564,6 +564,10 @@
     "update_installed": {
       "title": "NET Sniffer mis à jour",
       "text": "La dernière version est maintenant installée"
+    },
+    "device_unknown_online": {
+      "title": "Appareil non reconnu connecté : {name}",
+      "text": "{ip} · {vendor}"
     }
   },
   "notify": {
@@ -602,6 +606,18 @@
     "test": {
       "title": "NET Sniffer",
       "body": "Les notifications fonctionnent 🎉"
+    },
+    "device_unknown_online": {
+      "title": "Appareil non reconnu connecté",
+      "body": "{name} ({ip}) {vendor}"
+    },
+    "device_ip_changed": {
+      "title": "{name} a changé d'adresse IP",
+      "body": "{old} → {new}"
+    },
+    "background": {
+      "title": "NET Sniffer reste actif",
+      "body": "La surveillance continue en arrière-plan. Ouvrez-le depuis l'icône de la zone de notification."
     }
   },
   "parental": {
@@ -695,16 +711,14 @@
     "watcher_d": "Contrôle de présence léger toutes les 90 secondes pour détecter rapidement les nouveaux appareils.",
     "monitor_interval": "Intervalle de vérification d'Internet",
     "monitor_interval_d": "Fréquence des tests de connectivité.",
-    "n_desktop": "Notifications de bureau",
-    "n_desktop_d": "Affiche les notifications système sur cet ordinateur.",
-    "n_new": "Nouveaux appareils",
-    "n_new_d": "M'alerter lorsqu'un appareil inconnu se connecte.",
-    "n_offline": "Favoris en ligne/hors ligne",
-    "n_offline_d": "M'alerter lorsqu'un appareil favori se connecte ou se déconnecte.",
-    "n_internet": "Pannes d'Internet",
-    "n_internet_d": "M'alerter lorsque la connexion tombe et revient.",
-    "n_security": "Avertissements de sécurité",
-    "n_security_d": "M'alerter en cas de problèmes d'audit et de caméras détectées.",
+    "n_desktop": "Notifications du bureau",
+    "n_desktop_d": "Afficher les notifications système sur cet ordinateur.",
+    "n_new": "Nouvel appareil connecté",
+    "n_new_d": "Lorsqu'un appareil rejoint votre réseau pour la première fois.",
+    "n_internet": "Coupures d'internet",
+    "n_internet_d": "Quand la connexion tombe et quand elle revient.",
+    "n_security": "Problèmes de sécurité",
+    "n_security_d": "Quand un audit trouve des problèmes importants.",
     "n_push": "Notifications push sur votre téléphone",
     "n_push_d": "Utilisez la combinaison de votre choix : ntfy, Telegram ou webhook.",
     "n_test": "Envoyer un test",
@@ -726,7 +740,37 @@
     "logout_d": "Termine la session sur ce navigateur.",
     "saved": "Enregistré",
     "legal": "NET Sniffer est destiné à la surveillance et à la sécurisation des réseaux que vous possédez ou que vous êtes autorisé à administrer. Il utilise uniquement des protocoles de découverte standard et des vérifications de connexion.",
-    "oss": "Développé avec Python, FastAPI, zeroconf, psutil, httpx, pywebview et d'autres logiciels open source. Données de fabricants MAC © IEEE Registration Authority."
+    "oss": "Développé avec Python, FastAPI, zeroconf, psutil, httpx, pywebview et d'autres logiciels open source. Données de fabricants MAC © IEEE Registration Authority.",
+    "background": "Arrière-plan",
+    "background_d": "Continuez à surveiller votre réseau fenêtre fermée",
+    "bg_run": "Continuer en arrière-plan",
+    "bg_run_d": "Fermer la fenêtre place NET Sniffer dans la zone de notification ; la surveillance et les alertes continuent.",
+    "bg_login": "Lancer à l'ouverture de session",
+    "bg_login_d": "Démarre automatiquement, masqué dans la zone de notification, à l'ouverture de session.",
+    "bg_no_tray": "La zone de notification n'est pas disponible sur ce système : fermer la fenêtre quitte l'application.",
+    "n_master": "Notifications",
+    "n_master_d": "Interrupteur général des notifications bureau et push. Les alertes restent toujours dans l'historique.",
+    "n_g_devices": "Appareils",
+    "n_g_network": "Réseau et sécurité",
+    "n_g_delivery": "Mode de notification",
+    "n_unknown": "Appareil non reconnu connecté",
+    "n_unknown_d": "Lorsqu'un appareil que vous n'avez pas marqué comme fiable se reconnecte.",
+    "n_online_all": "Un appareil se connecte",
+    "n_online_all_d": "À chaque connexion d'un appareil.",
+    "n_offline_all": "Un appareil se déconnecte",
+    "n_offline_all_d": "À chaque fois qu'un appareil quitte le réseau.",
+    "n_favorites": "Appareils favoris",
+    "n_favorites_d": "Lorsqu'un appareil marqué d'une étoile se connecte ou se déconnecte.",
+    "n_ip": "Changements d'adresse IP",
+    "n_ip_d": "Lorsqu'un appareil obtient une autre adresse IP.",
+    "n_camera": "Caméras détectées",
+    "n_camera_d": "Quand une nouvelle caméra apparaît sur le réseau.",
+    "n_sound": "Son",
+    "n_sound_d": "Jouer le son de notification du système.",
+    "n_quiet": "Heures silencieuses",
+    "n_quiet_d": "Aucune notification pendant cette plage. Les alertes restent visibles dans l'app.",
+    "n_quiet_from": "De",
+    "n_quiet_to": "à"
   },
   "update": {
     "current": "Version {v}",
@@ -781,5 +825,11 @@
     "bad_url": "Saisissez une URL http(s) valide.",
     "update_not_ready": "La mise à jour n'est pas encore prête.",
     "no_network": "Aucune connexion au réseau local détectée."
+  },
+  "tray": {
+    "open": "Ouvrir NET Sniffer",
+    "scan": "Analyser maintenant",
+    "notifications": "Notifications",
+    "quit": "Quitter"
   }
 }

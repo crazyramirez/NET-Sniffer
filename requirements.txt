@@ -10,3 +10,5 @@ fritzconnection>=1.15
 desktop-notifier>=6.2
 defusedxml>=0.7
 segno>=1.6
+pystray>=0.19
+pillow>=11

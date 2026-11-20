@@ -7,8 +7,8 @@ import { openDevice } from "./device.js";
 
 let root, events = [], filter = "all";
 const GROUPS = {
-  security: ["security_issues", "camera_detected", "device_new", "device_blocked", "device_unblocked"],
-  devices: ["device_new", "device_online", "device_offline", "device_ip_changed", "device_first_seen"],
+  security: ["security_issues", "camera_detected", "device_new", "device_unknown_online", "device_blocked", "device_unblocked"],
+  devices: ["device_new", "device_unknown_online", "device_online", "device_offline", "device_ip_changed", "device_first_seen"],
   internet: ["internet_down", "internet_up", "gateway_down"],
 };
 

@@ -14,9 +14,6 @@ import webbrowser
 from . import __app_name__, __version__
 from .config import FROZEN, IS_WINDOWS, PACKAGE_DIR, data_dir
 
-INSTANCE_PORT = 47391
-
-
 def setup_logging(debug: bool, console: bool = False) -> None:
     handler = logging.handlers.RotatingFileHandler(data_dir() / "netsniffer.log", maxBytes=1_000_000,
                                                    backupCount=1, encoding="utf-8")
@@ -27,23 +24,6 @@ def setup_logging(debug: bool, console: bool = False) -> None:
                         format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     for noisy in ("httpx", "httpcore", "asyncssh", "zeroconf", "uvicorn.access"):
         logging.getLogger(noisy).setLevel(logging.WARNING)
-
-
-def single_instance(wait: float) -> socket.socket | None:
-    deadline = time.time() + wait
-    while True:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        if IS_WINDOWS:
-            s.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
-        try:
-            s.bind(("127.0.0.1", INSTANCE_PORT))
-            s.listen(1)
-            return s
-        except OSError:
-            s.close()
-            if time.time() > deadline:
-                return None
-            time.sleep(0.5)
 
 
 def free_port() -> int:
@@ -63,11 +43,13 @@ def icon_path() -> str | None:
 def run_desktop(args: argparse.Namespace) -> int:
     import uvicorn
 
+    from . import desktop, i18n
     from .app import Context, create_app
+    from .config import IS_MAC
 
-    lock = single_instance(20 if args.updated else 0)
+    lock = desktop.acquire_instance(20 if args.updated else 0)
     if lock is None:
-        logging.info("another instance is already running")
+        logging.info("another instance is running; asked it to show its window")
         return 0
     ctx = Context(headless=False)
     app = create_app(ctx)
@@ -82,35 +64,82 @@ def run_desktop(args: argparse.Namespace) -> int:
             break
         time.sleep(0.05)
     url = f"http://127.0.0.1:{port}/launch?token={ctx.launch_token}"
-    windows: list = []
+    state: dict = {"window": None, "quitting": False, "hinted": False}
 
-    def shutdown() -> None:
-        for w in windows:
+    def show() -> None:
+        w = state["window"]
+        if w is None:
+            webbrowser.open(url)
+            return
+        for fn in (w.show, w.restore):
+            try:
+                fn()
+            except Exception:  # noqa: BLE001
+                pass
+
+    def quit_app() -> None:
+        state["quitting"] = True
+        tray.stop()
+        w = state["window"]
+        if w is not None:
             try:
                 w.destroy()
+                return
             except Exception:  # noqa: BLE001
                 pass
         server.should_exit = True
 
-    ctx.updater.shutdown = shutdown
+    def toggle_notifications() -> None:
+        enabled = not ctx.db.get_setting("notify_enabled", True)
+        ctx.db.set_settings({"notify_enabled": enabled})
+        ctx.run(ctx.hub.broadcast("settings", {"settings": ctx.public_settings(), "remote": ctx.remote_status()}))
+        tray.refresh()
+
+    tray = desktop.Tray(lambda: i18n.resolve(ctx.db.get_setting("language")), show,
+                        lambda: ctx.run(ctx.engine.scan(full=True)), toggle_notifications,
+                        lambda: bool(ctx.db.get_setting("notify_enabled", True)), quit_app)
+    desktop.serve_instance(lock, show)
+    ctx.notifier.on_click = show
+    ctx.updater.shutdown = quit_app
+    ctx.tray = tray
     try:
         import webview
 
+        tray.start()
         theme = ctx.db.get_setting("theme", "system")
         bg = "#F5F7FB" if theme == "light" else "#0A0F1C"
-        windows.append(webview.create_window(__app_name__, url, width=1380, height=900, min_size=(1024, 680),
-                                             background_color=bg, text_select=True))
+        w = webview.create_window(__app_name__, url, width=1380, height=900, min_size=(1024, 680),
+                                  background_color=bg, text_select=True,
+                                  hidden=bool(args.background and tray.available))
+        state["window"] = w
+
+        def on_closing():
+            if state["quitting"]:
+                return True
+            if tray.available and ctx.db.get_setting("background", True):
+                threading.Timer(0.05, w.hide).start()
+                if not state["hinted"]:
+                    state["hinted"] = True
+                    ctx.run(ctx.notifier.hint_background())
+                return False
+            return True
+
+        w.events.closing += on_closing
         webview.start(private_mode=False, storage_path=str(data_dir() / "webview"), debug=args.debug,
                       icon=icon_path())
     except Exception as exc:  # noqa: BLE001 - no GUI toolkit available → use the default browser
         logging.warning("native window unavailable (%s); opening browser", exc)
+        state["window"] = None
+        if not tray.available and not IS_MAC:
+            tray.start()
         webbrowser.open(url)
         try:
-            while thread.is_alive():
+            while thread.is_alive() and not state["quitting"]:
                 thread.join(1)
         except KeyboardInterrupt:
             pass
     finally:
+        tray.stop()
         ctx.updater.install_on_exit()
         server.should_exit = True
         thread.join(8)
@@ -149,6 +178,7 @@ def main() -> int:
     p.add_argument("--host", default="0.0.0.0", help="bind address in headless mode")
     p.add_argument("--port", type=int, default=0, help="port (headless default 8765)")
     p.add_argument("--debug", action="store_true")
+    p.add_argument("--background", action="store_true", help="start hidden in the system tray")
     p.add_argument("--updated", action="store_true", help=argparse.SUPPRESS)
     p.add_argument("--version", action="version", version=__version__)
     args = p.parse_args()

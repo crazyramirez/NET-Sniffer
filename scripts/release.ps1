@@ -47,10 +47,10 @@ Step "Tests"
 & $Py -m pytest -q
 if ($LASTEXITCODE -ne 0) { throw "tests failed" }
 
-Step "Building Windows executable (old builds are wiped first)"
-& $Py scripts\build.py --asset NETSniffer-Windows-x64.exe
+Step "Building Windows installer (old builds are wiped first)"
+& $Py scripts\build.py
 if ($LASTEXITCODE -ne 0) { throw "build failed" }
-$Exe = Join-Path $Root "dist\NETSniffer-Windows-x64.exe"
+$Exe = Join-Path $Root "dist\NETSniffer-Setup-Windows-x64.exe"
 
 # ---------------------------------------------------------------- git
 Step "Commit & tag"

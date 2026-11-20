@@ -7,6 +7,7 @@ import csv
 import html
 import io
 import logging
+import os
 import re
 import socket
 import time
@@ -17,7 +18,7 @@ from fastapi import Body, Depends, FastAPI, HTTPException, Request, WebSocket, W
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
-from . import __app_name__, __version__, i18n
+from . import __app_name__, __version__, demo, i18n
 from .audit import Auditor
 from .auth import COOKIE, RateLimiter, hash_password, new_token, verify_password
 from .blocking import BlockError, BlockManager
@@ -49,7 +50,7 @@ class Context:
         self.blocker = BlockManager(self.db, self.hub, self.notifier)
         self.updater = Updater(self.db, self.hub)
         self.updater.headless = headless
-        self.launch_token = new_token()
+        self.launch_token = (os.environ.get("NETSNIFFER_LAUNCH_TOKEN") if demo.ENABLED else None) or new_token()
         self.setup_token = new_token()[:12]
         self.limiter = RateLimiter()
         self.tasks: list[asyncio.Task] = []
@@ -59,6 +60,13 @@ class Context:
         self.port = 0
         self.speed_last: dict = {}
         self.audit_last: dict | None = None
+        self.loop: asyncio.AbstractEventLoop | None = None
+        self.tray = None  # desktop.Tray when running with a window
+
+    def run(self, coro) -> None:
+        """Schedule a coroutine on the server loop from another thread (tray, window events)."""
+        if self.loop is not None:
+            asyncio.run_coroutine_threadsafe(coro, self.loop)
 
     # ------------------------------------------------------------------ remote listener (desktop mode)
     async def apply_remote(self) -> None:
@@ -91,14 +99,19 @@ class Context:
 
     # ------------------------------------------------------------------ lifecycle
     async def startup(self) -> None:
+        self.loop = asyncio.get_running_loop()
         cleanup_previous()
+        if not self.headless and self.db.get_setting("launch_at_login"):
+            from .desktop import set_autostart
+            set_autostart(True)  # keep the entry pointing at the current executable
         await self.engine.start()
         spawn = lambda coro: self.tasks.append(asyncio.create_task(coro))  # noqa: E731
         spawn(self.engine.auto_loop())
         spawn(self.monitor.loop())
         spawn(self.monitor.bandwidth_loop())
         spawn(self.blocker.loop())
-        spawn(self.updater.loop())
+        if not demo.ENABLED:
+            spawn(self.updater.loop())
         spawn(self._housekeeping())
         audit = self.db.get_setting("last_audit")
         self.audit_last = audit if isinstance(audit, dict) else None
@@ -132,7 +145,8 @@ class Context:
         devices = self.engine.devices()
         return {
             "app": {"name": __app_name__, "version": __version__, "platform": platform_name(),
-                    "headless": self.headless, "os_language": i18n.os_language(), "languages": SUPPORTED_LANGUAGES},
+                    "headless": self.headless, "os_language": i18n.os_language(), "languages": SUPPORTED_LANGUAGES,
+                    "tray": bool(self.tray and self.tray.available)},
             "network": self.engine.net, "scan": self.engine.state, "devices": devices,
             "monitor": self.monitor.state, "settings": self.public_settings(),
             "update": self.updater.state, "unread": self.db.unread_count(), "blocking": self.blocker.status(),
@@ -179,9 +193,10 @@ def create_app(ctx: Context) -> FastAPI:
         return JSONResponse({"detail": {"error": "not_local", "params": {"ip": str(exc)}}}, status_code=403)
 
     @app.get("/launch")
-    async def launch(request: Request, token: str = ""):
+    async def launch(request: Request, token: str = "", next: str = ""):  # noqa: A002
+        target = "/" + next if re.fullmatch(r"#/[\w/%:.-]*", next or "") else "/"
         if token and token == ctx.launch_token:
-            return set_cookie(RedirectResponse("/", status_code=303), request)
+            return set_cookie(RedirectResponse(target, status_code=303), request)
         return RedirectResponse("/", status_code=303)
 
     @app.get("/api/auth/status")
@@ -546,6 +561,9 @@ def create_app(ctx: Context) -> FastAPI:
             upd.pop("theme")
         if "scan_interval_min" in upd:
             upd["scan_interval_min"] = max(1, min(240, upd["scan_interval_min"]))
+        for k in ("notify_quiet_start", "notify_quiet_end"):
+            if k in upd and not re.fullmatch(r"([01]\d|2[0-3]):[0-5]\d", upd[k]):
+                upd.pop(k)
         if "remote_port" in upd:
             upd["remote_port"] = max(1024, min(65535, upd["remote_port"]))
         if "block_backend" in upd and upd["block_backend"] not in ("none", "ssh", "fritz", "local"):
@@ -556,6 +574,12 @@ def create_app(ctx: Context) -> FastAPI:
             if upd.get(url_key) and not re.match(r"^https?://", upd[url_key]):
                 raise err(400, "bad_url")
         ctx.db.set_settings(upd)
+        if "launch_at_login" in upd and not ctx.headless:
+            from .desktop import set_autostart
+            if not set_autostart(upd["launch_at_login"]):
+                ctx.db.set_settings({"launch_at_login": False})
+        if "notify_enabled" in upd and ctx.tray:
+            ctx.tray.refresh()
         if {"remote_enabled", "remote_port"} & set(upd):
             await ctx.apply_remote()
         if any(k.startswith("block_") for k in upd):

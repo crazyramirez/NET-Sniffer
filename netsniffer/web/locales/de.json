@@ -564,6 +564,10 @@
     "update_installed": {
       "title": "NET Sniffer aktualisiert",
       "text": "Es läuft jetzt die neueste Version"
+    },
+    "device_unknown_online": {
+      "title": "Unbekanntes Gerät online: {name}",
+      "text": "{ip} · {vendor}"
     }
   },
   "notify": {
@@ -602,6 +606,18 @@
     "test": {
       "title": "NET Sniffer",
       "body": "Benachrichtigungen funktionieren 🎉"
+    },
+    "device_unknown_online": {
+      "title": "Unbekanntes Gerät verbunden",
+      "body": "{name} ({ip}) {vendor}"
+    },
+    "device_ip_changed": {
+      "title": "{name} hat eine neue IP-Adresse",
+      "body": "{old} → {new}"
+    },
+    "background": {
+      "title": "NET Sniffer läuft weiter",
+      "body": "Die Überwachung läuft im Hintergrund weiter. Öffnen über das Symbol im Infobereich."
     }
   },
   "parental": {
@@ -697,14 +713,12 @@
     "monitor_interval_d": "Wie oft die Konnektivität getestet wird.",
     "n_desktop": "Desktop-Benachrichtigungen",
     "n_desktop_d": "Systembenachrichtigungen auf diesem Computer anzeigen.",
-    "n_new": "Neue Geräte",
-    "n_new_d": "Melden, wenn ein unbekanntes Gerät beitritt.",
-    "n_offline": "Favoriten online/offline",
-    "n_offline_d": "Melden, wenn ein als Favorit markiertes Gerät sich verbindet oder trennt.",
+    "n_new": "Neues Gerät verbunden",
+    "n_new_d": "Wenn sich ein Gerät zum ersten Mal verbindet.",
     "n_internet": "Internetausfälle",
-    "n_internet_d": "Melden, wenn die Verbindung abbricht und wiederkehrt.",
-    "n_security": "Sicherheitswarnungen",
-    "n_security_d": "Melden bei Prüfbefunden und erkannten Kameras.",
+    "n_internet_d": "Wenn die Verbindung abbricht und wiederkommt.",
+    "n_security": "Sicherheitsprobleme",
+    "n_security_d": "Wenn eine Prüfung wichtige Probleme findet.",
     "n_push": "Push aufs Smartphone",
     "n_push_d": "Beliebige Kombination aus ntfy, Telegram oder webhook.",
     "n_test": "Test senden",
@@ -726,7 +740,37 @@
     "logout_d": "Die Sitzung in diesem Browser beenden.",
     "saved": "Gespeichert",
     "legal": "NET Sniffer dient der Überwachung und Absicherung von Netzwerken, die Ihnen gehören oder die Sie verwalten dürfen. Es nutzt ausschließlich Standard-Erkennungsprotokolle und Verbindungsprüfungen.",
-    "oss": "Entwickelt mit Python, FastAPI, zeroconf, psutil, httpx, pywebview und weiterer Open-Source-Software. MAC-Herstellerdaten © IEEE Registration Authority."
+    "oss": "Entwickelt mit Python, FastAPI, zeroconf, psutil, httpx, pywebview und weiterer Open-Source-Software. MAC-Herstellerdaten © IEEE Registration Authority.",
+    "background": "Hintergrund",
+    "background_d": "Netzwerk auch bei geschlossenem Fenster überwachen",
+    "bg_run": "Im Hintergrund weiterlaufen",
+    "bg_run_d": "Beim Schließen wandert NET Sniffer in den Infobereich; Überwachung und Warnungen laufen weiter.",
+    "bg_login": "Beim Anmelden starten",
+    "bg_login_d": "Startet bei der Anmeldung automatisch im Infobereich.",
+    "bg_no_tray": "Auf diesem System gibt es keinen Infobereich – das Schließen des Fensters beendet die App.",
+    "n_master": "Benachrichtigungen",
+    "n_master_d": "Hauptschalter für Desktop- und Push-Benachrichtigungen. Warnungen bleiben immer im Verlauf.",
+    "n_g_devices": "Geräte",
+    "n_g_network": "Netzwerk & Sicherheit",
+    "n_g_delivery": "Zustellung",
+    "n_unknown": "Unbekanntes Gerät verbunden",
+    "n_unknown_d": "Wenn ein nicht als vertrauenswürdig markiertes Gerät wieder online ist.",
+    "n_online_all": "Ein Gerät verbindet sich",
+    "n_online_all_d": "Jedes Mal, wenn ein Gerät online geht.",
+    "n_offline_all": "Ein Gerät trennt sich",
+    "n_offline_all_d": "Jedes Mal, wenn ein Gerät das Netzwerk verlässt.",
+    "n_favorites": "Favoriten",
+    "n_favorites_d": "Wenn ein mit Stern markiertes Gerät kommt oder geht.",
+    "n_ip": "IP-Adressänderungen",
+    "n_ip_d": "Wenn ein Gerät eine andere IP-Adresse erhält.",
+    "n_camera": "Kameras erkannt",
+    "n_camera_d": "Wenn eine neue Kamera im Netzwerk auftaucht.",
+    "n_sound": "Ton",
+    "n_sound_d": "Systembenachrichtigungston abspielen.",
+    "n_quiet": "Ruhezeiten",
+    "n_quiet_d": "Keine Benachrichtigungen in diesem Zeitraum. Warnungen erscheinen weiter in der App.",
+    "n_quiet_from": "Von",
+    "n_quiet_to": "bis"
   },
   "update": {
     "current": "Version {v}",
@@ -781,5 +825,11 @@
     "bad_url": "Geben Sie eine gültige http(s)-URL ein.",
     "update_not_ready": "Das Update ist noch nicht bereit.",
     "no_network": "Keine lokale Netzwerkverbindung erkannt."
+  },
+  "tray": {
+    "open": "NET Sniffer öffnen",
+    "scan": "Jetzt scannen",
+    "notifications": "Benachrichtigungen",
+    "quit": "Beenden"
   }
 }

@@ -61,7 +61,7 @@ def test_dynamic_families():
     ids = ["wifi_open", "wifi_wep", "wifi_wpa", "wifi_wpa2", "wifi_tkip", "upnp_enabled", "router_http",
            "untrusted_devices", "cameras_present"] + [f"port_{k}" for k in set(FINDING_BY_PORT.values())]
     missing += [f"audit.f.{i}.title" for i in ids if not resolves(f"audit.f.{i}.title")]
-    kinds = ["device_new", "device_online", "device_offline", "internet_down", "internet_up", "gateway_down",
+    kinds = ["device_new", "device_unknown_online", "device_ip_changed", "background", "device_online", "device_offline", "internet_down", "internet_up", "gateway_down",
              "security_issues", "camera_detected", "test"]
     missing += [f"notify.{k}.title" for k in kinds if not resolves(f"notify.{k}.title")]
     assert not missing, missing

@@ -123,7 +123,11 @@ function recentDevices() {
 
 function drawBw() {
   const el = $("#bw-chart"); if (!el) return;
-  const pts = S.bw.length ? S.bw : [{ ts: Date.now() / 1000, rx: 0, tx: 0 }];
+  // always show a 90-second window, even right after start-up
+  const now = Date.now() / 1000;
+  const pts = [...S.bw];
+  if (!pts.length || pts[0].ts > now - 89) pts.unshift({ ts: Math.min(now - 90, pts[0]?.ts ?? now), rx: 0, tx: 0 });
+  if (pts.length < 2) pts.push({ ts: now, rx: 0, tx: 0 });
   lineChart(el, [
     { name: "↓", color: "var(--accent-2)", values: pts.map((p) => ({ x: p.ts, y: p.rx })) },
     { name: "↑", color: "var(--accent)", values: pts.map((p) => ({ x: p.ts, y: p.tx })) },

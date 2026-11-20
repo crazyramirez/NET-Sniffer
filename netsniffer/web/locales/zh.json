@@ -564,6 +564,10 @@
     "update_installed": {
       "title": "NET Sniffer 已更新",
       "text": "当前运行的是最新版本"
+    },
+    "device_unknown_online": {
+      "title": "未识别设备上线：{name}",
+      "text": "{ip} · {vendor}"
     }
   },
   "notify": {
@@ -602,6 +606,18 @@
     "test": {
       "title": "NET Sniffer",
       "body": "通知工作正常 🎉"
+    },
+    "device_unknown_online": {
+      "title": "未识别设备已连接",
+      "body": "{name}（{ip}）{vendor}"
+    },
+    "device_ip_changed": {
+      "title": "{name} 的 IP 地址已变更",
+      "body": "{old} → {new}"
+    },
+    "background": {
+      "title": "NET Sniffer 仍在运行",
+      "body": "监控在后台继续进行。可从托盘图标打开。"
     }
   },
   "parental": {
@@ -697,14 +713,12 @@
     "monitor_interval_d": "连通性的检测频率。",
     "n_desktop": "桌面通知",
     "n_desktop_d": "在此电脑上显示系统通知。",
-    "n_new": "新设备",
-    "n_new_d": "未知设备加入时提醒。",
-    "n_offline": "收藏设备上线/离线",
-    "n_offline_d": "已收藏的设备连接或断开时提醒。",
-    "n_internet": "网络中断",
-    "n_internet_d": "连接断开和恢复时提醒。",
-    "n_security": "安全警告",
-    "n_security_d": "出现审计问题或检测到摄像头时提醒。",
+    "n_new": "新设备加入",
+    "n_new_d": "设备首次加入网络时。",
+    "n_internet": "互联网中断",
+    "n_internet_d": "连接中断和恢复时。",
+    "n_security": "安全问题",
+    "n_security_d": "安全审计发现重要问题时。",
     "n_push": "推送到手机",
     "n_push_d": "可任意组合使用 ntfy、Telegram 或 webhook。",
     "n_test": "发送测试",
@@ -726,7 +740,37 @@
     "logout_d": "结束此浏览器上的会话。",
     "saved": "已保存",
     "legal": "NET Sniffer 旨在监控和保护您拥有或获授权管理的网络，仅使用标准的发现协议和连接检测。",
-    "oss": "基于 Python、FastAPI、zeroconf、psutil、httpx、pywebview 及其他开源软件构建。MAC 厂商数据 © IEEE Registration Authority。"
+    "oss": "基于 Python、FastAPI、zeroconf、psutil、httpx、pywebview 及其他开源软件构建。MAC 厂商数据 © IEEE Registration Authority。",
+    "background": "后台运行",
+    "background_d": "关闭窗口后继续监控网络",
+    "bg_run": "在后台继续运行",
+    "bg_run_d": "关闭窗口后 NET Sniffer 会隐藏到系统托盘，监控和提醒继续运行。",
+    "bg_login": "登录时启动",
+    "bg_login_d": "登录时自动启动并隐藏在托盘中。",
+    "bg_no_tray": "此系统不支持系统托盘，关闭窗口将退出应用。",
+    "n_master": "通知",
+    "n_master_d": "桌面和推送通知的总开关。提醒始终保留在应用历史中。",
+    "n_g_devices": "设备",
+    "n_g_network": "网络与安全",
+    "n_g_delivery": "通知方式",
+    "n_unknown": "未识别设备已连接",
+    "n_unknown_d": "未标记为可信的设备重新上线时。",
+    "n_online_all": "任意设备上线",
+    "n_online_all_d": "每次有设备上线时。",
+    "n_offline_all": "任意设备离线",
+    "n_offline_all_d": "每次有设备离开网络时。",
+    "n_favorites": "收藏设备",
+    "n_favorites_d": "标星设备上线或离线时。",
+    "n_ip": "IP 地址变化",
+    "n_ip_d": "设备获得不同 IP 地址时。",
+    "n_camera": "检测到摄像头",
+    "n_camera_d": "网络中出现新摄像头时。",
+    "n_sound": "声音",
+    "n_sound_d": "播放系统通知声音。",
+    "n_quiet": "免打扰时段",
+    "n_quiet_d": "此时段内不发送通知，提醒仍会显示在应用中。",
+    "n_quiet_from": "从",
+    "n_quiet_to": "至"
   },
   "update": {
     "current": "版本 {v}",
@@ -781,5 +825,11 @@
     "bad_url": "请输入有效的 http(s) 网址。",
     "update_not_ready": "更新尚未就绪。",
     "no_network": "未检测到本地网络连接。"
+  },
+  "tray": {
+    "open": "打开 NET Sniffer",
+    "scan": "立即扫描",
+    "notifications": "通知",
+    "quit": "退出"
   }
 }

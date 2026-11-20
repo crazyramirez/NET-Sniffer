@@ -6,7 +6,7 @@ import { S } from "../store.js";
 import { $, confirmDialog, copyText, html, ico, loadingBtn, openModal, toast } from "../ui.js";
 
 let root;
-const SECTIONS = ["general", "scanning", "notifications", "remote", "blocking", "updates", "privacy", "about"];
+const SECTIONS = ["general", "background", "scanning", "notifications", "remote", "blocking", "updates", "privacy", "about"];
 
 const sw = (key, { disabled = false } = {}) => html`<label class="switch"><input type="checkbox" data-key="${key}" ${S.settings[key] ? "checked" : ""} ${disabled ? "disabled" : ""}><span></span></label>`;
 const row = (title, desc, ctl) => html`<div class="setting"><div class="txt"><div class="t">${title}</div>${desc ? html`<div class="d">${desc}</div>` : ""}</div><div class="ctl">${ctl}</div></div>`;
@@ -32,14 +32,40 @@ function scanning() {
       ${[5, 10, 15, 30, 60].map((v) => html`<option value="${v}" ${+s.monitor_interval_s === v ? "selected" : ""}>${v} s</option>`)}</select>`)}`);
 }
 
+function background() {
+  if (S.app.headless) return "";
+  return card("background", "power", t("settings.background"), html`
+    ${S.app.tray ? "" : html`<div class="banner warn" style="margin-bottom:6px"><div class="b-ico">${ico("info")}</div><div class="b-txt"><div class="b-d">${t("settings.bg_no_tray")}</div></div></div>`}
+    ${row(t("settings.bg_run"), t("settings.bg_run_d"), sw("background", { disabled: !S.app.tray }))}
+    ${row(t("settings.bg_login"), t("settings.bg_login_d"), sw("launch_at_login"))}`, t("settings.background_d"));
+}
+
 function notifications() {
-  const s = S.settings;
+  const s = S.settings, off = !s.notify_enabled;
+  const nsw = (key) => sw(key, { disabled: off });
+  const group = (label) => html`<div class="nav-label" style="padding:16px 0 2px">${label}</div>`;
   return card("notifications", "bell", t("settings.notifications"), html`
-    ${row(t("settings.n_desktop"), t("settings.n_desktop_d"), sw("notify_desktop"))}
-    ${row(t("settings.n_new"), t("settings.n_new_d"), sw("notify_new_device"))}
-    ${row(t("settings.n_offline"), t("settings.n_offline_d"), sw("notify_device_offline"))}
-    ${row(t("settings.n_internet"), t("settings.n_internet_d"), sw("notify_internet"))}
-    ${row(t("settings.n_security"), t("settings.n_security_d"), sw("notify_security"))}
+    ${row(html`<b>${t("settings.n_master")}</b>`, t("settings.n_master_d"), sw("notify_enabled"))}
+    <div style="${off ? "opacity:.5" : ""}">
+    ${group(t("settings.n_g_devices"))}
+    ${row(t("settings.n_new"), t("settings.n_new_d"), nsw("notify_new_device"))}
+    ${row(t("settings.n_unknown"), t("settings.n_unknown_d"), nsw("notify_unknown_online"))}
+    ${row(t("settings.n_online_all"), t("settings.n_online_all_d"), nsw("notify_device_online"))}
+    ${row(t("settings.n_offline_all"), t("settings.n_offline_all_d"), nsw("notify_device_offline"))}
+    ${row(t("settings.n_favorites"), t("settings.n_favorites_d"), nsw("notify_favorites"))}
+    ${row(t("settings.n_ip"), t("settings.n_ip_d"), nsw("notify_ip_change"))}
+    ${group(t("settings.n_g_network"))}
+    ${row(t("settings.n_internet"), t("settings.n_internet_d"), nsw("notify_internet"))}
+    ${row(t("settings.n_security"), t("settings.n_security_d"), nsw("notify_security"))}
+    ${row(t("settings.n_camera"), t("settings.n_camera_d"), nsw("notify_camera"))}
+    ${group(t("settings.n_g_delivery"))}
+    ${row(t("settings.n_desktop"), t("settings.n_desktop_d"), nsw("notify_desktop"))}
+    ${row(t("settings.n_sound"), t("settings.n_sound_d"), nsw("notify_sound"))}
+    ${row(t("settings.n_quiet"), t("settings.n_quiet_d"), html`${s.notify_quiet ? html`<span class="faint" style="font-size:12.5px">${t("settings.n_quiet_from")}</span>
+      <input class="input" type="time" data-key="notify_quiet_start" value="${s.notify_quiet_start}" style="width:110px" ${off ? "disabled" : ""}>
+      <span class="faint" style="font-size:12.5px">${t("settings.n_quiet_to")}</span>
+      <input class="input" type="time" data-key="notify_quiet_end" value="${s.notify_quiet_end}" style="width:110px" ${off ? "disabled" : ""}>` : ""}${nsw("notify_quiet")}`)}
+    </div>
     <div class="sep"></div><div class="label" style="margin-bottom:10px">${t("settings.n_push")}</div>
     <div class="form-grid">
       <div class="field"><label>ntfy URL</label><input class="input" data-key="notify_ntfy_url" value="${s.notify_ntfy_url}" placeholder="https://ntfy.sh/my-home-alerts"></div>
@@ -117,8 +143,8 @@ function about() {
 function paint() {
   if (!root) return;
   const y = $("#content").scrollTop;
-  root.innerHTML = html`<div class="row wrap" style="gap:6px;margin-bottom:16px">${SECTIONS.map((s) => html`<button class="chip" data-go="${s}">${t(`settings.${s}`)}</button>`)}</div>
-    <div class="stack" style="max-width:980px">${general()}${scanning()}${notifications()}${remote()}${blocking()}${updates()}${privacy()}${about()}</div>`;
+  root.innerHTML = html`<div class="row wrap" style="gap:6px;margin-bottom:16px">${SECTIONS.map((s) => s === "background" && S.app.headless ? "" : html`<button class="chip" data-go="${s}">${t(`settings.${s}`)}</button>`)}</div>
+    <div class="stack" style="max-width:980px">${general()}${background()}${scanning()}${notifications()}${remote()}${blocking()}${updates()}${privacy()}${about()}</div>`;
   $("#content").scrollTop = y;
 }
 
@@ -147,7 +173,7 @@ function passwordModal() {
 
 function render(el, arg) {
   root = el; paint();
-  if (arg) setTimeout(() => $(`#sec-${arg}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+  if (arg) setTimeout(() => $(`#sec-${arg}`)?.scrollIntoView({ behavior: "instant", block: "start" }), 60);
   el.onclick = async (e) => {
     const go = e.target.closest("[data-go]"); if (go) return $(`#sec-${go.dataset.go}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
     const th = e.target.closest("[data-theme]"); if (th) { applyTheme(th.dataset.theme); return save({ theme: th.dataset.theme }); }

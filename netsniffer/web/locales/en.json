@@ -564,6 +564,10 @@
     "update_installed": {
       "title": "NET Sniffer updated",
       "text": "Now running the latest version"
+    },
+    "device_unknown_online": {
+      "title": "Unrecognized device online: {name}",
+      "text": "{ip} · {vendor}"
     }
   },
   "notify": {
@@ -602,6 +606,18 @@
     "test": {
       "title": "NET Sniffer",
       "body": "Notifications are working 🎉"
+    },
+    "device_unknown_online": {
+      "title": "Unrecognized device connected",
+      "body": "{name} ({ip}) {vendor}"
+    },
+    "device_ip_changed": {
+      "title": "{name} changed IP address",
+      "body": "{old} → {new}"
+    },
+    "background": {
+      "title": "NET Sniffer is still running",
+      "body": "Monitoring continues in the background. Open it from the tray icon."
     }
   },
   "parental": {
@@ -697,14 +713,12 @@
     "monitor_interval_d": "How often connectivity is tested.",
     "n_desktop": "Desktop notifications",
     "n_desktop_d": "Show system notifications on this computer.",
-    "n_new": "New devices",
-    "n_new_d": "Alert when an unknown device joins.",
-    "n_offline": "Favorite devices online/offline",
-    "n_offline_d": "Alert when a device marked as favorite connects or disconnects.",
+    "n_new": "New device joins",
+    "n_new_d": "When a device joins your network for the first time.",
     "n_internet": "Internet outages",
-    "n_internet_d": "Alert when the connection drops and recovers.",
-    "n_security": "Security warnings",
-    "n_security_d": "Alert on audit issues and detected cameras.",
+    "n_internet_d": "When the connection drops and when it comes back.",
+    "n_security": "Security issues",
+    "n_security_d": "When a security audit finds important issues.",
     "n_push": "Push to your phone",
     "n_push_d": "Use any combination of ntfy, Telegram or a webhook.",
     "n_test": "Send test",
@@ -726,7 +740,37 @@
     "logout_d": "End the session on this browser.",
     "saved": "Saved",
     "legal": "NET Sniffer is intended for monitoring and securing networks that you own or are authorized to administer. It uses standard discovery protocols and connection checks only.",
-    "oss": "Built with Python, FastAPI, zeroconf, psutil, httpx, pywebview and other open-source software. MAC vendor data © IEEE Registration Authority."
+    "oss": "Built with Python, FastAPI, zeroconf, psutil, httpx, pywebview and other open-source software. MAC vendor data © IEEE Registration Authority.",
+    "background": "Background",
+    "background_d": "Keep watching your network when the window is closed",
+    "bg_run": "Keep running in the background",
+    "bg_run_d": "Closing the window hides NET Sniffer in the system tray; monitoring and alerts continue.",
+    "bg_login": "Launch at login",
+    "bg_login_d": "Start automatically, hidden in the tray, when you sign in.",
+    "bg_no_tray": "The system tray isn't available on this system, so closing the window exits the app.",
+    "n_master": "Notifications",
+    "n_master_d": "Master switch for desktop and push notifications. Alerts are always kept in the app history.",
+    "n_g_devices": "Devices",
+    "n_g_network": "Network & security",
+    "n_g_delivery": "How to notify",
+    "n_unknown": "Unrecognized device connected",
+    "n_unknown_d": "When a device you haven't marked as trusted comes back online.",
+    "n_online_all": "Any device connects",
+    "n_online_all_d": "Every time a device comes online.",
+    "n_offline_all": "Any device disconnects",
+    "n_offline_all_d": "Every time a device leaves the network.",
+    "n_favorites": "Favorite devices",
+    "n_favorites_d": "When a device marked with a star connects or disconnects.",
+    "n_ip": "IP address changes",
+    "n_ip_d": "When a device gets a different IP address.",
+    "n_camera": "Cameras detected",
+    "n_camera_d": "When a new camera appears on the network.",
+    "n_sound": "Sound",
+    "n_sound_d": "Play the system notification sound.",
+    "n_quiet": "Quiet hours",
+    "n_quiet_d": "No notifications in this time range. Alerts still appear in the app.",
+    "n_quiet_from": "From",
+    "n_quiet_to": "to"
   },
   "update": {
     "current": "Version {v}",
@@ -781,5 +825,11 @@
     "bad_url": "Enter a valid http(s) URL.",
     "update_not_ready": "The update isn't ready yet.",
     "no_network": "No local network connection detected."
+  },
+  "tray": {
+    "open": "Open NET Sniffer",
+    "scan": "Scan now",
+    "notifications": "Notifications",
+    "quit": "Quit"
   }
 }

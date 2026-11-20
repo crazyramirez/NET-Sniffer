@@ -564,6 +564,10 @@
     "update_installed": {
       "title": "NET Sniffer を更新しました",
       "text": "最新バージョンで動作しています"
+    },
+    "device_unknown_online": {
+      "title": "未確認デバイスが接続：{name}",
+      "text": "{ip} · {vendor}"
     }
   },
   "notify": {
@@ -602,6 +606,18 @@
     "test": {
       "title": "NET Sniffer",
       "body": "通知は正常に動作しています 🎉"
+    },
+    "device_unknown_online": {
+      "title": "未確認デバイスが接続しました",
+      "body": "{name}（{ip}）{vendor}"
+    },
+    "device_ip_changed": {
+      "title": "{name} の IP アドレスが変わりました",
+      "body": "{old} → {new}"
+    },
+    "background": {
+      "title": "NET Sniffer は実行中です",
+      "body": "監視はバックグラウンドで続いています。トレイアイコンから開けます。"
     }
   },
   "parental": {
@@ -697,14 +713,12 @@
     "monitor_interval_d": "接続をテストする頻度です。",
     "n_desktop": "デスクトップ通知",
     "n_desktop_d": "このコンピューターにシステム通知を表示します。",
-    "n_new": "新しいデバイス",
-    "n_new_d": "未知のデバイスが参加したときに通知します。",
-    "n_offline": "お気に入りデバイスのオンライン/オフライン",
-    "n_offline_d": "お気に入りに設定したデバイスが接続または切断されたときに通知します。",
+    "n_new": "新しいデバイスの接続",
+    "n_new_d": "デバイスが初めてネットワークに接続したとき。",
     "n_internet": "インターネット障害",
-    "n_internet_d": "接続が切断されたときと復旧したときに通知します。",
-    "n_security": "セキュリティ警告",
-    "n_security_d": "監査で見つかった問題や検出されたカメラを通知します。",
+    "n_internet_d": "接続が切れたときと復旧したとき。",
+    "n_security": "セキュリティの問題",
+    "n_security_d": "監査で重要な問題が見つかったとき。",
     "n_push": "スマートフォンへのプッシュ通知",
     "n_push_d": "ntfy、Telegram、webhook を自由に組み合わせて使用できます。",
     "n_test": "テストを送信",
@@ -726,7 +740,37 @@
     "logout_d": "このブラウザーでのセッションを終了します。",
     "saved": "保存しました",
     "legal": "NET Sniffer は、ご自身が所有または管理を許可されているネットワークの監視と保護を目的としています。標準的なディスカバリープロトコルと接続確認のみを使用します。",
-    "oss": "Python、FastAPI、zeroconf、psutil、httpx、pywebview、その他のオープンソースソフトウェアで構築されています。MAC ベンダーデータ © IEEE Registration Authority。"
+    "oss": "Python、FastAPI、zeroconf、psutil、httpx、pywebview、その他のオープンソースソフトウェアで構築されています。MAC ベンダーデータ © IEEE Registration Authority。",
+    "background": "バックグラウンド",
+    "background_d": "ウィンドウを閉じてもネットワークを監視し続けます",
+    "bg_run": "バックグラウンドで実行を続ける",
+    "bg_run_d": "ウィンドウを閉じると NET Sniffer はシステムトレイに隠れ、監視と通知は続きます。",
+    "bg_login": "ログイン時に起動",
+    "bg_login_d": "サインイン時にトレイに隠れた状態で自動起動します。",
+    "bg_no_tray": "このシステムではトレイが使えないため、ウィンドウを閉じるとアプリが終了します。",
+    "n_master": "通知",
+    "n_master_d": "デスクトップ通知とプッシュ通知の一括スイッチ。アラートは常にアプリの履歴に残ります。",
+    "n_g_devices": "デバイス",
+    "n_g_network": "ネットワークとセキュリティ",
+    "n_g_delivery": "通知方法",
+    "n_unknown": "未確認デバイスの接続",
+    "n_unknown_d": "信頼済みにしていないデバイスが再接続したとき。",
+    "n_online_all": "デバイスの接続（すべて）",
+    "n_online_all_d": "デバイスがオンラインになるたびに。",
+    "n_offline_all": "デバイスの切断（すべて）",
+    "n_offline_all_d": "デバイスがネットワークから離れるたびに。",
+    "n_favorites": "お気に入りデバイス",
+    "n_favorites_d": "スター付きデバイスが接続・切断したとき。",
+    "n_ip": "IP アドレスの変更",
+    "n_ip_d": "デバイスの IP アドレスが変わったとき。",
+    "n_camera": "カメラの検出",
+    "n_camera_d": "新しいカメラがネットワークに現れたとき。",
+    "n_sound": "サウンド",
+    "n_sound_d": "システムの通知音を鳴らします。",
+    "n_quiet": "おやすみ時間",
+    "n_quiet_d": "この時間帯は通知しません。アラートはアプリに表示されます。",
+    "n_quiet_from": "開始",
+    "n_quiet_to": "終了"
   },
   "update": {
     "current": "バージョン {v}",
@@ -781,5 +825,11 @@
     "bad_url": "有効な http(s) の URL を入力してください。",
     "update_not_ready": "アップデートの準備がまだできていません。",
     "no_network": "ローカルネットワーク接続が検出されませんでした。"
+  },
+  "tray": {
+    "open": "NET Sniffer を開く",
+    "scan": "今すぐスキャン",
+    "notifications": "通知",
+    "quit": "終了"
   }
 }
