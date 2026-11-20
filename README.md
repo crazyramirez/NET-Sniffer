@@ -1,3 +1,5 @@
+<p align="center"><b>English</b> · <a href="README.es.md">Español</a></p>
+
 <p align="center"><img src="docs/assets/readme-header.png" alt="NET Sniffer — See every device. Secure your network." width="100%"></p>
 
 <p align="center">
