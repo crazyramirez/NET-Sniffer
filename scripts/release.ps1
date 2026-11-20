@@ -13,7 +13,10 @@ param(
   [string]$Version = "",
   [string]$Notes = ""
 )
-$ErrorActionPreference = "Stop"
+# Native tools (PyInstaller, git, gh) log progress to stderr; Windows PowerShell 5.1 would treat that as a
+# fatal error under "Stop". Failures are detected through $LASTEXITCODE instead.
+$ErrorActionPreference = "Continue"
+function Check($what) { if ($LASTEXITCODE -ne 0) { Write-Host "FAILED: $what" -ForegroundColor Red; exit 1 } }
 $Root = Split-Path -Parent $PSScriptRoot
 Set-Location $Root
 $Py = Join-Path $Root ".venv\Scripts\python.exe"
@@ -23,7 +26,7 @@ function Step($msg) { Write-Host "`n==> $msg" -ForegroundColor Cyan }
 
 # ---------------------------------------------------------------- preflight
 gh auth status | Out-Null
-if ($LASTEXITCODE -ne 0) { throw "Run 'gh auth login' first." }
+if ($LASTEXITCODE -ne 0) { Write-Host "Run 'gh auth login' first." -ForegroundColor Red; exit 1 }
 $Repo = (& $Py -c "import netsniffer.config as c; print(c.REPO)").Trim()
 if (git status --porcelain --untracked-files=no) { Write-Host "Uncommitted changes will be included in the release commit." -ForegroundColor Yellow }
 
@@ -31,7 +34,7 @@ if (git status --porcelain --untracked-files=no) { Write-Host "Uncommitted chang
 $InitFile = Join-Path $Root "netsniffer\__init__.py"
 $src = Get-Content $InitFile -Raw
 $cur = [regex]::Match($src, '__version__ = "(\d+)\.(\d+)\.(\d+)"')
-if (-not $cur.Success) { throw "version not found" }
+if (-not $cur.Success) { Write-Host "version not found" -ForegroundColor Red; exit 1 }
 if (-not $Version) {
   $ma = [int]$cur.Groups[1].Value; $mi = [int]$cur.Groups[2].Value; $pa = [int]$cur.Groups[3].Value
   switch ($Bump) { "major" { $ma++; $mi = 0; $pa = 0 } "minor" { $mi++; $pa = 0 } default { $pa++ } }
@@ -45,20 +48,23 @@ $src = $src -replace '__version__ = "[^"]+"', "__version__ = `"$Version`""
 # ---------------------------------------------------------------- test & build
 Step "Tests"
 & $Py -m pytest -q
-if ($LASTEXITCODE -ne 0) { throw "tests failed" }
+Check "tests"
 
 Step "Building Windows installer (old builds are wiped first)"
 & $Py scripts\build.py
-if ($LASTEXITCODE -ne 0) { throw "build failed" }
+Check "build"
 $Exe = Join-Path $Root "dist\NETSniffer-Setup-Windows-x64.exe"
+if (-not (Test-Path $Exe)) { Write-Host "FAILED: installer not found" -ForegroundColor Red; exit 1 }
 
 # ---------------------------------------------------------------- git
 Step "Commit & tag"
 git add -A
-git commit -m "release: $Tag" | Out-Null
+if (git status --porcelain) { git commit -q -m "release: $Tag"; Check "git commit" }
 git tag -f $Tag
 git push origin HEAD
+Check "git push"
 git push origin $Tag --force
+Check "git push tag"
 
 # ---------------------------------------------------------------- GitHub release
 Step "Publishing release (triggers macOS & Linux builds)"
@@ -71,6 +77,7 @@ if (-not $Notes) {
 $NotesFile = New-TemporaryFile
 [System.IO.File]::WriteAllText($NotesFile, $Notes, (New-Object System.Text.UTF8Encoding $false))
 gh release create $Tag $Exe --repo $Repo --title "NET Sniffer $Version" --notes-file $NotesFile --latest
+Check "gh release create"
 Remove-Item $NotesFile
 
 # ---------------------------------------------------------------- never keep old versions
