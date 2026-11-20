@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netsniffer"
+dynamic = ["version"]
+description = "NET Sniffer — premium local network monitor, inventory and security auditor for your own network."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary" }
+dependencies = [
+  "fastapi>=0.165",
+  "uvicorn[standard]>=0.54",
+  "httpx>=0.28",
+  "psutil>=7.2",
+  "zeroconf>=0.154",
+  "pywebview>=6.2",
+  "cryptography>=50",
+  "asyncssh>=2.24",
+  "fritzconnection>=1.15",
+  "desktop-notifier>=6.2",
+  "defusedxml>=0.7",
+  "segno>=1.6",
+]
+
+[project.scripts]
+netsniffer = "netsniffer.__main__:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "netsniffer.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["netsniffer*"]
+
+[tool.setuptools.package-data]
+netsniffer = ["data/*", "web/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

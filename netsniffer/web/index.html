@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0A0F1C" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F3F5FA" media="(prefers-color-scheme: light)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="NET Sniffer — network monitor & security auditor for your own network">
+  <title>NET Sniffer</title>
+  <meta property="og:title" content="NET Sniffer">
+  <meta property="og:description" content="See every device. Secure your network.">
+  <meta property="og:image" content="/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/assets/css/app.css">
+  <script>
+    // Apply theme before first paint (no flash).
+    (function () {
+      var p = "system"; try { p = localStorage.getItem("ns-theme") || "system"; } catch (e) {}
+      var dark = p === "dark" || (p === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.dataset.theme = dark ? "dark" : "light";
+    })();
+  </script>
+</head>
+<body>
+  <div id="app"><div class="login"><div class="spinner" style="width:28px;height:28px;color:var(--accent)"></div></div></div>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <noscript>NET Sniffer requires JavaScript.</noscript>
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>
