@@ -1,12 +1,12 @@
 import { api } from "../api.js";
-import { planBadge, proLock, showError, upgradeModal } from "../common.js";
+import { showError } from "../common.js";
 import { getLang, LANGS, t, fmt } from "../i18n.js";
 import { applyTheme, changeLang, saveSettings } from "../main.js";
-import { S, can } from "../store.js";
+import { S } from "../store.js";
 import { $, confirmDialog, copyText, html, ico, loadingBtn, openModal, toast } from "../ui.js";
 
 let root;
-const SECTIONS = ["general", "scanning", "notifications", "remote", "blocking", "license", "updates", "privacy", "about"];
+const SECTIONS = ["general", "scanning", "notifications", "remote", "blocking", "updates", "privacy", "about"];
 
 const sw = (key, { disabled = false } = {}) => html`<label class="switch"><input type="checkbox" data-key="${key}" ${S.settings[key] ? "checked" : ""} ${disabled ? "disabled" : ""}><span></span></label>`;
 const row = (title, desc, ctl) => html`<div class="setting"><div class="txt"><div class="t">${title}</div>${desc ? html`<div class="d">${desc}</div>` : ""}</div><div class="ctl">${ctl}</div></div>`;
@@ -22,19 +22,19 @@ function general() {
 }
 
 function scanning() {
-  const s = S.settings, pro = can("custom_interval");
+  const s = S.settings;
   return card("scanning", "radar", t("settings.scanning"), html`
     ${row(t("settings.auto_scan"), t("settings.auto_scan_d"), sw("auto_scan"))}
-    ${row(t("settings.interval"), pro ? t("settings.interval_d") : t("settings.interval_free"), html`<select class="input" data-key="scan_interval_min" style="width:140px">
-      ${[1, 2, 5, 10, 15, 30, 60, 120].map((m) => html`<option value="${m}" ${+s.scan_interval_min === m ? "selected" : ""} ${!pro && m < 15 ? "disabled" : ""}>${m} min</option>`)}</select>`)}
-    ${row(html`${t("settings.watcher")} ${can("watcher") ? "" : html`<span class="badge pro">PRO</span>`}`, t("settings.watcher_d"), sw("watcher", { disabled: !can("watcher") }))}
+    ${row(t("settings.interval"), t("settings.interval_d"), html`<select class="input" data-key="scan_interval_min" style="width:140px">
+      ${[1, 2, 5, 10, 15, 30, 60, 120].map((m) => html`<option value="${m}" ${+s.scan_interval_min === m ? "selected" : ""}>${m} min</option>`)}</select>`)}
+    ${row(t("settings.watcher"), t("settings.watcher_d"), sw("watcher"))}
     ${row(t("settings.monitor_interval"), t("settings.monitor_interval_d"), html`<select class="input" data-key="monitor_interval_s" style="width:140px">
       ${[5, 10, 15, 30, 60].map((v) => html`<option value="${v}" ${+s.monitor_interval_s === v ? "selected" : ""}>${v} s</option>`)}</select>`)}`);
 }
 
 function notifications() {
   const s = S.settings;
-  return card("notifications", "bell", t("settings.notifications"), proLock("notifications", html`
+  return card("notifications", "bell", t("settings.notifications"), html`
     ${row(t("settings.n_desktop"), t("settings.n_desktop_d"), sw("notify_desktop"))}
     ${row(t("settings.n_new"), t("settings.n_new_d"), sw("notify_new_device"))}
     ${row(t("settings.n_offline"), t("settings.n_offline_d"), sw("notify_device_offline"))}
@@ -47,13 +47,13 @@ function notifications() {
       <div class="field"><label>Telegram bot token</label><input class="input" type="password" data-key="notify_telegram_token" value="${s.notify_telegram_token}" autocomplete="off"></div>
       <div class="field"><label>Telegram chat ID</label><input class="input" data-key="notify_telegram_chat" value="${s.notify_telegram_chat}"></div>
     </div>
-    <div class="row" style="margin-top:14px"><button class="btn sm" id="n-test">${ico("bell")} ${t("settings.n_test")}</button><span class="faint" style="font-size:12.5px">${t("settings.n_push_d")}</span></div>`, { compact: true }));
+    <div class="row" style="margin-top:14px"><button class="btn sm" id="n-test">${ico("bell")} ${t("settings.n_test")}</button><span class="faint" style="font-size:12.5px">${t("settings.n_push_d")}</span></div>`);
 }
 
 function remote() {
   const r = S.remote || {};
   const dark = document.documentElement.dataset.theme === "dark";
-  return card("remote", "globe", t("settings.remote"), proLock("remote", html`
+  return card("remote", "globe", t("settings.remote"), html`
     ${S.app.headless ? html`<div class="banner accent" style="margin-bottom:10px"><div class="b-ico">${ico("t_raspberry")}</div><div class="b-txt"><div class="b-t">${t("settings.remote_headless")}</div></div></div>` :
       row(t("settings.remote_enable"), t("settings.remote_enable_d"), sw("remote_enabled", { disabled: !r.password_set }))}
     ${row(t("settings.remote_password"), r.password_set ? t("settings.remote_password_set") : t("settings.remote_password_d"), html`<button class="btn sm" id="r-pass">${ico("key")} ${r.password_set ? t("common.change") : t("common.set")}</button>`)}
@@ -62,13 +62,13 @@ function remote() {
       <div class="qr"><img src="/api/remote/qr.svg?dark=${dark}" alt="QR"></div>
       <div style="flex:1;min-width:220px"><div class="label">${t("settings.remote_open")}</div>
         ${r.urls.map((u) => html`<div class="row" style="margin-top:6px"><b class="mono" style="font-size:15px">${u}</b><span class="copy" data-copy="${u}">${ico("copy")}</span></div>`)}
-        <p class="faint" style="font-size:12.5px">${t("settings.remote_hint")}</p></div></div>` : ""}`, { compact: true }));
+        <p class="faint" style="font-size:12.5px">${t("settings.remote_hint")}</p></div></div>` : ""}`);
 }
 
 function blocking() {
   const s = S.settings, b = s.block_backend || "none";
   const st = S.blocking || {};
-  return card("blocking", "ban", t("settings.blocking"), proLock("blocking", html`
+  return card("blocking", "ban", t("settings.blocking"), html`
     <p class="muted" style="margin-top:0;font-size:13.5px">${t("block.intro")}</p>
     <div class="field"><label>${t("block.backend")}</label><select class="input" data-key="block_backend">
       ${["none", "ssh", "fritz", "local"].map((k) => html`<option value="${k}" ${b === k ? "selected" : ""}>${t(`block.backend_${k}`)}</option>`)}</select>
@@ -83,16 +83,7 @@ function blocking() {
       <option value="nft" ${s.block_firewall === "nft" ? "selected" : ""}>nftables (OpenWrt 22+)</option><option value="iptables" ${s.block_firewall === "iptables" ? "selected" : ""}>iptables</option></select></div>` : ""}
     ${b !== "none" ? html`<div class="row wrap" style="margin-top:16px"><button class="btn sm primary" id="b-test">${ico("link")} ${t("block.test")}</button>
       ${st.last_error ? html`<span class="badge danger">${st.last_error}</span>` : st.last_apply ? html`<span class="badge ok">${ico("check")} ${t("block.applied", { ago: fmt.ago(st.last_apply) })}</span>` : ""}</div>` : ""}
-    <p class="faint" style="font-size:12px;margin-bottom:0">${ico("info")} ${t("block.legal")}</p>`, { compact: true }));
-}
-
-function license() {
-  const l = S.license;
-  return card("license", "crown", t("settings.license"), html`
-    <div class="row between wrap"><div><div class="row" style="gap:8px"><b style="font-size:16px">${l.plan === "pro" ? "NET Sniffer Pro" : l.plan === "trial" ? t("plan.trial_title") : t("plan.free_title")}</b>${planBadge()}</div>
-      <div class="faint" style="font-size:13px;margin-top:2px">${l.plan === "pro" ? `${l.name || ""}${l.email ? ` · ${l.email}` : ""} · ${l.expires ? t("license.until", { date: l.expires }) : t("license.lifetime")}`
-        : l.plan === "trial" ? t("license.trial_left", { count: l.trial_days_left }) : t("plan.free_sub")}</div></div>
-      ${l.plan === "pro" ? html`<button class="btn sm danger" id="lic-rm">${t("license.remove")}</button>` : html`<button class="btn pro" data-upgrade>${ico("sparkles")} ${t("pro.upgrade")}</button>`}</div>`);
+    <p class="faint" style="font-size:12px;margin-bottom:0">${ico("info")} ${t("block.legal")}</p>`);
 }
 
 function updates() {
@@ -127,7 +118,7 @@ function paint() {
   if (!root) return;
   const y = $("#content").scrollTop;
   root.innerHTML = html`<div class="row wrap" style="gap:6px;margin-bottom:16px">${SECTIONS.map((s) => html`<button class="chip" data-go="${s}">${t(`settings.${s}`)}</button>`)}</div>
-    <div class="stack" style="max-width:980px">${general()}${scanning()}${notifications()}${remote()}${blocking()}${license()}${updates()}${privacy()}${about()}</div>`;
+    <div class="stack" style="max-width:980px">${general()}${scanning()}${notifications()}${remote()}${blocking()}${updates()}${privacy()}${about()}</div>`;
   $("#content").scrollTop = y;
 }
 
@@ -166,9 +157,6 @@ function render(el, arg) {
       if (id === "n-test") { await api("/settings/notify-test", { method: "POST" }); toast({ kind: "ok", title: t("settings.n_test_sent") }); }
       if (id === "r-pass") passwordModal();
       if (id === "b-test") { const b = e.target.closest("button"); loadingBtn(b, true); try { const r = await api("/blocking/test", { method: "POST" }); toast({ kind: "ok", title: t("block.test_ok"), text: r.info }); } finally { loadingBtn(b, false); } }
-      if (id === "lic-rm" && (await confirmDialog({ title: t("license.remove"), text: t("license.remove_d"), ok: t("license.remove"), cancel: t("common.cancel"), danger: true }))) {
-        S.license = await api("/license", { method: "DELETE" }); window.dispatchEvent(new Event("ns:rerender"));
-      }
       if (id === "u-check") { S.update = await api("/update/check", { method: "POST" }); paint(); }
       if (id === "u-apply") { await api("/update/apply", { method: "POST" }); toast({ kind: "ok", title: t("update.restarting") }); }
       if (id === "clear-ev" && (await confirmDialog({ title: t("alerts.clear"), text: t("alerts.clear_text"), ok: t("common.delete"), cancel: t("common.cancel"), danger: true }))) {
@@ -188,7 +176,6 @@ function render(el, arg) {
 
 function onEvent(type) {
   if (!root) return;
-  if (["update", "settings", "blocking", "license"].includes(type) && !root.contains(document.activeElement)) paint();
+  if (["update", "settings", "blocking"].includes(type) && !root.contains(document.activeElement)) paint();
 }
 export default { render, onEvent, destroy() { root = null; } };
-export { upgradeModal };

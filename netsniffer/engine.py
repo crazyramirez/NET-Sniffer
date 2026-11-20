@@ -9,7 +9,6 @@ import time
 
 import psutil
 
-from . import licensing
 from .db import Database
 from .hub import Hub
 from .net import arp, names, oui
@@ -301,14 +300,9 @@ class Engine:
         while True:
             await asyncio.sleep(30)
             s = self.db.settings()
-            lic = licensing.status(s)
-            interval = int(s.get("scan_interval_min") or 15)
-            if "custom_interval" not in lic["features"]:
-                interval = max(15, interval)
-            interval = max(1, interval) * 60
+            interval = max(1, int(s.get("scan_interval_min") or 15)) * 60
             if s.get("auto_scan", True) and time.time() - last_full >= interval:
                 await self.scan(full=True)
                 last_full = time.time()
-            elif s.get("watcher", True) and "watcher" in lic["features"] \
-                    and time.time() - (self.state.get("last") or 0) >= 90:
+            elif s.get("watcher", True) and time.time() - (self.state.get("last") or 0) >= 90:
                 await self.scan(full=False)

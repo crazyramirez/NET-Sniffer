@@ -18,7 +18,6 @@ import logging
 import re
 import time
 
-from .. import licensing
 from ..config import IS_LINUX
 
 log = logging.getLogger("netsniffer.blocking")
@@ -218,14 +217,12 @@ class BlockManager:
     def status(self) -> dict:
         s = self.db.settings()
         return {"backend": s.get("block_backend") or "none", "applied": list(self.applied),
-                "last_error": self.last_error, "last_apply": self.last_apply,
-                "allowed": licensing.has(s, "blocking")}
+                "last_error": self.last_error, "last_apply": self.last_apply}
 
     async def reconcile(self, force: bool = False) -> None:
         async with self._lock:
-            s = self.db.settings()
             backend = self.backend()
-            if not backend or not licensing.has(s, "blocking"):
+            if not backend:
                 self.applied = {}
                 return
             want = self.desired()

@@ -1,10 +1,10 @@
 // App shell: auth gate, i18n, theme, routing, realtime events.
 import { api, connectWS, setUnauthorizedHandler } from "./api.js";
-import { eventClass, eventText, EVENT_ICON, planBadge, showError, upgradeModal } from "./common.js";
+import { eventClass, eventText, EVENT_ICON, showError } from "./common.js";
 import { detectLang, fmt, LANGS, setLang, t } from "./i18n.js";
 import { icon } from "./icons.js";
-import { S, can, emit, upsertDevice } from "./store.js";
-import { $, $$, html, ico, openMenu, openModal, toast, loadingBtn, drawerOpen } from "./ui.js";
+import { S, emit, upsertDevice } from "./store.js";
+import { $, $$, html, ico, openMenu, openModal, toast, loadingBtn, drawerOpen, closeDrawer } from "./ui.js";
 import dashboard from "./views/dashboard.js";
 import devices from "./views/devices.js";
 import security from "./views/security.js";
@@ -20,7 +20,7 @@ const VIEWS = { dashboard, devices, security, speed, monitor, alerts, parental, 
 const NAV = [
   { group: "nav.g_overview", items: [["dashboard", "dashboard"]] },
   { group: "nav.g_network", items: [["devices", "devices"], ["monitor", "activity"], ["speed", "gauge"]] },
-  { group: "nav.g_protection", items: [["security", "shield", "audit"], ["parental", "family", "parental"], ["alerts", "bell"]] },
+  { group: "nav.g_protection", items: [["security", "shield"], ["parental", "family"], ["alerts", "bell"]] },
 ];
 let current = null, currentName = null;
 
@@ -40,25 +40,18 @@ export async function saveSettings(patch) {
 }
 
 // ------------------------------------------------------------------ shell
-function navLink([name, ic, feature]) {
-  const badge = name === "alerts" && S.unread ? html`<span class="badge count">${S.unread > 99 ? "99+" : S.unread}</span>` :
-    feature && !can(feature) ? html`${ico("lock", "lock")}` : "";
+function navLink([name, ic]) {
+  const badge = name === "alerts" && S.unread ? html`<span class="badge count">${S.unread > 99 ? "99+" : S.unread}</span>` : "";
   return html`<a href="#/${name}" data-nav="${name}">${ico(ic)}<span>${t(`nav.${name}`)}</span>${badge}</a>`;
 }
 
 function renderShell() {
-  const lic = S.license;
-  const planCard = lic.plan === "pro" ? html`<div class="plan-card"><div class="row"><div><div class="title">NET Sniffer Pro</div>
-      <div class="sub">${lic.expires ? t("license.until", { date: lic.expires }) : t("license.lifetime")}</div></div>${planBadge()}</div></div>` :
-    html`<div class="plan-card"><div class="row"><div><div class="title">${lic.plan === "trial" ? t("plan.trial_title") : t("plan.free_title")}</div>
-      <div class="sub">${lic.plan === "trial" ? t("license.trial_left", { count: lic.trial_days_left }) : t("plan.free_sub")}</div></div>${planBadge()}</div>
-      <button class="btn pro sm" data-upgrade>${ico("sparkles")} ${t("pro.upgrade")}</button></div>`;
   $("#app").innerHTML = html`<div class="app">
     <aside class="sidebar">
       <div class="brand"><div class="brand-logo">${ico("logo")}</div><div><div class="brand-name">NET Sniffer</div><div class="brand-sub">${t("app.tagline")}</div></div></div>
       <nav class="nav" id="nav">${NAV.map((g) => html`<div class="nav-label">${t(g.group)}</div>${g.items.map(navLink)}`)}
         <div class="nav-label">${t("nav.g_system")}</div>${navLink(["settings", "settings"])}</nav>
-      ${planCard}
+      <div id="side-status">${sideStatus()}</div>
       <div class="sidebar-foot"><span>v${S.app.version}</span><span class="row" style="gap:6px"><span class="status-dot ${S.ws ? "on" : "warn"}" id="ws-dot"></span>${S.ws ? t("common.live") : t("common.connecting")}</span></div>
     </aside>
     <div class="main">
@@ -105,6 +98,17 @@ export async function changeLang(l) {
   rerender();
 }
 
+function sideStatus() {
+  const m = S.monitor || {}, st = m.status || "unknown";
+  const dot = { online: "on", degraded: "warn", offline: "bad" }[st] || "off";
+  const on = (S.devices || []).filter((d) => d.online).length;
+  return html`<a class="plan-card" href="#/monitor" style="display:block;color:inherit;text-decoration:none">
+    <div class="row"><span class="status-dot ${dot} ${st === "online" ? "pulse" : ""}"></span><div class="title">${t("dash.internet")}</div>
+      <span class="faint num" style="margin-left:auto;font-size:12px">${m.latency ? `${fmt.num(m.latency, 0)} ms` : ""}</span></div>
+    <div class="sub">${t(`monitor.status.${st}`)} · ${on} ${t("device.online").toLowerCase()}</div></a>`;
+}
+function updateSideStatus() { const el = $("#side-status"); if (el) el.innerHTML = sideStatus(); }
+
 function renderNetPill() {
   const n = S.network || {}, el = $("#net-pill");
   if (!el) return;
@@ -132,6 +136,7 @@ function updateNav() {
 
 // ------------------------------------------------------------------ routing
 function route() {
+  if (drawerOpen() && !location.hash.startsWith("#/devices/")) closeDrawer();
   const [, name = "dashboard", arg] = location.hash.split("/");
   const view = VIEWS[name] || dashboard;
   const vname = VIEWS[name] ? name : "dashboard";
@@ -161,12 +166,11 @@ function onWS(type, data) {
   switch (type) {
     case "scan": S.scan = data; renderScanBtn(); break;
     case "scan_error": toast({ kind: "error", title: t("scan.failed"), text: t(`errors.${data.error}`) }); break;
-    case "devices": S.devices = data; break;
+    case "devices": S.devices = data; updateSideStatus(); break;
     case "device": upsertDevice(data); break;
     case "network": S.network = data; renderNetPill(); break;
-    case "monitor": S.monitor = data; break;
+    case "monitor": S.monitor = data; updateSideStatus(); break;
     case "bandwidth": S.bandwidth = data; S.bw.push(data); if (S.bw.length > 90) S.bw.shift(); break;
-    case "license": S.license = data; rerender(); return;
     case "settings": S.settings = data.settings; S.remote = data.remote; break;
     case "update":
       S.update = data;
@@ -196,7 +200,7 @@ function updateBell() {
   const b = $("#alerts-btn");
   if (b) b.innerHTML = icon("bell") + (S.unread ? `<span class="dot">${S.unread > 9 ? "9+" : S.unread}</span>` : "");
   const nav = $('#nav [data-nav="alerts"]');
-  if (nav) nav.outerHTML = navLink(["alerts", "bell"]).s, updateNav();
+  if (nav) { nav.outerHTML = navLink(["alerts", "bell"]).s; updateNav(); }
 }
 
 // ------------------------------------------------------------------ onboarding
@@ -233,21 +237,19 @@ async function boot() {
   applyTheme(S.settings.theme);
   await setLang(detectLang(S.settings.language, S.app.os_language));
   rerender();
-  window.addEventListener("hashchange", () => { if (!drawerOpen() || !location.hash.startsWith("#/devices/")) route(); });
+  window.addEventListener("hashchange", () => route());
   connectWS(onWS, (online) => {
     S.ws = online;
     const dot = $("#ws-dot"); if (dot) { dot.className = `status-dot ${online ? "on" : "warn"}`; dot.parentElement.lastChild.textContent = online ? t("common.live") : t("common.connecting"); }
     if (online) refreshState().then(() => current?.onEvent?.("resync")).catch(() => {});
   });
   document.addEventListener("click", (e) => {
-    const up = e.target.closest("[data-upgrade]");
-    if (up) { e.preventDefault(); upgradeModal(up.dataset.upgrade || undefined); }
   });
   document.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); $("#gsearch")?.focus(); }
   });
   if (!S.settings.onboarded) onboarding();
-  if ("serviceWorker" in navigator && !S.app.headless === false) navigator.serviceWorker.register("/sw.js").catch(() => {});
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});
 }
 
 boot().catch((e) => {

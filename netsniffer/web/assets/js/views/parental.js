@@ -1,5 +1,5 @@
 import { api } from "../api.js";
-import { deviceAvatar, deviceSub, emptyState, proLock, showError } from "../common.js";
+import { deviceAvatar, deviceSub, emptyState, showError } from "../common.js";
 import { fmt, t } from "../i18n.js";
 import { S } from "../store.js";
 import { confirmDialog, html, ico, openModal, toast } from "../ui.js";
@@ -47,7 +47,7 @@ function paint() {
         <div class="li">${deviceAvatar(d, "sm")}<div class="li-main"><div class="li-t">${d.display_name}</div><div class="li-s">${deviceSub(d)}</div></div>
         <button class="btn xs" data-pause="${d.id}" data-min="60">${ico("pause")} 1 h</button><button class="btn xs" data-pause="${d.id}" data-min="0">${ico("play")}</button></div>`)}
     </div></div></div></div>`;
-  root.innerHTML = proLock("parental", body).s;
+  root.innerHTML = body.s;
 }
 
 function editor(rule = { name: "", devices: [], schedule: [{ ...PRESETS.bedtime }], enabled: true }) {

@@ -1,321 +1,785 @@
 {
-  "app": { "tagline": "Network intelligence" },
+  "app": {
+    "tagline": "Network intelligence"
+  },
   "nav": {
-    "dashboard": "Dashboard", "devices": "Dispositivi", "monitor": "Monitor internet", "speed": "Speed test",
-    "security": "Sicurezza", "parental": "Controllo parentale", "alerts": "Avvisi", "settings": "Impostazioni",
-    "g_overview": "Panoramica", "g_network": "Rete", "g_protection": "Protezione", "g_system": "Sistema"
+    "dashboard": "Dashboard",
+    "devices": "Dispositivi",
+    "monitor": "Monitor internet",
+    "speed": "Speed test",
+    "security": "Sicurezza",
+    "parental": "Controllo parentale",
+    "alerts": "Avvisi",
+    "settings": "Impostazioni",
+    "g_overview": "Panoramica",
+    "g_network": "Rete",
+    "g_protection": "Protezione",
+    "g_system": "Sistema"
   },
   "common": {
-    "cancel": "Annulla", "change": "Cambia", "close": "Chiudi", "confirm": "Conferma", "connecting": "Connessione…",
-    "copied": "Copiato negli appunti", "copy": "Copia", "delete": "Elimina", "details": "Dettagli", "edit": "Modifica",
-    "just_now": "adesso", "learn_more": "Scopri di più", "live": "Live", "more": "Altro", "rename": "Rinomina",
-    "save": "Salva", "search": "Cerca", "see_all": "Vedi tutto", "set": "Imposta"
-  },
-  "plan": {
-    "free": "Gratis", "trial": "Prova", "free_title": "Piano gratuito", "free_sub": "Funzioni di monitoraggio essenziali",
-    "trial_title": "Prova Pro"
-  },
-  "pro": {
-    "title": "Sblocca NET Sniffer Pro", "subtitle": "Protezione avanzata, automazione e accesso remoto per la tua rete.",
-    "upgrade": "Passa a Pro", "locked_title": "Funzione Pro",
-    "names": {
-      "audit": "Verifica di sicurezza", "cameras": "Rilevatore di telecamere nascoste", "blocking": "Blocca dispositivi",
-      "parental": "Controllo parentale", "remote": "Accesso remoto", "notifications": "Avvisi push e desktop",
-      "watcher": "Sorveglianza intrusi in tempo reale", "history": "Cronologia completa", "export": "Report ed esportazione",
-      "full_ports": "Analisi completa delle porte", "custom_interval": "Intervallo di scansione personalizzato"
-    },
-    "features": {
-      "audit": "Valuta la tua rete, individua servizi aperti a rischio, impostazioni Wi-Fi deboli ed esposizione del router, con correzioni passo dopo passo.",
-      "cameras": "Trova le telecamere sulla tua rete tramite rilevamento ONVIF, servizi RTSP/DVR e impronte dei produttori.",
-      "blocking": "Interrompi l'accesso a internet di qualsiasi dispositivo tramite l'interfaccia di amministrazione del tuo router.",
-      "parental": "Fasce orarie come la nanna o l'orario scolastico, più pausa con un tocco per qualsiasi dispositivo.",
-      "remote": "Monitora la tua rete dallo smartphone, da un altro PC o da un Raspberry Pi tramite una web app sicura protetta da password.",
-      "notifications": "Notifiche desktop più avvisi push via Telegram, ntfy e webhook.",
-      "watcher": "Cerca nuovi dispositivi ogni 90 secondi, così gli intrusi vengono segnalati quasi subito.",
-      "history": "Conserva 30 giorni di cronologia di latenza, interruzioni e velocità.",
-      "export": "Esporta l'inventario dei dispositivi in CSV e report di sicurezza completi.",
-      "full_ports": "Analizza da 100 a 1.100 porte TCP per dispositivo con identificazione dei servizi.",
-      "custom_interval": "Scansiona anche ogni minuto."
-    }
-  },
-  "license": {
-    "enter": "Hai una chiave di licenza?", "activate": "Attiva", "activated": "NET Sniffer Pro attivato. Grazie!",
-    "hint": "La tua chiave inizia con NS1. Viene verificata offline su questo dispositivo.",
-    "trial_left_one": "{count} giorno rimasto nella tua prova Pro", "trial_left_other": "{count} giorni rimasti nella tua prova Pro",
-    "until": "Valida fino al {date}", "lifetime": "Licenza a vita", "remove": "Rimuovi licenza",
-    "remove_d": "Questo dispositivo tornerà al piano gratuito."
+    "cancel": "Annulla",
+    "change": "Cambia",
+    "close": "Chiudi",
+    "confirm": "Conferma",
+    "connecting": "Connessione…",
+    "copied": "Copiato negli appunti",
+    "copy": "Copia",
+    "delete": "Elimina",
+    "details": "Dettagli",
+    "edit": "Modifica",
+    "just_now": "adesso",
+    "learn_more": "Scopri di più",
+    "live": "Live",
+    "more": "Altro",
+    "rename": "Rinomina",
+    "save": "Salva",
+    "search": "Cerca",
+    "see_all": "Vedi tutto",
+    "set": "Imposta"
   },
   "onb": {
-    "title": "Benvenuto in NET Sniffer", "subtitle": "Vedi ogni dispositivo sulla tua rete, mantienila sicura e scopri subito quando qualcosa cambia.",
-    "f1_t": "Scopri i dispositivi", "f1_d": "IP, MAC, produttore, modello e tipo di tutto ciò che è connesso.",
-    "f2_t": "Verifica la sicurezza", "f2_d": "Individua impostazioni Wi-Fi deboli e servizi aperti a rischio.",
-    "f3_t": "Testa la velocità", "f3_d": "Download, upload, latenza e jitter con cronologia.",
-    "f4_t": "Ricevi avvisi", "f4_d": "Nuovi dispositivi, interruzioni e problemi di sicurezza in tempo reale.",
+    "title": "Benvenuto in NET Sniffer",
+    "subtitle": "Vedi ogni dispositivo sulla tua rete, mantienila sicura e scopri subito quando qualcosa cambia.",
+    "f1_t": "Scopri i dispositivi",
+    "f1_d": "IP, MAC, produttore, modello e tipo di tutto ciò che è connesso.",
+    "f2_t": "Verifica la sicurezza",
+    "f2_d": "Individua impostazioni Wi-Fi deboli e servizi aperti a rischio.",
+    "f3_t": "Testa la velocità",
+    "f3_d": "Download, upload, latenza e jitter con cronologia.",
+    "f4_t": "Ricevi avvisi",
+    "f4_d": "Nuovi dispositivi, interruzioni e problemi di sicurezza in tempo reale.",
     "legal_t": "Usalo su reti che possiedi o gestisci",
     "legal_d": "NET Sniffer usa solo protocolli di rilevamento standard e controlli di connessione. Analizzare reti senza autorizzazione può essere illegale.",
     "accept": "Userò NET Sniffer solo su reti di mia proprietà o che sono autorizzato ad amministrare.",
     "start": "Scansiona la mia rete"
   },
   "login": {
-    "title": "Accedi", "subtitle": "Inserisci la password di accesso remoto configurata sull'host.",
-    "setup_title": "Proteggi il tuo NET Sniffer", "setup_d": "Inserisci il codice di configurazione mostrato nella console dell'host e scegli una password (min. 8 caratteri).",
-    "setup_code": "Codice di configurazione", "password": "Password", "repeat": "Ripeti password", "create": "Crea password",
-    "enter": "Accedi", "footer": "La tua sessione resta su questo dispositivo per 30 giorni."
+    "title": "Accedi",
+    "subtitle": "Inserisci la password di accesso remoto configurata sull'host.",
+    "setup_title": "Proteggi il tuo NET Sniffer",
+    "setup_d": "Inserisci il codice di configurazione mostrato nella console dell'host e scegli una password (min. 8 caratteri).",
+    "setup_code": "Codice di configurazione",
+    "password": "Password",
+    "repeat": "Ripeti password",
+    "create": "Crea password",
+    "enter": "Accedi",
+    "footer": "La tua sessione resta su questo dispositivo per 30 giorni."
   },
-  "scan": { "button": "Scansiona", "scanning": "Scansione", "failed": "Scansione non riuscita" },
+  "scan": {
+    "button": "Scansiona",
+    "scanning": "Scansione",
+    "failed": "Scansione non riuscita"
+  },
   "network": {
-    "ethernet": "Rete cablata", "your_network": "La tua rete", "public_ip": "IP pubblico", "isp": "Provider",
-    "gateway": "Gateway", "local_ip": "Questo dispositivo", "signal": "Segnale", "wired": "Cablata", "band": "Banda"
+    "ethernet": "Rete cablata",
+    "your_network": "La tua rete",
+    "public_ip": "IP pubblico",
+    "isp": "Provider",
+    "gateway": "Gateway",
+    "local_ip": "Questo dispositivo",
+    "signal": "Segnale",
+    "wired": "Cablata",
+    "band": "Banda"
   },
   "dash": {
-    "security_score": "Punteggio di sicurezza", "health": "Stato della rete",
-    "health_hint": "Stima. Esegui una verifica di sicurezza per un punteggio preciso.", "run_audit": "Avvia verifica di sicurezza",
-    "devices_online": "Dispositivi online", "last_scan": "Ultima scansione {ago}", "never_scanned": "Non ancora scansionata",
-    "new_24h": "Nuovi dispositivi (24 h)", "new_hint": "Visti per la prima volta nell'ultimo giorno",
-    "untrusted": "Non riconosciuti", "untrusted_hint": "Controllali e contrassegnali come attendibili", "all_trusted": "Tutti i dispositivi sono riconosciuti",
-    "last_speed": "Ultimo speed test", "run_speed": "Esegui il tuo primo speed test",
-    "internet": "Connessione internet", "throughput": "Velocità in tempo reale (questo dispositivo)", "by_type": "Dispositivi per tipo",
-    "no_devices": "Ancora nessun dispositivo", "scan_hint": "Avvia una scansione per scoprire tutto ciò che è connesso alla tua rete.",
-    "activity": "Attività recente", "no_activity": "Ancora nessuna attività", "no_activity_hint": "Eventi come nuovi dispositivi e interruzioni appariranno qui.",
+    "security_score": "Punteggio di sicurezza",
+    "health": "Stato della rete",
+    "health_hint": "Stima. Esegui una verifica di sicurezza per un punteggio preciso.",
+    "run_audit": "Avvia verifica di sicurezza",
+    "devices_online": "Dispositivi online",
+    "last_scan": "Ultima scansione {ago}",
+    "never_scanned": "Non ancora scansionata",
+    "new_24h": "Nuovi dispositivi (24 h)",
+    "new_hint": "Visti per la prima volta nell'ultimo giorno",
+    "untrusted": "Non riconosciuti",
+    "untrusted_hint": "Controllali e contrassegnali come attendibili",
+    "all_trusted": "Tutti i dispositivi sono riconosciuti",
+    "last_speed": "Ultimo speed test",
+    "run_speed": "Esegui il tuo primo speed test",
+    "internet": "Connessione internet",
+    "throughput": "Velocità in tempo reale (questo dispositivo)",
+    "by_type": "Dispositivi per tipo",
+    "no_devices": "Ancora nessun dispositivo",
+    "scan_hint": "Avvia una scansione per scoprire tutto ciò che è connesso alla tua rete.",
+    "activity": "Attività recente",
+    "no_activity": "Ancora nessuna attività",
+    "no_activity_hint": "Eventi come nuovi dispositivi e interruzioni appariranno qui.",
     "recent_devices": "Connessi di recente"
   },
   "devices": {
-    "search": "Cerca dispositivi, IP, MAC, produttore…", "all_types": "Tutti i tipi",
-    "f_all": "Tutti", "f_online": "Online", "f_offline": "Offline", "f_untrusted": "Non riconosciuti", "f_new": "Nuovi", "f_blocked": "Bloccati",
-    "results_one": "{count} risultato per “{q}”", "results_other": "{count} risultati per “{q}”",
-    "none_match": "Nessun dispositivo corrispondente", "none_match_hint": "Prova con un altro termine di ricerca o filtro.",
-    "deep_scan": "Scansione approfondita (reidentifica tutti)", "trust_all": "Contrassegna tutti come attendibili",
+    "search": "Cerca dispositivi, IP, MAC, produttore…",
+    "all_types": "Tutti i tipi",
+    "f_all": "Tutti",
+    "f_online": "Online",
+    "f_offline": "Offline",
+    "f_untrusted": "Non riconosciuti",
+    "f_new": "Nuovi",
+    "f_blocked": "Bloccati",
+    "results_one": "{count} risultato per “{q}”",
+    "results_other": "{count} risultati per “{q}”",
+    "none_match": "Nessun dispositivo corrispondente",
+    "none_match_hint": "Prova con un altro termine di ricerca o filtro.",
+    "deep_scan": "Scansione approfondita (reidentifica tutti)",
+    "trust_all": "Contrassegna tutti come attendibili",
     "trust_all_text": "Ogni dispositivo attualmente nell'elenco verrà contrassegnato come riconosciuto. I nuovi dispositivi continueranno a generare avvisi di intrusione.",
-    "trusted_ok": "Tutti i dispositivi contrassegnati come attendibili", "export_csv": "Esporta CSV",
+    "trusted_ok": "Tutti i dispositivi contrassegnati come attendibili",
+    "export_csv": "Esporta CSV",
     "forget_offline": "Dimentica i dispositivi offline",
-    "forget_offline_text_one": "Rimuovere {count} dispositivo offline e la sua cronologia?", "forget_offline_text_other": "Rimuovere {count} dispositivi offline e la loro cronologia?",
+    "forget_offline_text_one": "Rimuovere {count} dispositivo offline e la sua cronologia?",
+    "forget_offline_text_other": "Rimuovere {count} dispositivi offline e la loro cronologia?",
     "no_offline": "Non ci sono dispositivi offline"
   },
   "device": {
-    "name": "Nome", "ip": "Indirizzo IP", "vendor": "Produttore", "model": "Modello", "type": "Tipo", "os": "Sistema operativo",
-    "hostname": "Nome host", "server": "Server", "services": "Servizi", "status": "Stato",
-    "first_seen": "Primo avvistamento", "last_seen": "Ultimo avvistamento", "online": "Online", "offline": "Offline", "online_now": "Online ora",
-    "this_device": "Questo dispositivo", "gateway": "Router", "blocked": "Bloccato", "untrusted": "Non riconosciuto", "new": "Nuovo",
-    "trusted": "Attendibile", "mark_trusted": "Contrassegna come attendibile", "private": "Privato", "private_mac": "Indirizzo privato",
+    "name": "Nome",
+    "ip": "Indirizzo IP",
+    "vendor": "Produttore",
+    "model": "Modello",
+    "type": "Tipo",
+    "os": "Sistema operativo",
+    "hostname": "Nome host",
+    "server": "Server",
+    "services": "Servizi",
+    "status": "Stato",
+    "first_seen": "Primo avvistamento",
+    "last_seen": "Ultimo avvistamento",
+    "online": "Online",
+    "offline": "Offline",
+    "online_now": "Online ora",
+    "this_device": "Questo dispositivo",
+    "gateway": "Router",
+    "blocked": "Bloccato",
+    "untrusted": "Non riconosciuto",
+    "new": "Nuovo",
+    "trusted": "Attendibile",
+    "mark_trusted": "Contrassegna come attendibile",
+    "private": "Privato",
+    "private_mac": "Indirizzo privato",
     "private_mac_hint": "Indirizzo MAC casuale (funzione di privacy di iOS, Android e Windows). Il produttore non può essere identificato.",
-    "unknown_vendor": "Produttore sconosciuto", "notes": "Note", "notes_ph": "Proprietario, posizione, qualsiasi cosa utile…",
-    "block": "Blocca", "unblock": "Sblocca", "block_confirm_t": "Bloccare {name}?",
+    "unknown_vendor": "Produttore sconosciuto",
+    "notes": "Note",
+    "notes_ph": "Proprietario, posizione, qualsiasi cosa utile…",
+    "block": "Blocca",
+    "unblock": "Sblocca",
+    "block_confirm_t": "Bloccare {name}?",
     "block_confirm": "Il dispositivo perderà l'accesso a internet finché non lo sblocchi. La regola viene applicata sul tuo router.",
-    "blocked_ok": "Dispositivo bloccato", "unblocked_ok": "Dispositivo sbloccato",
-    "wake": "Riattiva", "wol_sent": "Pacchetto Wake-on-LAN inviato", "open_web": "Interfaccia web",
-    "favorite": "Preferito", "favorite_hint": "I preferiti ti avvisano quando vanno online o offline",
-    "forget": "Dimentica dispositivo", "forget_text": "Il dispositivo e la sua cronologia verranno rimossi. Riapparirà come nuovo se si connette di nuovo.",
+    "blocked_ok": "Dispositivo bloccato",
+    "unblocked_ok": "Dispositivo sbloccato",
+    "wake": "Riattiva",
+    "wol_sent": "Pacchetto Wake-on-LAN inviato",
+    "open_web": "Interfaccia web",
+    "favorite": "Preferito",
+    "favorite_hint": "I preferiti ti avvisano quando vanno online o offline",
+    "forget": "Dimentica dispositivo",
+    "forget_text": "Il dispositivo e la sua cronologia verranno rimossi. Riapparirà come nuovo se si connette di nuovo.",
     "no_events": "Nessuna attività registrata finora.",
-    "ping_ok": "Raggiungibile · {avg} ms in media (min {min} / max {max})", "ping_fail": "Nessuna risposta",
+    "ping_ok": "Raggiungibile · {avg} ms in media (min {min} / max {max})",
+    "ping_fail": "Nessuna risposta",
     "ping_detail": "{recv}/{sent} risposte via {method}",
-    "tab_overview": "Panoramica", "tab_ports": "Porte e servizi", "tab_activity": "Attività"
+    "tab_overview": "Panoramica",
+    "tab_ports": "Porte e servizi",
+    "tab_activity": "Attività"
   },
   "ports": {
-    "quick": "Scansione rapida", "common": "Porte comuni", "full": "Scansione completa", "scanned": "Scansionato {ago}", "never": "Non ancora scansionato",
-    "port": "Porta", "service": "Servizio", "risk": "Rischio", "none_open": "Nessuna porta TCP aperta trovata nel profilo selezionato.",
+    "quick": "Scansione rapida",
+    "common": "Porte comuni",
+    "full": "Scansione completa",
+    "scanned": "Scansionato {ago}",
+    "never": "Non ancora scansionato",
+    "port": "Porta",
+    "service": "Servizio",
+    "risk": "Rischio",
+    "none_open": "Nessuna porta TCP aperta trovata nel profilo selezionato.",
     "hint": "Scansiona questo dispositivo per elencare i servizi che espone sulla tua rete.",
     "legal": "Solo controlli di connessione: nessun exploit né tentativo di password. Usalo su dispositivi che possiedi o amministri."
   },
-  "risk": { "none": "Sicuro", "low": "Basso", "medium": "Medio", "high": "Alto", "critical": "Critico" },
-  "severity": { "critical": "Critica", "high": "Alta", "medium": "Media", "low": "Bassa", "info": "Info" },
+  "risk": {
+    "none": "Sicuro",
+    "low": "Basso",
+    "medium": "Medio",
+    "high": "Alto",
+    "critical": "Critico"
+  },
+  "severity": {
+    "critical": "Critica",
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Bassa",
+    "info": "Info"
+  },
   "types": {
-    "router": "Router", "mesh": "Access point / mesh", "phone": "Telefono", "tablet": "Tablet", "laptop": "Portatile",
-    "desktop": "Computer", "server": "Server", "tv": "TV", "streamer": "Dispositivo di streaming", "speaker": "Altoparlante",
-    "camera": "Telecamera", "printer": "Stampante", "console": "Console di gioco", "iot": "Dispositivo smart", "light": "Luce",
-    "plug": "Presa smart", "hub": "Hub smart", "nas": "Archiviazione NAS", "watch": "Orologio", "car": "Auto",
-    "raspberry": "Raspberry Pi", "voip": "Telefono VoIP", "unknown": "Sconosciuto"
+    "router": "Router",
+    "mesh": "Access point / mesh",
+    "phone": "Telefono",
+    "tablet": "Tablet",
+    "laptop": "Portatile",
+    "desktop": "Computer",
+    "server": "Server",
+    "tv": "TV",
+    "streamer": "Dispositivo di streaming",
+    "speaker": "Altoparlante",
+    "camera": "Telecamera",
+    "printer": "Stampante",
+    "console": "Console di gioco",
+    "iot": "Dispositivo smart",
+    "light": "Luce",
+    "plug": "Presa smart",
+    "hub": "Hub smart",
+    "nas": "Archiviazione NAS",
+    "watch": "Orologio",
+    "car": "Auto",
+    "raspberry": "Raspberry Pi",
+    "voip": "Telefono VoIP",
+    "unknown": "Sconosciuto"
   },
   "security": {
-    "title": "Verifica di sicurezza", "score": "Punteggio di sicurezza", "grade": "Voto", "not_run": "Non ancora verificata",
+    "title": "Verifica di sicurezza",
+    "score": "Punteggio di sicurezza",
+    "grade": "Voto",
+    "not_run": "Non ancora verificata",
     "intro": "Controlla Wi-Fi, router e ogni dispositivo alla ricerca di configurazioni a rischio.",
     "intro_long": "La verifica controlla la crittografia Wi-Fi, l'esposizione UPnP, l'amministrazione del router e i servizi esposti da ogni dispositivo online. Richiede circa un minuto.",
-    "run": "Avvia verifica", "rerun": "Ripeti", "running": "Verifica in corso…", "report": "Scarica report",
-    "good": "La tua rete sembra ben protetta", "fair": "La tua rete potrebbe essere più sicura", "poor": "La tua rete richiede attenzione",
-    "summary_one": "{count} problema su {devices} dispositivi · {ago}", "summary_other": "{count} problemi su {devices} dispositivi · {ago}",
-    "findings": "Problemi rilevati", "passed": "Controlli superati", "no_findings": "Nessun problema trovato", "no_findings_d": "Ottimo lavoro: non c'è nulla da correggere al momento.",
-    "checking": "Controllo di {name}…", "phase_network": "Analisi della configurazione di rete…", "phase_ports": "Controllo dei dispositivi…",
-    "ethics_t": "Non invasivo per scelta", "ethics_d": "I controlli rilevano solo ciò che è esposto. Nulla viene sfruttato, nessuna password viene provata e nessun traffico viene intercettato."
+    "run": "Avvia verifica",
+    "rerun": "Ripeti",
+    "running": "Verifica in corso…",
+    "report": "Scarica report",
+    "good": "La tua rete sembra ben protetta",
+    "fair": "La tua rete potrebbe essere più sicura",
+    "poor": "La tua rete richiede attenzione",
+    "summary_one": "{count} problema su {devices} dispositivi · {ago}",
+    "summary_other": "{count} problemi su {devices} dispositivi · {ago}",
+    "findings": "Problemi rilevati",
+    "passed": "Controlli superati",
+    "no_findings": "Nessun problema trovato",
+    "no_findings_d": "Ottimo lavoro: non c'è nulla da correggere al momento.",
+    "checking": "Controllo di {name}…",
+    "phase_network": "Analisi della configurazione di rete…",
+    "phase_ports": "Controllo dei dispositivi…",
+    "ethics_t": "Non invasivo per scelta",
+    "ethics_d": "I controlli rilevano solo ciò che è esposto. Nulla viene sfruttato, nessuna password viene provata e nessun traffico viene intercettato."
   },
   "audit": {
-    "how_to_fix": "Come risolvere", "banner": "Banner del servizio", "view_device": "Apri dispositivo",
+    "how_to_fix": "Come risolvere",
+    "banner": "Banner del servizio",
+    "view_device": "Apri dispositivo",
     "pass": {
-      "wifi_wpa3": "Il Wi-Fi usa la crittografia WPA3", "upnp_disabled": "La mappatura delle porte UPnP non è esposta dal router",
-      "all_trusted": "Ogni dispositivo della rete è riconosciuto", "no_risky_services": "Nessun servizio ad alto rischio esposto"
+      "wifi_wpa3": "Il Wi-Fi usa la crittografia WPA3",
+      "upnp_disabled": "La mappatura delle porte UPnP non è esposta dal router",
+      "all_trusted": "Ogni dispositivo della rete è riconosciuto",
+      "no_risky_services": "Nessun servizio ad alto rischio esposto"
     },
     "f": {
-      "wifi_open": { "title": "Il Wi-Fi “{ssid}” è aperto", "desc": "Chiunque sia nelle vicinanze può connettersi e vedere il traffico non crittografato.", "fix": "Nelle impostazioni Wi-Fi del router attiva WPA3-Personal (o WPA2/WPA3 misto) con una passphrase robusta." },
-      "wifi_wep": { "title": "Il Wi-Fi “{ssid}” usa WEP", "desc": "WEP può essere violato in pochi minuti.", "fix": "Passa a WPA3-Personal o almeno a WPA2-AES nelle impostazioni del router." },
-      "wifi_wpa": { "title": "Il Wi-Fi “{ssid}” usa il vecchio WPA", "desc": "Il WPA/TKIP originale è obsoleto e vulnerabile.", "fix": "Passa a WPA3-Personal o WPA2-AES (CCMP)." },
-      "wifi_wpa2": { "title": "Il Wi-Fi “{ssid}” usa WPA2", "desc": "WPA2 è ancora accettabile, ma WPA3 resiste ai tentativi di indovinare la password offline.", "fix": "Se tutti i tuoi dispositivi lo supportano, attiva WPA3 o la modalità di transizione WPA2/WPA3. Usa una passphrase di almeno 12 caratteri." },
-      "wifi_tkip": { "title": "Il Wi-Fi usa la crittografia TKIP", "desc": "TKIP è deprecato e debole.", "fix": "Seleziona solo AES/CCMP nelle impostazioni di sicurezza wireless del router." },
-      "upnp_enabled": { "title": "UPnP attivo sul router {router}", "desc": "Qualsiasi dispositivo o malware sulla tua rete può aprire automaticamente porte verso internet.", "fix": "Disattiva UPnP sul router a meno che una console o un'app non ne abbia davvero bisogno; inoltra invece manualmente porte specifiche." },
-      "router_http": { "title": "Pagina di amministrazione del router senza HTTPS", "desc": "{device} ({ip}) offre la sua pagina di amministrazione tramite HTTP non crittografato.", "fix": "Attiva l'amministrazione HTTPS, se disponibile, usa una password di amministratore robusta e disattiva l'amministrazione remota (WAN)." },
-      "untrusted_devices": { "title": "{count} dispositivi non riconosciuti online", "desc": "Non riconosciuti: {names}.", "fix": "Apri ogni dispositivo, conferma di conoscerlo e contrassegnalo come attendibile. Blocca tutto ciò che non riconosci e cambia la password del Wi-Fi." },
-      "cameras_present": { "title": "{count} telecamere sulla rete", "desc": "Rilevate: {names}.", "fix": "Assicurati di conoscere ogni telecamera, aggiorna il loro firmware e cambia le password predefinite." },
-      "port_telnet": { "title": "Telnet aperto su {device}", "desc": "Telnet (porta {port}) invia le password in chiaro ed è un bersaglio prediletto delle botnet IoT.", "fix": "Disattiva Telnet nelle impostazioni o nel firmware del dispositivo; usa SSH se serve l'accesso remoto alla shell." },
-      "port_ftp": { "title": "FTP aperto su {device}", "desc": "FTP (porta {port}) trasmette credenziali e file senza crittografia.", "fix": "Disattiva FTP o sostituiscilo con SFTP/FTPS." },
-      "port_tftp": { "title": "TFTP aperto su {device}", "desc": "TFTP non prevede alcuna autenticazione.", "fix": "Disattiva TFTP quando non stai configurando dispositivi." },
-      "port_smb": { "title": "Condivisione file (SMB) su {device}", "desc": "La porta {port} è aperta. Normale per computer e NAS che condividono file, inattesa su altri dispositivi.", "fix": "Disattiva la condivisione file se non serve, mantieni SMBv1 disattivato e proteggi le condivisioni con password." },
-      "port_msrpc": { "title": "RPC di Windows esposto su {device}", "desc": "La porta {port} è normale sui PC Windows in una rete privata.", "fix": "Mantieni Windows aggiornato e imposta questa rete come Privata solo se ti fidi." },
-      "port_rdp": { "title": "Desktop remoto aperto su {device}", "desc": "RDP (porta {port}) è un bersaglio frequente di attacchi.", "fix": "Disattiva il Desktop remoto se non lo usi, richiedi l'autenticazione a livello di rete e non inoltrarlo mai a internet." },
-      "port_vnc": { "title": "VNC aperto su {device}", "desc": "VNC (porta {port}) spesso usa un'autenticazione debole o assente.", "fix": "Disattiva VNC oppure proteggilo con una password robusta e consentilo solo tramite VPN." },
-      "port_docker": { "title": "API Docker esposta su {device}", "desc": "La porta {port} dà il controllo completo dell'host senza autenticazione.", "fix": "Associa il daemon Docker solo a un socket Unix oppure attiva l'autenticazione client TLS (porta 2376)." },
-      "port_adb": { "title": "Debug Android (ADB) aperto su {device}", "desc": "ADB via rete (porta {port}) consente il controllo completo del dispositivo Android.", "fix": "Disattiva “Debug wireless/ADB via rete” nelle Opzioni sviluppatore." },
-      "port_mqtt": { "title": "MQTT non crittografato su {device}", "desc": "MQTT (porta {port}) controlla i dispositivi della casa smart e può consentire l'accesso anonimo.", "fix": "Richiedi nome utente e password e preferisci MQTT su TLS (porta 8883)." },
-      "port_rtsp": { "title": "Flusso video (RTSP) su {device}", "desc": "RTSP (porta {port}) può esporre il video in diretta della telecamera.", "fix": "Imposta una password robusta per la telecamera, aggiorna il firmware e disattiva RTSP se usi solo l'app del produttore." },
-      "port_database": { "title": "Database {service} esposto su {device}", "desc": "La porta {port} è raggiungibile da tutta la rete.", "fix": "Associa il database a localhost o limitalo con un firewall e richiedi l'autenticazione." },
-      "port_x11": { "title": "Server grafico X11 aperto su {device}", "desc": "La porta {port} può consentire la cattura dello schermo e dei tasti premuti.", "fix": "Disattiva l'ascolto TCP per X11 (usa -nolisten tcp)." },
-      "port_rpcbind": { "title": "RPCbind aperto su {device}", "desc": "La porta {port} rivela i servizi RPC ed è sfruttata negli attacchi.", "fix": "Disattiva rpcbind se NFS non è in uso." },
-      "port_proxy": { "title": "Proxy aperto su {device}", "desc": "Un proxy SOCKS sulla porta {port} può inoltrare traffico.", "fix": "Disattiva il proxy o richiedi l'autenticazione." },
-      "port_pptp": { "title": "VPN PPTP su {device}", "desc": "PPTP (porta {port}) usa una crittografia compromessa.", "fix": "Sostituiscila con WireGuard o OpenVPN." },
-      "port_modbus": { "title": "Modbus aperto su {device}", "desc": "Protocollo industriale sulla porta {port} senza autenticazione.", "fix": "Isola il dispositivo su un segmento di rete separato." },
-      "port_dvr": { "title": "Servizio DVR/NVR su {device}", "desc": "La porta {port} appartiene a un protocollo di videoregistrazione noto per le vulnerabilità.", "fix": "Aggiorna il firmware, cambia le password predefinite e non esporlo mai a internet." },
-      "port_suspicious": { "title": "Servizio insolito su {device}", "desc": "La porta {port} è comunemente usata da backdoor e strumenti di test.", "fix": "Controlla quale programma è in ascolto su questa porta e rimuovilo se non lo conosci." },
-      "port_webmin": { "title": "Webmin su {device}", "desc": "Pannello di amministrazione sulla porta {port}.", "fix": "Tienilo aggiornato e limita l'accesso a host attendibili." },
-      "port_tr069": { "title": "Gestione TR-069 su {device}", "desc": "Porta di gestione remota {port} usata dagli ISP.", "fix": "Normale sui router degli ISP; assicurati che non sia raggiungibile dai dispositivi della tua LAN se non necessario." },
-      "port_rsync": { "title": "rsync aperto su {device}", "desc": "La porta {port} può consentire l'accesso ai file senza autenticazione.", "fix": "Richiedi l'autenticazione o disattiva il daemon." },
-      "port_nfs": { "title": "NFS aperto su {device}", "desc": "La porta {port} condivide cartelle in rete.", "fix": "Limita le esportazioni a host specifici e disattivalo se non serve." },
-      "port_mail_plain": { "title": "Servizio di posta non crittografato su {device}", "desc": "{service} sulla porta {port} invia le credenziali in chiaro.", "fix": "Usa le varianti TLS (IMAPS 993 / POP3S 995)." },
-      "port_winrm": { "title": "WinRM su {device}", "desc": "Gestione remota di Windows sulla porta {port}.", "fix": "Disattivalo se non serve o limitalo agli amministratori." }
+      "wifi_open": {
+        "title": "Il Wi-Fi “{ssid}” è aperto",
+        "desc": "Chiunque sia nelle vicinanze può connettersi e vedere il traffico non crittografato.",
+        "fix": "Nelle impostazioni Wi-Fi del router attiva WPA3-Personal (o WPA2/WPA3 misto) con una passphrase robusta."
+      },
+      "wifi_wep": {
+        "title": "Il Wi-Fi “{ssid}” usa WEP",
+        "desc": "WEP può essere violato in pochi minuti.",
+        "fix": "Passa a WPA3-Personal o almeno a WPA2-AES nelle impostazioni del router."
+      },
+      "wifi_wpa": {
+        "title": "Il Wi-Fi “{ssid}” usa il vecchio WPA",
+        "desc": "Il WPA/TKIP originale è obsoleto e vulnerabile.",
+        "fix": "Passa a WPA3-Personal o WPA2-AES (CCMP)."
+      },
+      "wifi_wpa2": {
+        "title": "Il Wi-Fi “{ssid}” usa WPA2",
+        "desc": "WPA2 è ancora accettabile, ma WPA3 resiste ai tentativi di indovinare la password offline.",
+        "fix": "Se tutti i tuoi dispositivi lo supportano, attiva WPA3 o la modalità di transizione WPA2/WPA3. Usa una passphrase di almeno 12 caratteri."
+      },
+      "wifi_tkip": {
+        "title": "Il Wi-Fi usa la crittografia TKIP",
+        "desc": "TKIP è deprecato e debole.",
+        "fix": "Seleziona solo AES/CCMP nelle impostazioni di sicurezza wireless del router."
+      },
+      "upnp_enabled": {
+        "title": "UPnP attivo sul router {router}",
+        "desc": "Qualsiasi dispositivo o malware sulla tua rete può aprire automaticamente porte verso internet.",
+        "fix": "Disattiva UPnP sul router a meno che una console o un'app non ne abbia davvero bisogno; inoltra invece manualmente porte specifiche."
+      },
+      "router_http": {
+        "title": "Pagina di amministrazione del router senza HTTPS",
+        "desc": "{device} ({ip}) offre la sua pagina di amministrazione tramite HTTP non crittografato.",
+        "fix": "Attiva l'amministrazione HTTPS, se disponibile, usa una password di amministratore robusta e disattiva l'amministrazione remota (WAN)."
+      },
+      "untrusted_devices": {
+        "title": "{count} dispositivi non riconosciuti online",
+        "desc": "Non riconosciuti: {names}.",
+        "fix": "Apri ogni dispositivo, conferma di conoscerlo e contrassegnalo come attendibile. Blocca tutto ciò che non riconosci e cambia la password del Wi-Fi."
+      },
+      "cameras_present": {
+        "title": "{count} telecamere sulla rete",
+        "desc": "Rilevate: {names}.",
+        "fix": "Assicurati di conoscere ogni telecamera, aggiorna il loro firmware e cambia le password predefinite."
+      },
+      "port_telnet": {
+        "title": "Telnet aperto su {device}",
+        "desc": "Telnet (porta {port}) invia le password in chiaro ed è un bersaglio prediletto delle botnet IoT.",
+        "fix": "Disattiva Telnet nelle impostazioni o nel firmware del dispositivo; usa SSH se serve l'accesso remoto alla shell."
+      },
+      "port_ftp": {
+        "title": "FTP aperto su {device}",
+        "desc": "FTP (porta {port}) trasmette credenziali e file senza crittografia.",
+        "fix": "Disattiva FTP o sostituiscilo con SFTP/FTPS."
+      },
+      "port_tftp": {
+        "title": "TFTP aperto su {device}",
+        "desc": "TFTP non prevede alcuna autenticazione.",
+        "fix": "Disattiva TFTP quando non stai configurando dispositivi."
+      },
+      "port_smb": {
+        "title": "Condivisione file (SMB) su {device}",
+        "desc": "La porta {port} è aperta. Normale per computer e NAS che condividono file, inattesa su altri dispositivi.",
+        "fix": "Disattiva la condivisione file se non serve, mantieni SMBv1 disattivato e proteggi le condivisioni con password."
+      },
+      "port_msrpc": {
+        "title": "RPC di Windows esposto su {device}",
+        "desc": "La porta {port} è normale sui PC Windows in una rete privata.",
+        "fix": "Mantieni Windows aggiornato e imposta questa rete come Privata solo se ti fidi."
+      },
+      "port_rdp": {
+        "title": "Desktop remoto aperto su {device}",
+        "desc": "RDP (porta {port}) è un bersaglio frequente di attacchi.",
+        "fix": "Disattiva il Desktop remoto se non lo usi, richiedi l'autenticazione a livello di rete e non inoltrarlo mai a internet."
+      },
+      "port_vnc": {
+        "title": "VNC aperto su {device}",
+        "desc": "VNC (porta {port}) spesso usa un'autenticazione debole o assente.",
+        "fix": "Disattiva VNC oppure proteggilo con una password robusta e consentilo solo tramite VPN."
+      },
+      "port_docker": {
+        "title": "API Docker esposta su {device}",
+        "desc": "La porta {port} dà il controllo completo dell'host senza autenticazione.",
+        "fix": "Associa il daemon Docker solo a un socket Unix oppure attiva l'autenticazione client TLS (porta 2376)."
+      },
+      "port_adb": {
+        "title": "Debug Android (ADB) aperto su {device}",
+        "desc": "ADB via rete (porta {port}) consente il controllo completo del dispositivo Android.",
+        "fix": "Disattiva “Debug wireless/ADB via rete” nelle Opzioni sviluppatore."
+      },
+      "port_mqtt": {
+        "title": "MQTT non crittografato su {device}",
+        "desc": "MQTT (porta {port}) controlla i dispositivi della casa smart e può consentire l'accesso anonimo.",
+        "fix": "Richiedi nome utente e password e preferisci MQTT su TLS (porta 8883)."
+      },
+      "port_rtsp": {
+        "title": "Flusso video (RTSP) su {device}",
+        "desc": "RTSP (porta {port}) può esporre il video in diretta della telecamera.",
+        "fix": "Imposta una password robusta per la telecamera, aggiorna il firmware e disattiva RTSP se usi solo l'app del produttore."
+      },
+      "port_database": {
+        "title": "Database {service} esposto su {device}",
+        "desc": "La porta {port} è raggiungibile da tutta la rete.",
+        "fix": "Associa il database a localhost o limitalo con un firewall e richiedi l'autenticazione."
+      },
+      "port_x11": {
+        "title": "Server grafico X11 aperto su {device}",
+        "desc": "La porta {port} può consentire la cattura dello schermo e dei tasti premuti.",
+        "fix": "Disattiva l'ascolto TCP per X11 (usa -nolisten tcp)."
+      },
+      "port_rpcbind": {
+        "title": "RPCbind aperto su {device}",
+        "desc": "La porta {port} rivela i servizi RPC ed è sfruttata negli attacchi.",
+        "fix": "Disattiva rpcbind se NFS non è in uso."
+      },
+      "port_proxy": {
+        "title": "Proxy aperto su {device}",
+        "desc": "Un proxy SOCKS sulla porta {port} può inoltrare traffico.",
+        "fix": "Disattiva il proxy o richiedi l'autenticazione."
+      },
+      "port_pptp": {
+        "title": "VPN PPTP su {device}",
+        "desc": "PPTP (porta {port}) usa una crittografia compromessa.",
+        "fix": "Sostituiscila con WireGuard o OpenVPN."
+      },
+      "port_modbus": {
+        "title": "Modbus aperto su {device}",
+        "desc": "Protocollo industriale sulla porta {port} senza autenticazione.",
+        "fix": "Isola il dispositivo su un segmento di rete separato."
+      },
+      "port_dvr": {
+        "title": "Servizio DVR/NVR su {device}",
+        "desc": "La porta {port} appartiene a un protocollo di videoregistrazione noto per le vulnerabilità.",
+        "fix": "Aggiorna il firmware, cambia le password predefinite e non esporlo mai a internet."
+      },
+      "port_suspicious": {
+        "title": "Servizio insolito su {device}",
+        "desc": "La porta {port} è comunemente usata da backdoor e strumenti di test.",
+        "fix": "Controlla quale programma è in ascolto su questa porta e rimuovilo se non lo conosci."
+      },
+      "port_webmin": {
+        "title": "Webmin su {device}",
+        "desc": "Pannello di amministrazione sulla porta {port}.",
+        "fix": "Tienilo aggiornato e limita l'accesso a host attendibili."
+      },
+      "port_tr069": {
+        "title": "Gestione TR-069 su {device}",
+        "desc": "Porta di gestione remota {port} usata dagli ISP.",
+        "fix": "Normale sui router degli ISP; assicurati che non sia raggiungibile dai dispositivi della tua LAN se non necessario."
+      },
+      "port_rsync": {
+        "title": "rsync aperto su {device}",
+        "desc": "La porta {port} può consentire l'accesso ai file senza autenticazione.",
+        "fix": "Richiedi l'autenticazione o disattiva il daemon."
+      },
+      "port_nfs": {
+        "title": "NFS aperto su {device}",
+        "desc": "La porta {port} condivide cartelle in rete.",
+        "fix": "Limita le esportazioni a host specifici e disattivalo se non serve."
+      },
+      "port_mail_plain": {
+        "title": "Servizio di posta non crittografato su {device}",
+        "desc": "{service} sulla porta {port} invia le credenziali in chiaro.",
+        "fix": "Usa le varianti TLS (IMAPS 993 / POP3S 995)."
+      },
+      "port_winrm": {
+        "title": "WinRM su {device}",
+        "desc": "Gestione remota di Windows sulla porta {port}.",
+        "fix": "Disattivalo se non serve o limitalo agli amministratori."
+      }
     }
   },
   "cams": {
-    "title": "Rilevatore di telecamere nascoste", "subtitle": "ONVIF, RTSP, servizi DVR e impronte dei produttori", "run": "Cerca telecamere",
+    "title": "Rilevatore di telecamere nascoste",
+    "subtitle": "ONVIF, RTSP, servizi DVR e impronte dei produttori",
+    "run": "Cerca telecamere",
     "hint": "Cerca su ogni dispositivo online segni di una telecamera o di un videoregistratore.",
-    "none": "Nessuna telecamera trovata", "none_d": "{count} dispositivi controllati. Smartphone e portatili possono comunque avere telecamere integrate.",
+    "none": "Nessuna telecamera trovata",
+    "none_d": "{count} dispositivi controllati. Smartphone e portatili possono comunque avere telecamere integrate.",
     "advice": "Riconosci ogni telecamera? Se no, verifica dove si trova fisicamente e bloccala dal pannello del dispositivo.",
-    "conf_high": "Molto probabile", "conf_medium": "Possibile",
-    "reason_classified": "produttore/modello della telecamera", "reason_onvif": "telecamera ONVIF", "reason_mdns_rtsp": "annuncia RTSP",
-    "reason_rtsp": "flusso RTSP", "reason_dvr": "protocollo DVR", "reason_banner": "server web della telecamera"
+    "conf_high": "Molto probabile",
+    "conf_medium": "Possibile",
+    "reason_classified": "produttore/modello della telecamera",
+    "reason_onvif": "telecamera ONVIF",
+    "reason_mdns_rtsp": "annuncia RTSP",
+    "reason_rtsp": "flusso RTSP",
+    "reason_dvr": "protocollo DVR",
+    "reason_banner": "server web della telecamera"
   },
   "speed": {
-    "go": "GO", "ping": "Ping", "jitter": "Jitter", "download": "Download", "upload": "Upload", "connect": "Connessione",
-    "history": "Cronologia", "history_free": "Ultimi 10 test (Pro conserva tutto)", "date": "Data",
-    "no_history": "Ancora nessun test", "no_history_d": "Premi GO per misurare la tua connessione."
+    "go": "GO",
+    "ping": "Ping",
+    "jitter": "Jitter",
+    "download": "Download",
+    "upload": "Upload",
+    "connect": "Connessione",
+    "history": "Cronologia",
+    "date": "Data",
+    "no_history": "Ancora nessun test",
+    "no_history_d": "Premi GO per misurare la tua connessione."
   },
   "monitor": {
-    "status": { "online": "Online", "offline": "Offline", "degraded": "Degradata", "unknown": "Verifica…" },
-    "connection": "Connessione", "latency": "Latenza", "loss": "Perdita di pacchetti", "since": "Da", "since_ago": "Da {ago}",
-    "avg": "Media", "uptime": "Uptime", "last_hours_one": "Ultima ora", "last_hours_other": "Ultime {count} ore",
-    "outages": "Interruzioni", "gw_ok": "Router OK", "gw_down": "Router non raggiungibile", "latency_chart": "Latenza e perdita di pacchetti",
-    "outage_log": "Registro interruzioni", "lan_outage": "Interruzione della rete locale", "inet_outage": "Interruzione di internet", "ongoing": "in corso",
-    "no_outages": "Nessuna interruzione", "no_outages_d": "La tua connessione è stata stabile in questo periodo.",
-    "how_t": "Come funziona il monitoraggio", "how_d": "NET Sniffer controlla di continuo il tuo router e tre provider DNS pubblici. Due errori consecutivi aprono un'interruzione, così sai esattamente quando e per quanto tempo sei rimasto offline.",
-    "targets": "Destinazioni", "interval": "Intervallo", "samples": "Campioni"
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "degraded": "Degradata",
+      "unknown": "Verifica…"
+    },
+    "connection": "Connessione",
+    "latency": "Latenza",
+    "loss": "Perdita di pacchetti",
+    "since": "Da",
+    "since_ago": "Da {ago}",
+    "avg": "Media",
+    "uptime": "Uptime",
+    "last_hours_one": "Ultima ora",
+    "last_hours_other": "Ultime {count} ore",
+    "outages": "Interruzioni",
+    "gw_ok": "Router OK",
+    "gw_down": "Router non raggiungibile",
+    "latency_chart": "Latenza e perdita di pacchetti",
+    "outage_log": "Registro interruzioni",
+    "lan_outage": "Interruzione della rete locale",
+    "inet_outage": "Interruzione di internet",
+    "ongoing": "in corso",
+    "no_outages": "Nessuna interruzione",
+    "no_outages_d": "La tua connessione è stata stabile in questo periodo.",
+    "how_t": "Come funziona il monitoraggio",
+    "how_d": "NET Sniffer controlla di continuo il tuo router e tre provider DNS pubblici. Due errori consecutivi aprono un'interruzione, così sai esattamente quando e per quanto tempo sei rimasto offline.",
+    "targets": "Destinazioni",
+    "interval": "Intervallo",
+    "samples": "Campioni"
   },
   "alerts": {
-    "f_all": "Tutti", "f_security": "Sicurezza", "f_devices": "Dispositivi", "f_internet": "Internet",
-    "mark_read": "Segna tutto come letto", "clear": "Cancella cronologia", "clear_text": "Tutti gli avvisi e la cronologia delle attività dei dispositivi verranno eliminati.",
-    "none": "Nessun avviso", "none_d": "Qui vedrai nuovi dispositivi, interruzioni e avvisi di sicurezza."
+    "f_all": "Tutti",
+    "f_security": "Sicurezza",
+    "f_devices": "Dispositivi",
+    "f_internet": "Internet",
+    "mark_read": "Segna tutto come letto",
+    "clear": "Cancella cronologia",
+    "clear_text": "Tutti gli avvisi e la cronologia delle attività dei dispositivi verranno eliminati.",
+    "none": "Nessun avviso",
+    "none_d": "Qui vedrai nuovi dispositivi, interruzioni e avvisi di sicurezza."
   },
   "events": {
-    "device_new": { "title": "Nuovo dispositivo: {name}", "text": "{ip} · {vendor} {mac}" },
-    "device_first_seen": { "title": "Scoperto {name}", "text": "{ip} · {vendor}" },
-    "device_online": { "title": "{name} è online", "text": "{ip}" },
-    "device_offline": { "title": "{name} è andato offline", "text": "Ultimo IP {ip}" },
-    "device_ip_changed": { "title": "{name} ha cambiato IP", "text": "{old} → {new}" },
-    "internet_down": { "title": "Connessione internet persa", "text": "Il router è raggiungibile ma internet no." },
-    "internet_up": { "title": "Connessione internet ripristinata", "text": "L'interruzione è durata {duration}" },
-    "gateway_down": { "title": "Router non raggiungibile", "text": "Questo dispositivo ha perso il contatto con la rete locale." },
-    "security_issues": { "title": "Verifica di sicurezza: {count} problemi importanti", "text": "Punteggio {score}/100. Controlla i risultati." },
-    "camera_detected": { "title": "Telecamera rilevata: {name}", "text": "{ip} · {vendor}" },
-    "device_blocked": { "title": "{name} bloccato", "text": "Accesso a internet rimosso" },
-    "device_unblocked": { "title": "{name} sbloccato", "text": "Accesso a internet ripristinato" },
-    "update_installed": { "title": "NET Sniffer aggiornato", "text": "Ora è in esecuzione l'ultima versione" }
+    "device_new": {
+      "title": "Nuovo dispositivo: {name}",
+      "text": "{ip} · {vendor} {mac}"
+    },
+    "device_first_seen": {
+      "title": "Scoperto {name}",
+      "text": "{ip} · {vendor}"
+    },
+    "device_online": {
+      "title": "{name} è online",
+      "text": "{ip}"
+    },
+    "device_offline": {
+      "title": "{name} è andato offline",
+      "text": "Ultimo IP {ip}"
+    },
+    "device_ip_changed": {
+      "title": "{name} ha cambiato IP",
+      "text": "{old} → {new}"
+    },
+    "internet_down": {
+      "title": "Connessione internet persa",
+      "text": "Il router è raggiungibile ma internet no."
+    },
+    "internet_up": {
+      "title": "Connessione internet ripristinata",
+      "text": "L'interruzione è durata {duration}"
+    },
+    "gateway_down": {
+      "title": "Router non raggiungibile",
+      "text": "Questo dispositivo ha perso il contatto con la rete locale."
+    },
+    "security_issues": {
+      "title": "Verifica di sicurezza: {count} problemi importanti",
+      "text": "Punteggio {score}/100. Controlla i risultati."
+    },
+    "camera_detected": {
+      "title": "Telecamera rilevata: {name}",
+      "text": "{ip} · {vendor}"
+    },
+    "device_blocked": {
+      "title": "{name} bloccato",
+      "text": "Accesso a internet rimosso"
+    },
+    "device_unblocked": {
+      "title": "{name} sbloccato",
+      "text": "Accesso a internet ripristinato"
+    },
+    "update_installed": {
+      "title": "NET Sniffer aggiornato",
+      "text": "Ora è in esecuzione l'ultima versione"
+    }
   },
   "notify": {
-    "device_new": { "title": "Nuovo dispositivo sulla tua rete", "body": "{name} ({ip}) {vendor}" },
-    "device_online": { "title": "{name} è online", "body": "{ip}" },
-    "device_offline": { "title": "{name} è andato offline", "body": "Visto l'ultima volta a {ip}" },
-    "internet_down": { "title": "Connessione internet persa", "body": "NET Sniffer ti avviserà quando tornerà." },
-    "internet_up": { "title": "Internet è tornato", "body": "L'interruzione è durata {duration}." },
-    "gateway_down": { "title": "Router non raggiungibile", "body": "La rete locale non risponde." },
-    "security_issues": { "title": "Problemi di sicurezza rilevati", "body": "{count} problemi importanti · punteggio {score}/100" },
-    "camera_detected": { "title": "Telecamera rilevata", "body": "{name} ({ip})" },
-    "test": { "title": "NET Sniffer", "body": "Le notifiche funzionano 🎉" }
+    "device_new": {
+      "title": "Nuovo dispositivo sulla tua rete",
+      "body": "{name} ({ip}) {vendor}"
+    },
+    "device_online": {
+      "title": "{name} è online",
+      "body": "{ip}"
+    },
+    "device_offline": {
+      "title": "{name} è andato offline",
+      "body": "Visto l'ultima volta a {ip}"
+    },
+    "internet_down": {
+      "title": "Connessione internet persa",
+      "body": "NET Sniffer ti avviserà quando tornerà."
+    },
+    "internet_up": {
+      "title": "Internet è tornato",
+      "body": "L'interruzione è durata {duration}."
+    },
+    "gateway_down": {
+      "title": "Router non raggiungibile",
+      "body": "La rete locale non risponde."
+    },
+    "security_issues": {
+      "title": "Problemi di sicurezza rilevati",
+      "body": "{count} problemi importanti · punteggio {score}/100"
+    },
+    "camera_detected": {
+      "title": "Telecamera rilevata",
+      "body": "{name} ({ip})"
+    },
+    "test": {
+      "title": "NET Sniffer",
+      "body": "Le notifiche funzionano 🎉"
+    }
   },
   "parental": {
-    "rules": "Fasce orarie", "rules_d": "Blocca automaticamente l'accesso a internet in certi orari.",
-    "new_rule": "Nuova fascia oraria", "edit_rule": "Modifica fascia oraria", "rule": "Fascia oraria", "rule_name": "Nome", "rule_name_ph": "es. Nanna dei bambini",
-    "devices": "Dispositivi", "block_periods": "Periodi di blocco", "add_period": "Aggiungi periodo",
+    "rules": "Fasce orarie",
+    "rules_d": "Blocca automaticamente l'accesso a internet in certi orari.",
+    "new_rule": "Nuova fascia oraria",
+    "edit_rule": "Modifica fascia oraria",
+    "rule": "Fascia oraria",
+    "rule_name": "Nome",
+    "rule_name_ph": "es. Nanna dei bambini",
+    "devices": "Dispositivi",
+    "block_periods": "Periodi di blocco",
+    "add_period": "Aggiungi periodo",
     "periods_hint": "Internet è bloccato all'interno di ogni periodo. Un periodo che finisce prima di iniziare prosegue oltre la mezzanotte.",
-    "preset_bedtime": "Nanna", "preset_school": "Orario scolastico", "preset_homework": "Compiti",
-    "every_day": "Ogni giorno", "weekdays": "Giorni feriali", "no_schedule": "Nessun periodo", "no_devices": "Nessun dispositivo selezionato",
-    "blocking_now": "Bloccato ora", "scheduled": "Programmata", "disabled": "Disattivata", "enabled": "Attivata",
-    "none": "Ancora nessuna fascia oraria", "none_d": "Crea una fascia oraria o parti da un preset.",
-    "delete_rule": "Elimina fascia oraria", "delete_rule_d": "I dispositivi di questa fascia oraria non verranno più bloccati da essa.",
-    "saved": "Fascia oraria salvata", "quick_pause": "Metti internet in pausa", "quick_pause_d": "Un tocco per mettere in pausa un dispositivo per un'ora",
-    "pause": "Pausa", "pause_for": "Pausa per {d}", "resume": "Riprendi ora", "paused_ok": "Internet in pausa", "resumed_ok": "Internet ripristinato",
+    "preset_bedtime": "Nanna",
+    "preset_school": "Orario scolastico",
+    "preset_homework": "Compiti",
+    "every_day": "Ogni giorno",
+    "weekdays": "Giorni feriali",
+    "no_schedule": "Nessun periodo",
+    "no_devices": "Nessun dispositivo selezionato",
+    "blocking_now": "Bloccato ora",
+    "scheduled": "Programmata",
+    "disabled": "Disattivata",
+    "enabled": "Attivata",
+    "none": "Ancora nessuna fascia oraria",
+    "none_d": "Crea una fascia oraria o parti da un preset.",
+    "delete_rule": "Elimina fascia oraria",
+    "delete_rule_d": "I dispositivi di questa fascia oraria non verranno più bloccati da essa.",
+    "saved": "Fascia oraria salvata",
+    "quick_pause": "Metti internet in pausa",
+    "quick_pause_d": "Un tocco per mettere in pausa un dispositivo per un'ora",
+    "pause": "Pausa",
+    "pause_for": "Pausa per {d}",
+    "resume": "Riprendi ora",
+    "paused_ok": "Internet in pausa",
+    "resumed_ok": "Internet ripristinato",
     "paused_until": "In pausa fino alle {time}",
     "need_backend": "Collega il router per applicare i blocchi",
     "need_backend_d": "Il blocco viene applicato dal tuo router. Configura la connessione una sola volta nelle Impostazioni.",
     "backend_error": "Il router ha rifiutato l'ultima modifica"
   },
   "block": {
-    "guide_title": "Collega il tuo router", "guide_desc": "NET Sniffer blocca i dispositivi tramite l'interfaccia di amministrazione del tuo router: il metodo legittimo, con le tue credenziali di amministratore.",
-    "backend": "Metodo di blocco", "backend_none": "Non configurato", "none_d": "Scegli come NET Sniffer comunica con il tuo router.",
-    "backend_ssh": "Router via SSH (OpenWrt / Linux)", "backend_ssh_d": "OpenWrt, GL.iNet, Turris, DD-WRT e altri router Linux. Aggiunge il MAC del dispositivo a una lista di blocco del firewall.",
-    "backend_fritz": "AVM FRITZ!Box", "backend_fritz_d": "Usa l'interfaccia ufficiale TR-064 (attiva “Consenti accesso per applicazioni” nel FRITZ!Box).",
-    "backend_local": "Questo dispositivo è il gateway (Linux)", "backend_local_d": "Per un Raspberry Pi o un computer Linux che fa da router/hotspot. Richiede i privilegi di root.",
-    "manual_t": "Preferisci farlo manualmente?", "manual_d": "Aggiungi questo indirizzo MAC alla lista di blocco / filtro MAC nella pagina di amministrazione del tuo router:",
-    "configure": "Configura", "host": "Indirizzo del router", "port": "Porta SSH", "user": "Nome utente", "password": "Password",
-    "firewall": "Firewall", "test": "Testa connessione", "test_ok": "Connesso al router", "applied": "Regole applicate {ago}",
+    "guide_title": "Collega il tuo router",
+    "guide_desc": "NET Sniffer blocca i dispositivi tramite l'interfaccia di amministrazione del tuo router: il metodo legittimo, con le tue credenziali di amministratore.",
+    "backend": "Metodo di blocco",
+    "backend_none": "Non configurato",
+    "none_d": "Scegli come NET Sniffer comunica con il tuo router.",
+    "backend_ssh": "Router via SSH (OpenWrt / Linux)",
+    "backend_ssh_d": "OpenWrt, GL.iNet, Turris, DD-WRT e altri router Linux. Aggiunge il MAC del dispositivo a una lista di blocco del firewall.",
+    "backend_fritz": "AVM FRITZ!Box",
+    "backend_fritz_d": "Usa l'interfaccia ufficiale TR-064 (attiva “Consenti accesso per applicazioni” nel FRITZ!Box).",
+    "backend_local": "Questo dispositivo è il gateway (Linux)",
+    "backend_local_d": "Per un Raspberry Pi o un computer Linux che fa da router/hotspot. Richiede i privilegi di root.",
+    "manual_t": "Preferisci farlo manualmente?",
+    "manual_d": "Aggiungi questo indirizzo MAC alla lista di blocco / filtro MAC nella pagina di amministrazione del tuo router:",
+    "configure": "Configura",
+    "host": "Indirizzo del router",
+    "port": "Porta SSH",
+    "user": "Nome utente",
+    "password": "Password",
+    "firewall": "Firewall",
+    "test": "Testa connessione",
+    "test_ok": "Connesso al router",
+    "applied": "Regole applicate {ago}",
     "intro": "Il blocco dei dispositivi e il controllo parentale sono applicati dal tuo router. Le credenziali sono memorizzate in forma crittografata su questo dispositivo e usate solo per comunicare con il router.",
     "legal": "La chiave host SSH del router viene fissata alla prima connessione. NET Sniffer non si spaccia mai per altri dispositivi della rete."
   },
   "settings": {
-    "general": "Generali", "scanning": "Scansione", "notifications": "Notifiche", "remote": "Accesso remoto",
-    "blocking": "Router e blocco", "license": "Licenza", "updates": "Aggiornamenti", "privacy": "Privacy e dati", "about": "Informazioni",
-    "language": "Lingua", "language_d": "Automatica usa la lingua del tuo dispositivo.", "lang_auto": "Automatica",
-    "theme": "Aspetto", "theme_d": "Chiaro, scuro o segui il sistema.", "theme_system": "Sistema", "theme_light": "Chiaro", "theme_dark": "Scuro",
-    "auto_scan": "Scansioni automatiche", "auto_scan_d": "Riscansiona la rete periodicamente in background.",
-    "interval": "Intervallo di scansione", "interval_d": "Ogni quanto viene eseguita una scansione completa.", "interval_free": "Piano gratuito: ogni 15 minuti o più.",
-    "watcher": "Sorveglianza intrusi in tempo reale", "watcher_d": "Controllo leggero della presenza ogni 90 secondi per rilevare rapidamente i nuovi dispositivi.",
-    "monitor_interval": "Intervallo di controllo internet", "monitor_interval_d": "Ogni quanto viene testata la connettività.",
-    "n_desktop": "Notifiche desktop", "n_desktop_d": "Mostra le notifiche di sistema su questo computer.",
-    "n_new": "Nuovi dispositivi", "n_new_d": "Avvisa quando si connette un dispositivo sconosciuto.",
-    "n_offline": "Preferiti online/offline", "n_offline_d": "Avvisa quando un dispositivo contrassegnato come preferito si connette o si disconnette.",
-    "n_internet": "Interruzioni di internet", "n_internet_d": "Avvisa quando la connessione cade e quando si ripristina.",
-    "n_security": "Avvisi di sicurezza", "n_security_d": "Avvisa su problemi della verifica e telecamere rilevate.",
-    "n_push": "Push sul tuo telefono", "n_push_d": "Usa qualsiasi combinazione di ntfy, Telegram o webhook.",
-    "n_test": "Invia test", "n_test_sent": "Notifica di test inviata",
-    "remote_enable": "Attiva accesso remoto", "remote_enable_d": "Rendi disponibile NET Sniffer sul tuo telefono e su altri computer di questa rete. Imposta prima una password.",
-    "remote_password": "Password di accesso", "remote_password_d": "Necessaria per aprire NET Sniffer da altri dispositivi.", "remote_password_set": "Password configurata",
-    "remote_port": "Porta", "remote_open": "Apri sul telefono",
+    "general": "Generali",
+    "scanning": "Scansione",
+    "notifications": "Notifiche",
+    "remote": "Accesso remoto",
+    "blocking": "Router e blocco",
+    "updates": "Aggiornamenti",
+    "privacy": "Privacy e dati",
+    "about": "Informazioni",
+    "language": "Lingua",
+    "language_d": "Automatica usa la lingua del tuo dispositivo.",
+    "lang_auto": "Automatica",
+    "theme": "Aspetto",
+    "theme_d": "Chiaro, scuro o segui il sistema.",
+    "theme_system": "Sistema",
+    "theme_light": "Chiaro",
+    "theme_dark": "Scuro",
+    "auto_scan": "Scansioni automatiche",
+    "auto_scan_d": "Riscansiona la rete periodicamente in background.",
+    "interval": "Intervallo di scansione",
+    "interval_d": "Ogni quanto viene eseguita una scansione completa.",
+    "watcher": "Sorveglianza intrusi in tempo reale",
+    "watcher_d": "Controllo leggero della presenza ogni 90 secondi per rilevare rapidamente i nuovi dispositivi.",
+    "monitor_interval": "Intervallo di controllo internet",
+    "monitor_interval_d": "Ogni quanto viene testata la connettività.",
+    "n_desktop": "Notifiche desktop",
+    "n_desktop_d": "Mostra le notifiche di sistema su questo computer.",
+    "n_new": "Nuovi dispositivi",
+    "n_new_d": "Avvisa quando si connette un dispositivo sconosciuto.",
+    "n_offline": "Preferiti online/offline",
+    "n_offline_d": "Avvisa quando un dispositivo contrassegnato come preferito si connette o si disconnette.",
+    "n_internet": "Interruzioni di internet",
+    "n_internet_d": "Avvisa quando la connessione cade e quando si ripristina.",
+    "n_security": "Avvisi di sicurezza",
+    "n_security_d": "Avvisa su problemi della verifica e telecamere rilevate.",
+    "n_push": "Push sul tuo telefono",
+    "n_push_d": "Usa qualsiasi combinazione di ntfy, Telegram o webhook.",
+    "n_test": "Invia test",
+    "n_test_sent": "Notifica di test inviata",
+    "remote_enable": "Attiva accesso remoto",
+    "remote_enable_d": "Rendi disponibile NET Sniffer sul tuo telefono e su altri computer di questa rete. Imposta prima una password.",
+    "remote_password": "Password di accesso",
+    "remote_password_d": "Necessaria per aprire NET Sniffer da altri dispositivi.",
+    "remote_password_set": "Password configurata",
+    "remote_port": "Porta",
+    "remote_open": "Apri sul telefono",
     "remote_hint": "Inquadra il codice QR da un dispositivo connesso allo stesso Wi-Fi. Per accedere fuori casa usa una VPN (WireGuard, Tailscale) invece di aprire porte sul router.",
     "remote_headless": "In esecuzione in modalità server: l'accesso remoto è sempre attivo e protetto dalla tua password.",
-    "public_ip": "Ricerca IP pubblico e provider", "public_ip_d": "Chiedi a Cloudflare il tuo IP pubblico e il nome dell'ISP.",
-    "clear_alerts": "Cronologia avvisi", "clear_alerts_d": "Elimina tutti gli avvisi e le attività dei dispositivi.",
-    "logout": "Esci", "logout_d": "Termina la sessione su questo browser.",
+    "public_ip": "Ricerca IP pubblico e provider",
+    "public_ip_d": "Chiedi a Cloudflare il tuo IP pubblico e il nome dell'ISP.",
+    "clear_alerts": "Cronologia avvisi",
+    "clear_alerts_d": "Elimina tutti gli avvisi e le attività dei dispositivi.",
+    "logout": "Esci",
+    "logout_d": "Termina la sessione su questo browser.",
     "saved": "Salvato",
     "legal": "NET Sniffer è pensato per monitorare e proteggere reti che possiedi o sei autorizzato ad amministrare. Usa solo protocolli di rilevamento standard e controlli di connessione.",
     "oss": "Realizzato con Python, FastAPI, zeroconf, psutil, httpx, pywebview e altro software open source. Dati dei produttori MAC © IEEE Registration Authority."
   },
   "update": {
-    "current": "Versione {v}", "available": "È disponibile la versione {v}", "ready_title": "Aggiornamento {v} pronto",
-    "ready_text": "Riavvia NET Sniffer per completare l'aggiornamento.", "restart": "Riavvia ora", "restarting": "Riavvio…",
-    "downloading": "Download dell'aggiornamento… {p}%", "checking": "Ricerca aggiornamenti…", "uptodate": "Sei aggiornato",
-    "error": "Impossibile cercare aggiornamenti", "check": "Controlla ora", "install": "Installa e riavvia", "checked": "controllato {ago}",
-    "auto": "Aggiornamenti automatici", "auto_d": "Scarica e installa automaticamente le nuove versioni.",
-    "notes": "Novità", "source_mode": "Esecuzione dal sorgente: aggiorna con git pull o scarica l'ultima release."
+    "current": "Versione {v}",
+    "available": "È disponibile la versione {v}",
+    "ready_title": "Aggiornamento {v} pronto",
+    "ready_text": "Riavvia NET Sniffer per completare l'aggiornamento.",
+    "restart": "Riavvia ora",
+    "restarting": "Riavvio…",
+    "downloading": "Download dell'aggiornamento… {p}%",
+    "checking": "Ricerca aggiornamenti…",
+    "uptodate": "Sei aggiornato",
+    "error": "Impossibile cercare aggiornamenti",
+    "check": "Controlla ora",
+    "install": "Installa e riavvia",
+    "checked": "controllato {ago}",
+    "auto": "Aggiornamenti automatici",
+    "auto_d": "Scarica e installa automaticamente le nuove versioni.",
+    "notes": "Novità",
+    "source_mode": "Esecuzione dal sorgente: aggiorna con git pull o scarica l'ultima release."
   },
-  "report": { "title": "Report di rete" },
+  "report": {
+    "title": "Report di rete"
+  },
   "errors": {
-    "title": "Qualcosa è andato storto", "generic": "Errore imprevisto.", "offline": "Impossibile raggiungere NET Sniffer. È ancora in esecuzione?",
-    "unauthorized": "La tua sessione è scaduta.", "pro_required": "Questa funzione richiede NET Sniffer Pro.",
-    "not_local": "È possibile scansionare solo i dispositivi della tua rete locale.", "device_not_found": "Dispositivo non trovato.",
-    "bad_profile": "Profilo di scansione sconosciuto.", "no_mac": "Questo dispositivo non ha un indirizzo MAC.",
+    "title": "Qualcosa è andato storto",
+    "generic": "Errore imprevisto.",
+    "offline": "Impossibile raggiungere NET Sniffer. È ancora in esecuzione?",
+    "unauthorized": "La tua sessione è scaduta.",
+    "not_local": "È possibile scansionare solo i dispositivi della tua rete locale.",
+    "device_not_found": "Dispositivo non trovato.",
+    "bad_profile": "Profilo di scansione sconosciuto.",
+    "no_mac": "Questo dispositivo non ha un indirizzo MAC.",
     "cannot_block_self": "Non puoi bloccare questo computer o il router.",
-    "block_not_configured": "Connessione al router non configurata.", "block_failed": "Il router non ha accettato la modifica.",
-    "block_connect_failed": "Impossibile connettersi al router.", "block_hostkey_changed": "La chiave SSH del router è cambiata. Inserisci di nuovo l'indirizzo del router per considerarla attendibile.",
-    "block_command_failed": "Il comando sul router non è riuscito.", "block_local_linux_only": "Questo metodo funziona solo su Linux.",
+    "block_not_configured": "Connessione al router non configurata.",
+    "block_failed": "Il router non ha accettato la modifica.",
+    "block_connect_failed": "Impossibile connettersi al router.",
+    "block_hostkey_changed": "La chiave SSH del router è cambiata. Inserisci di nuovo l'indirizzo del router per considerarla attendibile.",
+    "block_command_failed": "Il comando sul router non è riuscito.",
+    "block_local_linux_only": "Questo metodo funziona solo su Linux.",
     "block_local_needs_root": "NET Sniffer deve essere eseguito come root per gestire il firewall.",
-    "speedtest_running": "Uno speed test è già in corso.", "speedtest_unreachable": "Il server dello speed test non è raggiungibile.",
-    "speedtest_failed": "Lo speed test non è riuscito.", "audit_running": "Una verifica è già in corso.", "audit_failed": "La verifica non è riuscita.",
-    "already_configured": "Una password è già configurata.", "bad_setup_token": "Codice di configurazione errato.",
-    "password_short": "Usa almeno 8 caratteri.", "password_mismatch": "Le password non coincidono.",
-    "too_many_attempts": "Troppi tentativi. Attendi qualche minuto.", "bad_password": "Password errata.", "bad_url": "Inserisci un URL http(s) valido.",
-    "license_invalid": "Chiave di licenza non valida.", "license_expired": "Questa licenza è scaduta.",
-    "update_not_ready": "L'aggiornamento non è ancora pronto.", "no_network": "Nessuna connessione di rete locale rilevata."
+    "speedtest_running": "Uno speed test è già in corso.",
+    "speedtest_unreachable": "Il server dello speed test non è raggiungibile.",
+    "speedtest_failed": "Lo speed test non è riuscito.",
+    "audit_running": "Una verifica è già in corso.",
+    "audit_failed": "La verifica non è riuscita.",
+    "already_configured": "Una password è già configurata.",
+    "bad_setup_token": "Codice di configurazione errato.",
+    "password_short": "Usa almeno 8 caratteri.",
+    "password_mismatch": "Le password non coincidono.",
+    "too_many_attempts": "Troppi tentativi. Attendi qualche minuto.",
+    "bad_password": "Password errata.",
+    "bad_url": "Inserisci un URL http(s) valido.",
+    "update_not_ready": "L'aggiornamento non è ancora pronto.",
+    "no_network": "Nessuna connessione di rete locale rilevata."
   }
 }

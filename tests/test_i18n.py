@@ -44,7 +44,6 @@ def test_static_keys_exist():
 
 def test_dynamic_families():
     from netsniffer.audit import FINDING_BY_PORT
-    from netsniffer.licensing import PRO_FEATURES
     families = {
         "types": ["router", "mesh", "phone", "tablet", "laptop", "desktop", "server", "tv", "streamer", "speaker",
                   "camera", "printer", "console", "iot", "light", "plug", "hub", "nas", "watch", "car", "raspberry",
@@ -54,7 +53,6 @@ def test_dynamic_families():
         "monitor.status": ["online", "offline", "degraded", "unknown"],
         "nav": ["dashboard", "devices", "monitor", "speed", "security", "parental", "alerts", "settings",
                 "g_overview", "g_network", "g_protection", "g_system"],
-        "pro.features": sorted(PRO_FEATURES), "pro.names": sorted(PRO_FEATURES),
         "cams": [f"reason_{r}" for r in ("classified", "onvif", "mdns_rtsp", "rtsp", "dvr", "banner")] + ["conf_high", "conf_medium"],
         "speed": ["connect", "ping", "download", "upload"],
         "security": ["phase_network", "phase_ports"],

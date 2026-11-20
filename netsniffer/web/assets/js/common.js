@@ -1,54 +1,12 @@
 // Shared view fragments and actions.
-import { api } from "./api.js";
 import { fmt, t } from "./i18n.js";
 import { avatar } from "./icons.js";
-import { S, can } from "./store.js";
-import { html, ico, openModal, raw, toast, loadingBtn } from "./ui.js";
-
-export const PRO_LIST = ["audit", "cameras", "blocking", "parental", "remote", "notifications", "watcher", "history", "export"];
+import { html, ico, raw, toast } from "./ui.js";
 
 export function showError(e) {
-  if (e?.status === 402) return upgradeModal(e.params?.feature);
   const key = e?.key || "generic";
   const detail = e?.params?.detail ? String(e.params.detail).replace(/^[a-z_]+:/, "") : "";
   toast({ kind: "error", title: t("errors.title"), text: (t(`errors.${key.split(":")[0]}`, e?.params || {}) + (detail ? ` — ${detail}` : "")).trim() });
-}
-
-export function planBadge() {
-  const p = S.license?.plan;
-  if (p === "pro") return html`<span class="badge pro">${ico("crown")} PRO</span>`;
-  if (p === "trial") return html`<span class="badge accent">${t("plan.trial")}</span>`;
-  return html`<span class="badge">${t("plan.free")}</span>`;
-}
-
-export function proLock(feature, inner, { compact = false } = {}) {
-  if (can(feature)) return inner;
-  return html`<div class="locked">${inner}<div class="lock-overlay"><div class="lock-box">
-    <div class="ico">${ico("crown")}</div><h4>${t("pro.locked_title")}</h4>
-    ${compact ? "" : html`<p>${t(`pro.features.${feature}`)}</p>`}
-    <button class="btn pro" data-upgrade="${feature}">${ico("sparkles")} ${t("pro.upgrade")}</button></div></div></div>`;
-}
-
-export function upgradeModal(feature) {
-  const feats = PRO_LIST.map((f) => html`<div class="onb-feat">${ico("check")}<div><b>${t(`pro.names.${f}`)}</b><div class="faint">${t(`pro.features.${f}`)}</div></div></div>`);
-  openModal({
-    title: t("pro.title"), desc: feature ? t(`pro.features.${feature}`) : t("pro.subtitle"), wide: true, iconName: "crown",
-    body: html`<div class="onb-feats">${feats}</div>
-      <div class="sep"></div>
-      <div class="field"><label>${t("license.enter")}</label>
-      <div class="row"><input class="input mono" id="lic-key" placeholder="NS1.xxxxxxxx.xxxxxxxx" autocomplete="off" spellcheck="false">
-      <button class="btn primary" id="lic-save">${t("license.activate")}</button></div>
-      <div class="hint">${S.license.plan === "trial" ? t("license.trial_left", { count: S.license.trial_days_left }) : t("license.hint")}</div></div>`,
-    onMount: (el, close) => {
-      el.querySelector("#lic-save").onclick = async (ev) => {
-        loadingBtn(ev.currentTarget, true);
-        try {
-          S.license = await api("/license", { method: "POST", body: { key: el.querySelector("#lic-key").value } });
-          toast({ kind: "ok", title: t("license.activated") }); close(); location.hash = location.hash || "#/dashboard"; window.dispatchEvent(new Event("ns:rerender"));
-        } catch (e) { showError(e); } finally { loadingBtn(ev.currentTarget, false); }
-      };
-    },
-  });
 }
 
 export function deviceSub(d) {

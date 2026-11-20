@@ -74,7 +74,6 @@ class SpeedTest:
                     await asyncio.sleep(0.2)
 
         async def up_worker() -> None:
-            nonlocal total
             payload = self._payload
 
             async def body():

@@ -7,7 +7,6 @@ import time
 
 import psutil
 
-from . import licensing
 from .db import Database
 from .hub import Hub
 from .net.utils import tcp_probe
@@ -115,9 +114,6 @@ class Monitor:
             last = (now, c.bytes_recv, c.bytes_sent)
 
     def summary(self, hours: int = 24) -> dict:
-        s = self.db.settings()
-        if not licensing.has(s, "history"):
-            hours = min(hours, 24)
         since = time.time() - hours * 3600
         samples = self.db.samples(since)
         buckets = 96

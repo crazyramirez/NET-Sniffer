@@ -1,8 +1,8 @@
 import { api } from "../api.js";
 import { ring } from "../charts.js";
-import { emptyState, proLock, showError } from "../common.js";
+import { emptyState, showError } from "../common.js";
 import { fmt, has, t } from "../i18n.js";
-import { S, can } from "../store.js";
+import { S } from "../store.js";
 import { html, ico, raw, loadingBtn } from "../ui.js";
 import { openDevice } from "./device.js";
 
@@ -39,7 +39,7 @@ function scoreCard(rep) {
         <div class="row wrap" style="gap:14px;margin-top:10px;font-size:12.5px">${SEV.filter((k) => k !== "info").map((k) => html`<span class="row" style="gap:6px"><i style="width:9px;height:9px;border-radius:3px;background:${SEV_COLOR[k]};display:inline-block"></i>${t(`severity.${k}`)} <b>${c[k] || 0}</b></span>`)}</div>` : ""}
       <div class="row wrap" style="margin-top:18px">
         <button class="btn grad" id="run" ${progress ? "disabled" : ""}>${progress ? html`<span class="spinner"></span> ${t("security.running")} ${Math.round(progress.progress * 100)}%` : html`${ico("shieldCheck")} ${rep ? t("security.rerun") : t("security.run")}`}</button>
-        ${rep && can("export") ? html`<a class="btn" href="/api/export/report.html">${ico("file")} ${t("security.report")}</a>` : ""}
+        ${rep ? html`<a class="btn" href="/api/export/report.html">${ico("file")} ${t("security.report")}</a>` : ""}
       </div>
       ${progress ? html`<div class="progress" style="margin-top:14px"><i style="width:${Math.round(progress.progress * 100)}%"></i></div><div class="faint" style="font-size:12px;margin-top:6px">${progress.device ? t("security.checking", { name: progress.device }) : t(`security.phase_${progress.phase}`)}</div>` : ""}
     </div></div>`;
@@ -66,11 +66,11 @@ function paint() {
         ${rep ? (rep.findings.length ? groups.map(([, l]) => l.map(finding)) : emptyState("shieldCheck", t("security.no_findings"), t("security.no_findings_d")))
           : emptyState("shield", t("security.not_run"), t("security.intro_long"))}</div></div></div>
       <div class="stack">
-        ${proLock("cameras", camerasCard(), { compact: true })}
+        ${camerasCard()}
         ${rep ? html`<div class="card"><div class="card-h"><h3>${t("security.passed")}</h3></div><div class="card-b">${rep.passed.length ? rep.passed.map((p) => html`<div class="pass">${ico("checkCircle")}${t(`audit.pass.${p}`)}</div>`) : html`<div class="faint">—</div>`}</div></div>` : ""}
         <div class="card pad"><div class="row" style="align-items:flex-start;gap:12px"><span class="ev-ico info">${ico("info")}</span><div><b>${t("security.ethics_t")}</b><div class="faint" style="font-size:13px;margin-top:2px">${t("security.ethics_d")}</div></div></div></div>
       </div></div></div>`;
-  root.innerHTML = proLock("audit", body).s;
+  root.innerHTML = body.s;
 }
 
 function render(el) {
@@ -98,7 +98,6 @@ function onEvent(type, data) {
     else progress = data;
     paint();
   }
-  if (type === "license") paint();
 }
 
 export default { render, onEvent, destroy() { root = null; } };

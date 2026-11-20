@@ -1,321 +1,785 @@
 {
-  "app": { "tagline": "网络洞察" },
+  "app": {
+    "tagline": "网络洞察"
+  },
   "nav": {
-    "dashboard": "仪表盘", "devices": "设备", "monitor": "网络监测", "speed": "网速测试",
-    "security": "安全", "parental": "家长控制", "alerts": "提醒", "settings": "设置",
-    "g_overview": "概览", "g_network": "网络", "g_protection": "防护", "g_system": "系统"
+    "dashboard": "仪表盘",
+    "devices": "设备",
+    "monitor": "网络监测",
+    "speed": "网速测试",
+    "security": "安全",
+    "parental": "家长控制",
+    "alerts": "提醒",
+    "settings": "设置",
+    "g_overview": "概览",
+    "g_network": "网络",
+    "g_protection": "防护",
+    "g_system": "系统"
   },
   "common": {
-    "cancel": "取消", "change": "更改", "close": "关闭", "confirm": "确认", "connecting": "正在连接…",
-    "copied": "已复制到剪贴板", "copy": "复制", "delete": "删除", "details": "详情", "edit": "编辑",
-    "just_now": "刚刚", "learn_more": "了解更多", "live": "实时", "more": "更多", "rename": "重命名",
-    "save": "保存", "search": "搜索", "see_all": "查看全部", "set": "设置"
-  },
-  "plan": {
-    "free": "免费版", "trial": "试用", "free_title": "免费版", "free_sub": "核心监测功能",
-    "trial_title": "Pro 试用"
-  },
-  "pro": {
-    "title": "解锁 NET Sniffer Pro", "subtitle": "为您的网络提供高级防护、自动化与远程访问。",
-    "upgrade": "升级到 Pro", "locked_title": "Pro 功能",
-    "names": {
-      "audit": "安全审计", "cameras": "隐藏摄像头探测", "blocking": "阻止设备",
-      "parental": "家长控制", "remote": "远程访问", "notifications": "推送与桌面提醒",
-      "watcher": "实时入侵监视", "history": "完整历史记录", "export": "报告与导出",
-      "full_ports": "完整端口分析", "custom_interval": "自定义扫描间隔"
-    },
-    "features": {
-      "audit": "为您的网络评分，发现高风险的开放服务、薄弱的 Wi-Fi 设置和路由器暴露问题，并提供分步修复指引。",
-      "cameras": "通过 ONVIF 发现、RTSP/DVR 服务和厂商指纹识别网络中的摄像头。",
-      "blocking": "通过您自己路由器的管理界面，切断任意设备的上网权限。",
-      "parental": "按睡前、上课等时段设置计划，并可一键暂停任意设备。",
-      "remote": "通过安全的密码保护网页应用，在手机、其他电脑或 Raspberry Pi 上监控您的网络。",
-      "notifications": "桌面通知，以及 Telegram、ntfy 和 webhook 推送提醒。",
-      "watcher": "每 90 秒检查一次新设备，几乎即时标记入侵者。",
-      "history": "保留 30 天的延迟、断网和网速历史记录。",
-      "export": "将设备清单导出为 CSV，并导出完整的安全报告。",
-      "full_ports": "每台设备检测 100–1,100 个 TCP 端口，并识别对应服务。",
-      "custom_interval": "最短可每分钟扫描一次。"
-    }
-  },
-  "license": {
-    "enter": "有许可证密钥？", "activate": "激活", "activated": "NET Sniffer Pro 已激活，感谢您的支持！",
-    "hint": "密钥以 NS1 开头，将在本设备上离线验证。",
-    "trial_left_one": "Pro 试用还剩 {count} 天", "trial_left_other": "Pro 试用还剩 {count} 天",
-    "until": "有效期至 {date}", "lifetime": "终身许可证", "remove": "移除许可证",
-    "remove_d": "此设备将恢复为免费版。"
+    "cancel": "取消",
+    "change": "更改",
+    "close": "关闭",
+    "confirm": "确认",
+    "connecting": "正在连接…",
+    "copied": "已复制到剪贴板",
+    "copy": "复制",
+    "delete": "删除",
+    "details": "详情",
+    "edit": "编辑",
+    "just_now": "刚刚",
+    "learn_more": "了解更多",
+    "live": "实时",
+    "more": "更多",
+    "rename": "重命名",
+    "save": "保存",
+    "search": "搜索",
+    "see_all": "查看全部",
+    "set": "设置"
   },
   "onb": {
-    "title": "欢迎使用 NET Sniffer", "subtitle": "查看网络中的每台设备，保障网络安全，并在发生变化时第一时间知晓。",
-    "f1_t": "发现设备", "f1_d": "识别所有已连接设备的 IP、MAC、厂商、型号和类型。",
-    "f2_t": "安全审计", "f2_d": "发现薄弱的 Wi-Fi 设置和高风险的开放服务。",
-    "f3_t": "测试网速", "f3_d": "下载、上传、延迟和抖动，并保留历史记录。",
-    "f4_t": "接收提醒", "f4_d": "新设备、断网和安全问题，实时通知。",
+    "title": "欢迎使用 NET Sniffer",
+    "subtitle": "查看网络中的每台设备，保障网络安全，并在发生变化时第一时间知晓。",
+    "f1_t": "发现设备",
+    "f1_d": "识别所有已连接设备的 IP、MAC、厂商、型号和类型。",
+    "f2_t": "安全审计",
+    "f2_d": "发现薄弱的 Wi-Fi 设置和高风险的开放服务。",
+    "f3_t": "测试网速",
+    "f3_d": "下载、上传、延迟和抖动，并保留历史记录。",
+    "f4_t": "接收提醒",
+    "f4_d": "新设备、断网和安全问题，实时通知。",
     "legal_t": "仅限用于您拥有或管理的网络",
     "legal_d": "NET Sniffer 仅使用标准的发现协议和连接检测。扫描未经授权检查的网络可能违法。",
     "accept": "我仅会在我拥有或获授权管理的网络上使用 NET Sniffer。",
     "start": "扫描我的网络"
   },
   "login": {
-    "title": "登录", "subtitle": "请输入在主机上配置的远程访问密码。",
-    "setup_title": "保护您的 NET Sniffer", "setup_d": "请输入主机控制台中显示的设置码，并设置密码（至少 8 个字符）。",
-    "setup_code": "设置码", "password": "密码", "repeat": "确认密码", "create": "创建密码",
-    "enter": "登录", "footer": "您的登录状态将在此设备上保留 30 天。"
+    "title": "登录",
+    "subtitle": "请输入在主机上配置的远程访问密码。",
+    "setup_title": "保护您的 NET Sniffer",
+    "setup_d": "请输入主机控制台中显示的设置码，并设置密码（至少 8 个字符）。",
+    "setup_code": "设置码",
+    "password": "密码",
+    "repeat": "确认密码",
+    "create": "创建密码",
+    "enter": "登录",
+    "footer": "您的登录状态将在此设备上保留 30 天。"
   },
-  "scan": { "button": "扫描", "scanning": "正在扫描", "failed": "扫描失败" },
+  "scan": {
+    "button": "扫描",
+    "scanning": "正在扫描",
+    "failed": "扫描失败"
+  },
   "network": {
-    "ethernet": "有线网络", "your_network": "您的网络", "public_ip": "公网 IP", "isp": "服务商",
-    "gateway": "网关", "local_ip": "本设备", "signal": "信号", "wired": "有线", "band": "频段"
+    "ethernet": "有线网络",
+    "your_network": "您的网络",
+    "public_ip": "公网 IP",
+    "isp": "服务商",
+    "gateway": "网关",
+    "local_ip": "本设备",
+    "signal": "信号",
+    "wired": "有线",
+    "band": "频段"
   },
   "dash": {
-    "security_score": "安全评分", "health": "网络健康度",
-    "health_hint": "估算值。运行安全审计可获得精确评分。", "run_audit": "运行安全审计",
-    "devices_online": "在线设备", "last_scan": "上次扫描：{ago}", "never_scanned": "尚未扫描",
-    "new_24h": "新设备（24 小时）", "new_hint": "过去一天内首次发现",
-    "untrusted": "未识别", "untrusted_hint": "请检查并标记为信任", "all_trusted": "所有设备均已识别",
-    "last_speed": "上次网速测试", "run_speed": "进行首次网速测试",
-    "internet": "互联网连接", "throughput": "实时吞吐量（本设备）", "by_type": "按类型统计的设备",
-    "no_devices": "暂无设备", "scan_hint": "运行扫描以发现网络中的所有已连接设备。",
-    "activity": "最近动态", "no_activity": "暂无动态", "no_activity_hint": "新设备、断网等事件将显示在这里。",
+    "security_score": "安全评分",
+    "health": "网络健康度",
+    "health_hint": "估算值。运行安全审计可获得精确评分。",
+    "run_audit": "运行安全审计",
+    "devices_online": "在线设备",
+    "last_scan": "上次扫描：{ago}",
+    "never_scanned": "尚未扫描",
+    "new_24h": "新设备（24 小时）",
+    "new_hint": "过去一天内首次发现",
+    "untrusted": "未识别",
+    "untrusted_hint": "请检查并标记为信任",
+    "all_trusted": "所有设备均已识别",
+    "last_speed": "上次网速测试",
+    "run_speed": "进行首次网速测试",
+    "internet": "互联网连接",
+    "throughput": "实时吞吐量（本设备）",
+    "by_type": "按类型统计的设备",
+    "no_devices": "暂无设备",
+    "scan_hint": "运行扫描以发现网络中的所有已连接设备。",
+    "activity": "最近动态",
+    "no_activity": "暂无动态",
+    "no_activity_hint": "新设备、断网等事件将显示在这里。",
     "recent_devices": "最近加入"
   },
   "devices": {
-    "search": "搜索设备、IP、MAC、厂商…", "all_types": "所有类型",
-    "f_all": "全部", "f_online": "在线", "f_offline": "离线", "f_untrusted": "未识别", "f_new": "新设备", "f_blocked": "已阻止",
-    "results_one": "“{q}”共 {count} 条结果", "results_other": "“{q}”共 {count} 条结果",
-    "none_match": "没有匹配的设备", "none_match_hint": "请尝试其他搜索词或筛选条件。",
-    "deep_scan": "深度扫描（重新识别全部）", "trust_all": "全部标记为信任",
+    "search": "搜索设备、IP、MAC、厂商…",
+    "all_types": "所有类型",
+    "f_all": "全部",
+    "f_online": "在线",
+    "f_offline": "离线",
+    "f_untrusted": "未识别",
+    "f_new": "新设备",
+    "f_blocked": "已阻止",
+    "results_one": "“{q}”共 {count} 条结果",
+    "results_other": "“{q}”共 {count} 条结果",
+    "none_match": "没有匹配的设备",
+    "none_match_hint": "请尝试其他搜索词或筛选条件。",
+    "deep_scan": "深度扫描（重新识别全部）",
+    "trust_all": "全部标记为信任",
     "trust_all_text": "列表中当前的所有设备都将被标记为已识别。新设备仍会触发入侵提醒。",
-    "trusted_ok": "已将所有设备标记为信任", "export_csv": "导出 CSV",
+    "trusted_ok": "已将所有设备标记为信任",
+    "export_csv": "导出 CSV",
     "forget_offline": "清除离线设备",
-    "forget_offline_text_one": "移除 {count} 台离线设备及其历史记录？", "forget_offline_text_other": "移除 {count} 台离线设备及其历史记录？",
+    "forget_offline_text_one": "移除 {count} 台离线设备及其历史记录？",
+    "forget_offline_text_other": "移除 {count} 台离线设备及其历史记录？",
     "no_offline": "没有离线设备"
   },
   "device": {
-    "name": "名称", "ip": "IP 地址", "vendor": "厂商", "model": "型号", "type": "类型", "os": "操作系统",
-    "hostname": "主机名", "server": "服务器", "services": "服务", "status": "状态",
-    "first_seen": "首次发现", "last_seen": "最后在线", "online": "在线", "offline": "离线", "online_now": "当前在线",
-    "this_device": "本设备", "gateway": "路由器", "blocked": "已阻止", "untrusted": "未识别", "new": "新设备",
-    "trusted": "已信任", "mark_trusted": "标记为信任", "private": "私有", "private_mac": "私有地址",
+    "name": "名称",
+    "ip": "IP 地址",
+    "vendor": "厂商",
+    "model": "型号",
+    "type": "类型",
+    "os": "操作系统",
+    "hostname": "主机名",
+    "server": "服务器",
+    "services": "服务",
+    "status": "状态",
+    "first_seen": "首次发现",
+    "last_seen": "最后在线",
+    "online": "在线",
+    "offline": "离线",
+    "online_now": "当前在线",
+    "this_device": "本设备",
+    "gateway": "路由器",
+    "blocked": "已阻止",
+    "untrusted": "未识别",
+    "new": "新设备",
+    "trusted": "已信任",
+    "mark_trusted": "标记为信任",
+    "private": "私有",
+    "private_mac": "私有地址",
     "private_mac_hint": "随机化 MAC 地址（iOS、Android 和 Windows 的隐私功能），无法识别厂商。",
-    "unknown_vendor": "未知厂商", "notes": "备注", "notes_ph": "所有者、位置，或任何有用的信息…",
-    "block": "阻止", "unblock": "解除阻止", "block_confirm_t": "阻止 {name}？",
+    "unknown_vendor": "未知厂商",
+    "notes": "备注",
+    "notes_ph": "所有者、位置，或任何有用的信息…",
+    "block": "阻止",
+    "unblock": "解除阻止",
+    "block_confirm_t": "阻止 {name}？",
     "block_confirm": "在您解除阻止之前，该设备将无法上网。规则将应用于您的路由器。",
-    "blocked_ok": "设备已阻止", "unblocked_ok": "设备已解除阻止",
-    "wake": "唤醒", "wol_sent": "已发送 Wake-on-LAN 数据包", "open_web": "网页界面",
-    "favorite": "收藏", "favorite_hint": "收藏的设备上线或离线时会通知您",
-    "forget": "清除设备", "forget_text": "该设备及其历史记录将被移除。若再次连接，它将作为新设备重新出现。",
+    "blocked_ok": "设备已阻止",
+    "unblocked_ok": "设备已解除阻止",
+    "wake": "唤醒",
+    "wol_sent": "已发送 Wake-on-LAN 数据包",
+    "open_web": "网页界面",
+    "favorite": "收藏",
+    "favorite_hint": "收藏的设备上线或离线时会通知您",
+    "forget": "清除设备",
+    "forget_text": "该设备及其历史记录将被移除。若再次连接，它将作为新设备重新出现。",
     "no_events": "暂无活动记录。",
-    "ping_ok": "可访问 · 平均 {avg} ms（最小 {min} / 最大 {max}）", "ping_fail": "无响应",
+    "ping_ok": "可访问 · 平均 {avg} ms（最小 {min} / 最大 {max}）",
+    "ping_fail": "无响应",
     "ping_detail": "通过 {method} 收到 {recv}/{sent} 个响应",
-    "tab_overview": "概览", "tab_ports": "端口与服务", "tab_activity": "活动"
+    "tab_overview": "概览",
+    "tab_ports": "端口与服务",
+    "tab_activity": "活动"
   },
   "ports": {
-    "quick": "快速扫描", "common": "常用端口", "full": "完整扫描", "scanned": "扫描于 {ago}", "never": "尚未扫描",
-    "port": "端口", "service": "服务", "risk": "风险", "none_open": "所选方案未发现开放的 TCP 端口。",
+    "quick": "快速扫描",
+    "common": "常用端口",
+    "full": "完整扫描",
+    "scanned": "扫描于 {ago}",
+    "never": "尚未扫描",
+    "port": "端口",
+    "service": "服务",
+    "risk": "风险",
+    "none_open": "所选方案未发现开放的 TCP 端口。",
     "hint": "扫描此设备，列出它在您的网络中开放的服务。",
     "legal": "仅进行连接检测：不会利用漏洞，也不会尝试破解密码。请仅用于您拥有或管理的设备。"
   },
-  "risk": { "none": "安全", "low": "低", "medium": "中", "high": "高", "critical": "严重" },
-  "severity": { "critical": "严重", "high": "高", "medium": "中", "low": "低", "info": "信息" },
+  "risk": {
+    "none": "安全",
+    "low": "低",
+    "medium": "中",
+    "high": "高",
+    "critical": "严重"
+  },
+  "severity": {
+    "critical": "严重",
+    "high": "高",
+    "medium": "中",
+    "low": "低",
+    "info": "信息"
+  },
   "types": {
-    "router": "路由器", "mesh": "接入点 / Mesh", "phone": "手机", "tablet": "平板电脑", "laptop": "笔记本电脑",
-    "desktop": "电脑", "server": "服务器", "tv": "电视", "streamer": "流媒体设备", "speaker": "音箱",
-    "camera": "摄像头", "printer": "打印机", "console": "游戏机", "iot": "智能设备", "light": "灯",
-    "plug": "智能插座", "hub": "智能中枢", "nas": "NAS 存储", "watch": "手表", "car": "汽车",
-    "raspberry": "Raspberry Pi", "voip": "VoIP 电话", "unknown": "未知"
+    "router": "路由器",
+    "mesh": "接入点 / Mesh",
+    "phone": "手机",
+    "tablet": "平板电脑",
+    "laptop": "笔记本电脑",
+    "desktop": "电脑",
+    "server": "服务器",
+    "tv": "电视",
+    "streamer": "流媒体设备",
+    "speaker": "音箱",
+    "camera": "摄像头",
+    "printer": "打印机",
+    "console": "游戏机",
+    "iot": "智能设备",
+    "light": "灯",
+    "plug": "智能插座",
+    "hub": "智能中枢",
+    "nas": "NAS 存储",
+    "watch": "手表",
+    "car": "汽车",
+    "raspberry": "Raspberry Pi",
+    "voip": "VoIP 电话",
+    "unknown": "未知"
   },
   "security": {
-    "title": "安全审计", "score": "安全评分", "grade": "等级", "not_run": "尚未审计",
+    "title": "安全审计",
+    "score": "安全评分",
+    "grade": "等级",
+    "not_run": "尚未审计",
     "intro": "检查您的 Wi-Fi、路由器和每台设备是否存在高风险配置。",
     "intro_long": "审计将检查 Wi-Fi 加密、UPnP 暴露、路由器管理，以及每台在线设备开放的服务，大约需要一分钟。",
-    "run": "运行审计", "rerun": "重新运行", "running": "正在审计…", "report": "下载报告",
-    "good": "您的网络防护良好", "fair": "您的网络还可以更安全", "poor": "您的网络需要关注",
-    "summary_one": "{devices} 台设备共发现 {count} 个问题 · {ago}", "summary_other": "{devices} 台设备共发现 {count} 个问题 · {ago}",
-    "findings": "发现的问题", "passed": "通过的检查", "no_findings": "未发现问题", "no_findings_d": "太棒了，目前没有需要修复的内容。",
-    "checking": "正在检查 {name}…", "phase_network": "正在分析网络配置…", "phase_ports": "正在检查设备…",
-    "ethics_t": "设计上不具侵入性", "ethics_d": "检查仅探测已暴露的内容：不利用任何漏洞，不尝试任何密码，也不拦截任何流量。"
+    "run": "运行审计",
+    "rerun": "重新运行",
+    "running": "正在审计…",
+    "report": "下载报告",
+    "good": "您的网络防护良好",
+    "fair": "您的网络还可以更安全",
+    "poor": "您的网络需要关注",
+    "summary_one": "{devices} 台设备共发现 {count} 个问题 · {ago}",
+    "summary_other": "{devices} 台设备共发现 {count} 个问题 · {ago}",
+    "findings": "发现的问题",
+    "passed": "通过的检查",
+    "no_findings": "未发现问题",
+    "no_findings_d": "太棒了，目前没有需要修复的内容。",
+    "checking": "正在检查 {name}…",
+    "phase_network": "正在分析网络配置…",
+    "phase_ports": "正在检查设备…",
+    "ethics_t": "设计上不具侵入性",
+    "ethics_d": "检查仅探测已暴露的内容：不利用任何漏洞，不尝试任何密码，也不拦截任何流量。"
   },
   "audit": {
-    "how_to_fix": "修复方法", "banner": "服务标识", "view_device": "打开设备",
+    "how_to_fix": "修复方法",
+    "banner": "服务标识",
+    "view_device": "打开设备",
     "pass": {
-      "wifi_wpa3": "Wi-Fi 使用 WPA3 加密", "upnp_disabled": "路由器未暴露 UPnP 端口映射",
-      "all_trusted": "网络中的每台设备均已识别", "no_risky_services": "未暴露高风险服务"
+      "wifi_wpa3": "Wi-Fi 使用 WPA3 加密",
+      "upnp_disabled": "路由器未暴露 UPnP 端口映射",
+      "all_trusted": "网络中的每台设备均已识别",
+      "no_risky_services": "未暴露高风险服务"
     },
     "f": {
-      "wifi_open": { "title": "Wi-Fi “{ssid}” 未加密", "desc": "附近的任何人都可以加入并查看未加密的流量。", "fix": "在路由器的 Wi-Fi 设置中启用 WPA3-Personal（或 WPA2/WPA3 混合模式），并设置高强度密码。" },
-      "wifi_wep": { "title": "Wi-Fi “{ssid}” 使用 WEP", "desc": "WEP 可在几分钟内被破解。", "fix": "在路由器设置中切换到 WPA3-Personal，或至少使用 WPA2-AES。" },
-      "wifi_wpa": { "title": "Wi-Fi “{ssid}” 使用旧版 WPA", "desc": "最初的 WPA/TKIP 已过时且存在漏洞。", "fix": "切换到 WPA3-Personal 或 WPA2-AES (CCMP)。" },
-      "wifi_wpa2": { "title": "Wi-Fi “{ssid}” 使用 WPA2", "desc": "WPA2 仍可接受，但 WPA3 能抵御离线密码猜测。", "fix": "如果所有设备都支持，请启用 WPA3 或 WPA2/WPA3 过渡模式，并使用 12 位以上的密码。" },
-      "wifi_tkip": { "title": "Wi-Fi 使用 TKIP 加密", "desc": "TKIP 已被弃用且安全性较弱。", "fix": "在路由器的无线安全设置中仅选择 AES/CCMP。" },
-      "upnp_enabled": { "title": "路由器 {router} 已启用 UPnP", "desc": "网络中的任何设备或恶意软件都可以自动向互联网开放端口。", "fix": "除非游戏机或应用确实需要，否则请在路由器中禁用 UPnP，并改为手动转发特定端口。" },
-      "router_http": { "title": "路由器管理页面未使用 HTTPS", "desc": "{device}（{ip}）通过未加密的 HTTP 提供管理页面。", "fix": "如有可能，请启用 HTTPS 管理，使用高强度管理员密码，并禁用远程（WAN）管理。" },
-      "untrusted_devices": { "title": "{count} 台未识别设备在线", "desc": "未识别：{names}。", "fix": "逐一打开设备，确认您认识它并标记为信任。阻止任何不认识的设备，并更改您的 Wi-Fi 密码。" },
-      "cameras_present": { "title": "网络中有 {count} 个摄像头", "desc": "已检测到：{names}。", "fix": "请确认您认识每一个摄像头，更新其固件并修改默认密码。" },
-      "port_telnet": { "title": "{device} 上开放了 Telnet", "desc": "Telnet（端口 {port}）以明文发送密码，是 IoT 僵尸网络的常见目标。", "fix": "在设备设置或固件中禁用 Telnet；如需远程命令行访问，请使用 SSH。" },
-      "port_ftp": { "title": "{device} 上开放了 FTP", "desc": "FTP（端口 {port}）以未加密方式传输凭据和文件。", "fix": "禁用 FTP，或改用 SFTP/FTPS。" },
-      "port_tftp": { "title": "{device} 上开放了 TFTP", "desc": "TFTP 完全没有身份验证。", "fix": "不进行设备配置时请禁用 TFTP。" },
-      "port_smb": { "title": "{device} 上的文件共享（SMB）", "desc": "端口 {port} 已开放。对于共享文件的电脑和 NAS 属正常，但在其他设备上则不应出现。", "fix": "如不使用，请禁用文件共享，保持 SMBv1 禁用，并用密码保护共享。" },
-      "port_msrpc": { "title": "{device} 上暴露了 Windows RPC", "desc": "端口 {port} 在私有网络中的 Windows 电脑上属正常现象。", "fix": "保持 Windows 更新，并仅在信任该网络时将其设为“专用”网络。" },
-      "port_rdp": { "title": "{device} 上开放了远程桌面", "desc": "RDP（端口 {port}）是常见的攻击目标。", "fix": "如不使用请禁用远程桌面，要求网络级别身份验证，并且切勿将其转发到互联网。" },
-      "port_vnc": { "title": "{device} 上开放了 VNC", "desc": "VNC（端口 {port}）通常使用弱密码或无身份验证。", "fix": "禁用 VNC，或使用高强度密码保护，并仅允许通过 VPN 访问。" },
-      "port_docker": { "title": "{device} 上暴露了 Docker API", "desc": "端口 {port} 无需身份验证即可完全控制主机。", "fix": "仅将 Docker 守护进程绑定到 Unix 套接字，或启用 TLS 客户端身份验证（端口 2376）。" },
-      "port_adb": { "title": "{device} 上开放了 Android 调试（ADB）", "desc": "网络 ADB（端口 {port}）可完全控制 Android 设备。", "fix": "在开发者选项中关闭“无线调试 / 网络 ADB”。" },
-      "port_mqtt": { "title": "{device} 上的 MQTT 未加密", "desc": "MQTT（端口 {port}）控制智能家居设备，并可能允许匿名访问。", "fix": "要求用户名和密码，并优先使用基于 TLS 的 MQTT（端口 8883）。" },
-      "port_rtsp": { "title": "{device} 上的视频流（RTSP）", "desc": "RTSP（端口 {port}）可能暴露摄像头的实时画面。", "fix": "设置高强度的摄像头密码，更新固件；如果只使用厂商应用，请禁用 RTSP。" },
-      "port_database": { "title": "{device} 上暴露了数据库 {service}", "desc": "整个网络都可访问端口 {port}。", "fix": "将数据库绑定到 localhost 或用防火墙限制访问，并要求身份验证。" },
-      "port_x11": { "title": "{device} 上开放了 X11 显示服务器", "desc": "端口 {port} 可能允许截取屏幕和键盘输入。", "fix": "禁用 X11 的 TCP 监听（使用 -nolisten tcp）。" },
-      "port_rpcbind": { "title": "{device} 上开放了 RPCbind", "desc": "端口 {port} 会泄露 RPC 服务信息，常被用于攻击。", "fix": "如不使用 NFS，请禁用 rpcbind。" },
-      "port_proxy": { "title": "{device} 上存在开放代理", "desc": "端口 {port} 上的 SOCKS 代理可转发流量。", "fix": "禁用该代理，或要求身份验证。" },
-      "port_pptp": { "title": "{device} 上的 PPTP VPN", "desc": "PPTP（端口 {port}）使用已被攻破的加密。", "fix": "改用 WireGuard 或 OpenVPN。" },
-      "port_modbus": { "title": "{device} 上开放了 Modbus", "desc": "端口 {port} 上的工业协议没有身份验证。", "fix": "将该设备隔离到单独的网段。" },
-      "port_dvr": { "title": "{device} 上的 DVR/NVR 服务", "desc": "端口 {port} 属于以漏洞众多著称的录像机协议。", "fix": "更新固件，修改默认密码，并且切勿将其暴露到互联网。" },
-      "port_suspicious": { "title": "{device} 上存在异常服务", "desc": "端口 {port} 常被后门和测试工具使用。", "fix": "检查是哪个程序在监听此端口，如果不认识请将其移除。" },
-      "port_webmin": { "title": "{device} 上的 Webmin", "desc": "端口 {port} 上的管理面板。", "fix": "保持更新，并将访问限制在受信任的主机。" },
-      "port_tr069": { "title": "{device} 上的 TR-069 管理", "desc": "ISP 使用的远程管理端口 {port}。", "fix": "在 ISP 提供的路由器上属正常；如非必要，请确保局域网设备无法访问它。" },
-      "port_rsync": { "title": "{device} 上开放了 rsync", "desc": "端口 {port} 可能允许未经身份验证的文件访问。", "fix": "要求身份验证，或禁用该守护进程。" },
-      "port_nfs": { "title": "{device} 上开放了 NFS", "desc": "端口 {port} 通过网络共享文件夹。", "fix": "将导出限制到特定主机，如不使用请禁用。" },
-      "port_mail_plain": { "title": "{device} 上的邮件服务未加密", "desc": "端口 {port} 上的 {service} 以明文发送凭据。", "fix": "请使用 TLS 版本（IMAPS 993 / POP3S 995）。" },
-      "port_winrm": { "title": "{device} 上的 WinRM", "desc": "端口 {port} 上的 Windows 远程管理。", "fix": "如不使用请禁用，或仅限管理员访问。" }
+      "wifi_open": {
+        "title": "Wi-Fi “{ssid}” 未加密",
+        "desc": "附近的任何人都可以加入并查看未加密的流量。",
+        "fix": "在路由器的 Wi-Fi 设置中启用 WPA3-Personal（或 WPA2/WPA3 混合模式），并设置高强度密码。"
+      },
+      "wifi_wep": {
+        "title": "Wi-Fi “{ssid}” 使用 WEP",
+        "desc": "WEP 可在几分钟内被破解。",
+        "fix": "在路由器设置中切换到 WPA3-Personal，或至少使用 WPA2-AES。"
+      },
+      "wifi_wpa": {
+        "title": "Wi-Fi “{ssid}” 使用旧版 WPA",
+        "desc": "最初的 WPA/TKIP 已过时且存在漏洞。",
+        "fix": "切换到 WPA3-Personal 或 WPA2-AES (CCMP)。"
+      },
+      "wifi_wpa2": {
+        "title": "Wi-Fi “{ssid}” 使用 WPA2",
+        "desc": "WPA2 仍可接受，但 WPA3 能抵御离线密码猜测。",
+        "fix": "如果所有设备都支持，请启用 WPA3 或 WPA2/WPA3 过渡模式，并使用 12 位以上的密码。"
+      },
+      "wifi_tkip": {
+        "title": "Wi-Fi 使用 TKIP 加密",
+        "desc": "TKIP 已被弃用且安全性较弱。",
+        "fix": "在路由器的无线安全设置中仅选择 AES/CCMP。"
+      },
+      "upnp_enabled": {
+        "title": "路由器 {router} 已启用 UPnP",
+        "desc": "网络中的任何设备或恶意软件都可以自动向互联网开放端口。",
+        "fix": "除非游戏机或应用确实需要，否则请在路由器中禁用 UPnP，并改为手动转发特定端口。"
+      },
+      "router_http": {
+        "title": "路由器管理页面未使用 HTTPS",
+        "desc": "{device}（{ip}）通过未加密的 HTTP 提供管理页面。",
+        "fix": "如有可能，请启用 HTTPS 管理，使用高强度管理员密码，并禁用远程（WAN）管理。"
+      },
+      "untrusted_devices": {
+        "title": "{count} 台未识别设备在线",
+        "desc": "未识别：{names}。",
+        "fix": "逐一打开设备，确认您认识它并标记为信任。阻止任何不认识的设备，并更改您的 Wi-Fi 密码。"
+      },
+      "cameras_present": {
+        "title": "网络中有 {count} 个摄像头",
+        "desc": "已检测到：{names}。",
+        "fix": "请确认您认识每一个摄像头，更新其固件并修改默认密码。"
+      },
+      "port_telnet": {
+        "title": "{device} 上开放了 Telnet",
+        "desc": "Telnet（端口 {port}）以明文发送密码，是 IoT 僵尸网络的常见目标。",
+        "fix": "在设备设置或固件中禁用 Telnet；如需远程命令行访问，请使用 SSH。"
+      },
+      "port_ftp": {
+        "title": "{device} 上开放了 FTP",
+        "desc": "FTP（端口 {port}）以未加密方式传输凭据和文件。",
+        "fix": "禁用 FTP，或改用 SFTP/FTPS。"
+      },
+      "port_tftp": {
+        "title": "{device} 上开放了 TFTP",
+        "desc": "TFTP 完全没有身份验证。",
+        "fix": "不进行设备配置时请禁用 TFTP。"
+      },
+      "port_smb": {
+        "title": "{device} 上的文件共享（SMB）",
+        "desc": "端口 {port} 已开放。对于共享文件的电脑和 NAS 属正常，但在其他设备上则不应出现。",
+        "fix": "如不使用，请禁用文件共享，保持 SMBv1 禁用，并用密码保护共享。"
+      },
+      "port_msrpc": {
+        "title": "{device} 上暴露了 Windows RPC",
+        "desc": "端口 {port} 在私有网络中的 Windows 电脑上属正常现象。",
+        "fix": "保持 Windows 更新，并仅在信任该网络时将其设为“专用”网络。"
+      },
+      "port_rdp": {
+        "title": "{device} 上开放了远程桌面",
+        "desc": "RDP（端口 {port}）是常见的攻击目标。",
+        "fix": "如不使用请禁用远程桌面，要求网络级别身份验证，并且切勿将其转发到互联网。"
+      },
+      "port_vnc": {
+        "title": "{device} 上开放了 VNC",
+        "desc": "VNC（端口 {port}）通常使用弱密码或无身份验证。",
+        "fix": "禁用 VNC，或使用高强度密码保护，并仅允许通过 VPN 访问。"
+      },
+      "port_docker": {
+        "title": "{device} 上暴露了 Docker API",
+        "desc": "端口 {port} 无需身份验证即可完全控制主机。",
+        "fix": "仅将 Docker 守护进程绑定到 Unix 套接字，或启用 TLS 客户端身份验证（端口 2376）。"
+      },
+      "port_adb": {
+        "title": "{device} 上开放了 Android 调试（ADB）",
+        "desc": "网络 ADB（端口 {port}）可完全控制 Android 设备。",
+        "fix": "在开发者选项中关闭“无线调试 / 网络 ADB”。"
+      },
+      "port_mqtt": {
+        "title": "{device} 上的 MQTT 未加密",
+        "desc": "MQTT（端口 {port}）控制智能家居设备，并可能允许匿名访问。",
+        "fix": "要求用户名和密码，并优先使用基于 TLS 的 MQTT（端口 8883）。"
+      },
+      "port_rtsp": {
+        "title": "{device} 上的视频流（RTSP）",
+        "desc": "RTSP（端口 {port}）可能暴露摄像头的实时画面。",
+        "fix": "设置高强度的摄像头密码，更新固件；如果只使用厂商应用，请禁用 RTSP。"
+      },
+      "port_database": {
+        "title": "{device} 上暴露了数据库 {service}",
+        "desc": "整个网络都可访问端口 {port}。",
+        "fix": "将数据库绑定到 localhost 或用防火墙限制访问，并要求身份验证。"
+      },
+      "port_x11": {
+        "title": "{device} 上开放了 X11 显示服务器",
+        "desc": "端口 {port} 可能允许截取屏幕和键盘输入。",
+        "fix": "禁用 X11 的 TCP 监听（使用 -nolisten tcp）。"
+      },
+      "port_rpcbind": {
+        "title": "{device} 上开放了 RPCbind",
+        "desc": "端口 {port} 会泄露 RPC 服务信息，常被用于攻击。",
+        "fix": "如不使用 NFS，请禁用 rpcbind。"
+      },
+      "port_proxy": {
+        "title": "{device} 上存在开放代理",
+        "desc": "端口 {port} 上的 SOCKS 代理可转发流量。",
+        "fix": "禁用该代理，或要求身份验证。"
+      },
+      "port_pptp": {
+        "title": "{device} 上的 PPTP VPN",
+        "desc": "PPTP（端口 {port}）使用已被攻破的加密。",
+        "fix": "改用 WireGuard 或 OpenVPN。"
+      },
+      "port_modbus": {
+        "title": "{device} 上开放了 Modbus",
+        "desc": "端口 {port} 上的工业协议没有身份验证。",
+        "fix": "将该设备隔离到单独的网段。"
+      },
+      "port_dvr": {
+        "title": "{device} 上的 DVR/NVR 服务",
+        "desc": "端口 {port} 属于以漏洞众多著称的录像机协议。",
+        "fix": "更新固件，修改默认密码，并且切勿将其暴露到互联网。"
+      },
+      "port_suspicious": {
+        "title": "{device} 上存在异常服务",
+        "desc": "端口 {port} 常被后门和测试工具使用。",
+        "fix": "检查是哪个程序在监听此端口，如果不认识请将其移除。"
+      },
+      "port_webmin": {
+        "title": "{device} 上的 Webmin",
+        "desc": "端口 {port} 上的管理面板。",
+        "fix": "保持更新，并将访问限制在受信任的主机。"
+      },
+      "port_tr069": {
+        "title": "{device} 上的 TR-069 管理",
+        "desc": "ISP 使用的远程管理端口 {port}。",
+        "fix": "在 ISP 提供的路由器上属正常；如非必要，请确保局域网设备无法访问它。"
+      },
+      "port_rsync": {
+        "title": "{device} 上开放了 rsync",
+        "desc": "端口 {port} 可能允许未经身份验证的文件访问。",
+        "fix": "要求身份验证，或禁用该守护进程。"
+      },
+      "port_nfs": {
+        "title": "{device} 上开放了 NFS",
+        "desc": "端口 {port} 通过网络共享文件夹。",
+        "fix": "将导出限制到特定主机，如不使用请禁用。"
+      },
+      "port_mail_plain": {
+        "title": "{device} 上的邮件服务未加密",
+        "desc": "端口 {port} 上的 {service} 以明文发送凭据。",
+        "fix": "请使用 TLS 版本（IMAPS 993 / POP3S 995）。"
+      },
+      "port_winrm": {
+        "title": "{device} 上的 WinRM",
+        "desc": "端口 {port} 上的 Windows 远程管理。",
+        "fix": "如不使用请禁用，或仅限管理员访问。"
+      }
     }
   },
   "cams": {
-    "title": "隐藏摄像头探测", "subtitle": "ONVIF、RTSP、DVR 服务与厂商指纹", "run": "搜索摄像头",
+    "title": "隐藏摄像头探测",
+    "subtitle": "ONVIF、RTSP、DVR 服务与厂商指纹",
+    "run": "搜索摄像头",
     "hint": "检查每台在线设备，寻找摄像头或录像机的迹象。",
-    "none": "未发现摄像头", "none_d": "已检查 {count} 台设备。手机和笔记本电脑仍可能内置摄像头。",
+    "none": "未发现摄像头",
+    "none_d": "已检查 {count} 台设备。手机和笔记本电脑仍可能内置摄像头。",
     "advice": "是否认识每一个摄像头？如果不认识，请查看它的实际位置，并在设备面板中将其阻止。",
-    "conf_high": "极有可能", "conf_medium": "可能",
-    "reason_classified": "摄像头厂商/型号", "reason_onvif": "ONVIF 摄像头", "reason_mdns_rtsp": "广播 RTSP",
-    "reason_rtsp": "RTSP 视频流", "reason_dvr": "DVR 协议", "reason_banner": "摄像头网页服务器"
+    "conf_high": "极有可能",
+    "conf_medium": "可能",
+    "reason_classified": "摄像头厂商/型号",
+    "reason_onvif": "ONVIF 摄像头",
+    "reason_mdns_rtsp": "广播 RTSP",
+    "reason_rtsp": "RTSP 视频流",
+    "reason_dvr": "DVR 协议",
+    "reason_banner": "摄像头网页服务器"
   },
   "speed": {
-    "go": "GO", "ping": "Ping", "jitter": "抖动", "download": "下载", "upload": "上传", "connect": "正在连接",
-    "history": "历史记录", "history_free": "最近 10 次测试（Pro 保留全部）", "date": "日期",
-    "no_history": "暂无测试", "no_history_d": "点击 GO 测量您的网络连接。"
+    "go": "GO",
+    "ping": "Ping",
+    "jitter": "抖动",
+    "download": "下载",
+    "upload": "上传",
+    "connect": "正在连接",
+    "history": "历史记录",
+    "date": "日期",
+    "no_history": "暂无测试",
+    "no_history_d": "点击 GO 测量您的网络连接。"
   },
   "monitor": {
-    "status": { "online": "在线", "offline": "离线", "degraded": "质量下降", "unknown": "正在检查…" },
-    "connection": "连接", "latency": "延迟", "loss": "丢包", "since": "自", "since_ago": "自 {ago}",
-    "avg": "平均", "uptime": "在线率", "last_hours_one": "最近 1 小时", "last_hours_other": "最近 {count} 小时",
-    "outages": "断网", "gw_ok": "路由器正常", "gw_down": "路由器无法访问", "latency_chart": "延迟与丢包",
-    "outage_log": "断网记录", "lan_outage": "局域网中断", "inet_outage": "互联网中断", "ongoing": "进行中",
-    "no_outages": "无断网", "no_outages_d": "在此期间您的网络连接一直很稳定。",
-    "how_t": "监测原理", "how_d": "NET Sniffer 会持续检测您的路由器和三个公共 DNS 服务商。连续两次失败即记为一次断网，让您清楚知道离线的时间点和时长。",
-    "targets": "目标", "interval": "间隔", "samples": "样本"
+    "status": {
+      "online": "在线",
+      "offline": "离线",
+      "degraded": "质量下降",
+      "unknown": "正在检查…"
+    },
+    "connection": "连接",
+    "latency": "延迟",
+    "loss": "丢包",
+    "since": "自",
+    "since_ago": "自 {ago}",
+    "avg": "平均",
+    "uptime": "在线率",
+    "last_hours_one": "最近 1 小时",
+    "last_hours_other": "最近 {count} 小时",
+    "outages": "断网",
+    "gw_ok": "路由器正常",
+    "gw_down": "路由器无法访问",
+    "latency_chart": "延迟与丢包",
+    "outage_log": "断网记录",
+    "lan_outage": "局域网中断",
+    "inet_outage": "互联网中断",
+    "ongoing": "进行中",
+    "no_outages": "无断网",
+    "no_outages_d": "在此期间您的网络连接一直很稳定。",
+    "how_t": "监测原理",
+    "how_d": "NET Sniffer 会持续检测您的路由器和三个公共 DNS 服务商。连续两次失败即记为一次断网，让您清楚知道离线的时间点和时长。",
+    "targets": "目标",
+    "interval": "间隔",
+    "samples": "样本"
   },
   "alerts": {
-    "f_all": "全部", "f_security": "安全", "f_devices": "设备", "f_internet": "互联网",
-    "mark_read": "全部标为已读", "clear": "清除历史记录", "clear_text": "所有提醒和设备活动历史记录都将被删除。",
-    "none": "暂无提醒", "none_d": "新设备、断网和安全警告将显示在这里。"
+    "f_all": "全部",
+    "f_security": "安全",
+    "f_devices": "设备",
+    "f_internet": "互联网",
+    "mark_read": "全部标为已读",
+    "clear": "清除历史记录",
+    "clear_text": "所有提醒和设备活动历史记录都将被删除。",
+    "none": "暂无提醒",
+    "none_d": "新设备、断网和安全警告将显示在这里。"
   },
   "events": {
-    "device_new": { "title": "新设备：{name}", "text": "{ip} · {vendor} {mac}" },
-    "device_first_seen": { "title": "发现 {name}", "text": "{ip} · {vendor}" },
-    "device_online": { "title": "{name} 已上线", "text": "{ip}" },
-    "device_offline": { "title": "{name} 已离线", "text": "最后 IP：{ip}" },
-    "device_ip_changed": { "title": "{name} 的 IP 已更改", "text": "{old} → {new}" },
-    "internet_down": { "title": "互联网连接中断", "text": "路由器可访问，但无法连接互联网。" },
-    "internet_up": { "title": "互联网连接已恢复", "text": "中断持续了 {duration}" },
-    "gateway_down": { "title": "路由器无法访问", "text": "本设备与局域网失去联系。" },
-    "security_issues": { "title": "安全审计：{count} 个重要问题", "text": "评分 {score}/100。请查看发现的问题。" },
-    "camera_detected": { "title": "检测到摄像头：{name}", "text": "{ip} · {vendor}" },
-    "device_blocked": { "title": "{name} 已被阻止", "text": "已取消上网权限" },
-    "device_unblocked": { "title": "{name} 已解除阻止", "text": "已恢复上网权限" },
-    "update_installed": { "title": "NET Sniffer 已更新", "text": "当前运行的是最新版本" }
+    "device_new": {
+      "title": "新设备：{name}",
+      "text": "{ip} · {vendor} {mac}"
+    },
+    "device_first_seen": {
+      "title": "发现 {name}",
+      "text": "{ip} · {vendor}"
+    },
+    "device_online": {
+      "title": "{name} 已上线",
+      "text": "{ip}"
+    },
+    "device_offline": {
+      "title": "{name} 已离线",
+      "text": "最后 IP：{ip}"
+    },
+    "device_ip_changed": {
+      "title": "{name} 的 IP 已更改",
+      "text": "{old} → {new}"
+    },
+    "internet_down": {
+      "title": "互联网连接中断",
+      "text": "路由器可访问，但无法连接互联网。"
+    },
+    "internet_up": {
+      "title": "互联网连接已恢复",
+      "text": "中断持续了 {duration}"
+    },
+    "gateway_down": {
+      "title": "路由器无法访问",
+      "text": "本设备与局域网失去联系。"
+    },
+    "security_issues": {
+      "title": "安全审计：{count} 个重要问题",
+      "text": "评分 {score}/100。请查看发现的问题。"
+    },
+    "camera_detected": {
+      "title": "检测到摄像头：{name}",
+      "text": "{ip} · {vendor}"
+    },
+    "device_blocked": {
+      "title": "{name} 已被阻止",
+      "text": "已取消上网权限"
+    },
+    "device_unblocked": {
+      "title": "{name} 已解除阻止",
+      "text": "已恢复上网权限"
+    },
+    "update_installed": {
+      "title": "NET Sniffer 已更新",
+      "text": "当前运行的是最新版本"
+    }
   },
   "notify": {
-    "device_new": { "title": "网络中出现新设备", "body": "{name}（{ip}）{vendor}" },
-    "device_online": { "title": "{name} 已上线", "body": "{ip}" },
-    "device_offline": { "title": "{name} 已离线", "body": "最后出现在 {ip}" },
-    "internet_down": { "title": "互联网连接中断", "body": "恢复后 NET Sniffer 会通知您。" },
-    "internet_up": { "title": "互联网已恢复", "body": "中断持续了 {duration}。" },
-    "gateway_down": { "title": "路由器无法访问", "body": "局域网没有响应。" },
-    "security_issues": { "title": "发现安全问题", "body": "{count} 个重要问题 · 评分 {score}/100" },
-    "camera_detected": { "title": "检测到摄像头", "body": "{name}（{ip}）" },
-    "test": { "title": "NET Sniffer", "body": "通知工作正常 🎉" }
+    "device_new": {
+      "title": "网络中出现新设备",
+      "body": "{name}（{ip}）{vendor}"
+    },
+    "device_online": {
+      "title": "{name} 已上线",
+      "body": "{ip}"
+    },
+    "device_offline": {
+      "title": "{name} 已离线",
+      "body": "最后出现在 {ip}"
+    },
+    "internet_down": {
+      "title": "互联网连接中断",
+      "body": "恢复后 NET Sniffer 会通知您。"
+    },
+    "internet_up": {
+      "title": "互联网已恢复",
+      "body": "中断持续了 {duration}。"
+    },
+    "gateway_down": {
+      "title": "路由器无法访问",
+      "body": "局域网没有响应。"
+    },
+    "security_issues": {
+      "title": "发现安全问题",
+      "body": "{count} 个重要问题 · 评分 {score}/100"
+    },
+    "camera_detected": {
+      "title": "检测到摄像头",
+      "body": "{name}（{ip}）"
+    },
+    "test": {
+      "title": "NET Sniffer",
+      "body": "通知工作正常 🎉"
+    }
   },
   "parental": {
-    "rules": "计划", "rules_d": "在特定时间自动阻止上网。",
-    "new_rule": "新建计划", "edit_rule": "编辑计划", "rule": "计划", "rule_name": "名称", "rule_name_ph": "例如：孩子的睡前时间",
-    "devices": "设备", "block_periods": "阻止时段", "add_period": "添加时段",
+    "rules": "计划",
+    "rules_d": "在特定时间自动阻止上网。",
+    "new_rule": "新建计划",
+    "edit_rule": "编辑计划",
+    "rule": "计划",
+    "rule_name": "名称",
+    "rule_name_ph": "例如：孩子的睡前时间",
+    "devices": "设备",
+    "block_periods": "阻止时段",
+    "add_period": "添加时段",
     "periods_hint": "每个时段内将阻止上网。结束时间早于开始时间的时段会持续到次日。",
-    "preset_bedtime": "睡前时间", "preset_school": "上课时间", "preset_homework": "作业时间",
-    "every_day": "每天", "weekdays": "工作日", "no_schedule": "无时段", "no_devices": "未选择设备",
-    "blocking_now": "正在阻止", "scheduled": "已计划", "disabled": "已停用", "enabled": "已启用",
-    "none": "暂无计划", "none_d": "创建计划，或从预设开始。",
-    "delete_rule": "删除计划", "delete_rule_d": "此计划中的设备将不再受其阻止。",
-    "saved": "计划已保存", "quick_pause": "暂停上网", "quick_pause_d": "一键暂停设备上网一小时",
-    "pause": "暂停", "pause_for": "暂停 {d}", "resume": "立即恢复", "paused_ok": "已暂停上网", "resumed_ok": "已恢复上网",
+    "preset_bedtime": "睡前时间",
+    "preset_school": "上课时间",
+    "preset_homework": "作业时间",
+    "every_day": "每天",
+    "weekdays": "工作日",
+    "no_schedule": "无时段",
+    "no_devices": "未选择设备",
+    "blocking_now": "正在阻止",
+    "scheduled": "已计划",
+    "disabled": "已停用",
+    "enabled": "已启用",
+    "none": "暂无计划",
+    "none_d": "创建计划，或从预设开始。",
+    "delete_rule": "删除计划",
+    "delete_rule_d": "此计划中的设备将不再受其阻止。",
+    "saved": "计划已保存",
+    "quick_pause": "暂停上网",
+    "quick_pause_d": "一键暂停设备上网一小时",
+    "pause": "暂停",
+    "pause_for": "暂停 {d}",
+    "resume": "立即恢复",
+    "paused_ok": "已暂停上网",
+    "resumed_ok": "已恢复上网",
     "paused_until": "暂停至 {time}",
     "need_backend": "连接路由器以执行阻止",
     "need_backend_d": "阻止由您自己的路由器执行。请在“设置”中完成一次连接配置。",
     "backend_error": "路由器拒绝了最近一次更改"
   },
   "block": {
-    "guide_title": "连接您的路由器", "guide_desc": "NET Sniffer 通过路由器自带的管理界面来阻止设备，这是使用您的管理员凭据进行的合规方式。",
-    "backend": "阻止方式", "backend_none": "未配置", "none_d": "选择 NET Sniffer 与路由器通信的方式。",
-    "backend_ssh": "通过 SSH 连接路由器（OpenWrt / Linux）", "backend_ssh_d": "适用于 OpenWrt、GL.iNet、Turris、DD-WRT 及其他 Linux 路由器。将设备 MAC 添加到防火墙丢弃列表。",
-    "backend_fritz": "AVM FRITZ!Box", "backend_fritz_d": "使用官方 TR-064 接口（请在 FRITZ!Box 中启用“允许应用访问”）。",
-    "backend_local": "本设备即网关（Linux）", "backend_local_d": "适用于作为路由器/热点的 Raspberry Pi 或 Linux 设备。需要 root 权限。",
-    "manual_t": "想手动操作？", "manual_d": "请将此 MAC 地址添加到路由器管理页面的阻止列表 / MAC 过滤中：",
-    "configure": "配置", "host": "路由器地址", "port": "SSH 端口", "user": "用户名", "password": "密码",
-    "firewall": "防火墙", "test": "测试连接", "test_ok": "已连接到路由器", "applied": "规则已应用：{ago}",
+    "guide_title": "连接您的路由器",
+    "guide_desc": "NET Sniffer 通过路由器自带的管理界面来阻止设备，这是使用您的管理员凭据进行的合规方式。",
+    "backend": "阻止方式",
+    "backend_none": "未配置",
+    "none_d": "选择 NET Sniffer 与路由器通信的方式。",
+    "backend_ssh": "通过 SSH 连接路由器（OpenWrt / Linux）",
+    "backend_ssh_d": "适用于 OpenWrt、GL.iNet、Turris、DD-WRT 及其他 Linux 路由器。将设备 MAC 添加到防火墙丢弃列表。",
+    "backend_fritz": "AVM FRITZ!Box",
+    "backend_fritz_d": "使用官方 TR-064 接口（请在 FRITZ!Box 中启用“允许应用访问”）。",
+    "backend_local": "本设备即网关（Linux）",
+    "backend_local_d": "适用于作为路由器/热点的 Raspberry Pi 或 Linux 设备。需要 root 权限。",
+    "manual_t": "想手动操作？",
+    "manual_d": "请将此 MAC 地址添加到路由器管理页面的阻止列表 / MAC 过滤中：",
+    "configure": "配置",
+    "host": "路由器地址",
+    "port": "SSH 端口",
+    "user": "用户名",
+    "password": "密码",
+    "firewall": "防火墙",
+    "test": "测试连接",
+    "test_ok": "已连接到路由器",
+    "applied": "规则已应用：{ago}",
     "intro": "设备阻止和家长控制由您的路由器执行。凭据加密存储在本设备上，仅用于与路由器通信。",
     "legal": "首次连接时会固定路由器的 SSH 主机密钥。NET Sniffer 绝不会冒充网络中的其他设备。"
   },
   "settings": {
-    "general": "常规", "scanning": "扫描", "notifications": "通知", "remote": "远程访问",
-    "blocking": "路由器与阻止", "license": "许可证", "updates": "更新", "privacy": "隐私与数据", "about": "关于",
-    "language": "语言", "language_d": "“自动”将使用您设备的语言。", "lang_auto": "自动",
-    "theme": "外观", "theme_d": "浅色、深色或跟随系统。", "theme_system": "跟随系统", "theme_light": "浅色", "theme_dark": "深色",
-    "auto_scan": "自动扫描", "auto_scan_d": "在后台定期重新扫描网络。",
-    "interval": "扫描间隔", "interval_d": "完整扫描的运行频率。", "interval_free": "免费版：每 15 分钟或更长。",
-    "watcher": "实时入侵监视", "watcher_d": "每 90 秒进行一次轻量在线检查，快速发现新设备。",
-    "monitor_interval": "网络检测间隔", "monitor_interval_d": "连通性的检测频率。",
-    "n_desktop": "桌面通知", "n_desktop_d": "在此电脑上显示系统通知。",
-    "n_new": "新设备", "n_new_d": "未知设备加入时提醒。",
-    "n_offline": "收藏设备上线/离线", "n_offline_d": "已收藏的设备连接或断开时提醒。",
-    "n_internet": "网络中断", "n_internet_d": "连接断开和恢复时提醒。",
-    "n_security": "安全警告", "n_security_d": "出现审计问题或检测到摄像头时提醒。",
-    "n_push": "推送到手机", "n_push_d": "可任意组合使用 ntfy、Telegram 或 webhook。",
-    "n_test": "发送测试", "n_test_sent": "测试通知已发送",
-    "remote_enable": "启用远程访问", "remote_enable_d": "向本网络中的手机和其他电脑提供 NET Sniffer 服务。请先设置密码。",
-    "remote_password": "访问密码", "remote_password_d": "从其他设备打开 NET Sniffer 时需要输入。", "remote_password_set": "密码已设置",
-    "remote_port": "端口", "remote_open": "在手机上打开",
+    "general": "常规",
+    "scanning": "扫描",
+    "notifications": "通知",
+    "remote": "远程访问",
+    "blocking": "路由器与阻止",
+    "updates": "更新",
+    "privacy": "隐私与数据",
+    "about": "关于",
+    "language": "语言",
+    "language_d": "“自动”将使用您设备的语言。",
+    "lang_auto": "自动",
+    "theme": "外观",
+    "theme_d": "浅色、深色或跟随系统。",
+    "theme_system": "跟随系统",
+    "theme_light": "浅色",
+    "theme_dark": "深色",
+    "auto_scan": "自动扫描",
+    "auto_scan_d": "在后台定期重新扫描网络。",
+    "interval": "扫描间隔",
+    "interval_d": "完整扫描的运行频率。",
+    "watcher": "实时入侵监视",
+    "watcher_d": "每 90 秒进行一次轻量在线检查，快速发现新设备。",
+    "monitor_interval": "网络检测间隔",
+    "monitor_interval_d": "连通性的检测频率。",
+    "n_desktop": "桌面通知",
+    "n_desktop_d": "在此电脑上显示系统通知。",
+    "n_new": "新设备",
+    "n_new_d": "未知设备加入时提醒。",
+    "n_offline": "收藏设备上线/离线",
+    "n_offline_d": "已收藏的设备连接或断开时提醒。",
+    "n_internet": "网络中断",
+    "n_internet_d": "连接断开和恢复时提醒。",
+    "n_security": "安全警告",
+    "n_security_d": "出现审计问题或检测到摄像头时提醒。",
+    "n_push": "推送到手机",
+    "n_push_d": "可任意组合使用 ntfy、Telegram 或 webhook。",
+    "n_test": "发送测试",
+    "n_test_sent": "测试通知已发送",
+    "remote_enable": "启用远程访问",
+    "remote_enable_d": "向本网络中的手机和其他电脑提供 NET Sniffer 服务。请先设置密码。",
+    "remote_password": "访问密码",
+    "remote_password_d": "从其他设备打开 NET Sniffer 时需要输入。",
+    "remote_password_set": "密码已设置",
+    "remote_port": "端口",
+    "remote_open": "在手机上打开",
     "remote_hint": "请用同一 Wi-Fi 下的设备扫描二维码。如需在外出时访问，请使用 VPN（WireGuard、Tailscale），而不要开放路由器端口。",
     "remote_headless": "正在服务器模式下运行：远程访问始终开启，并受密码保护。",
-    "public_ip": "公网 IP 与服务商查询", "public_ip_d": "向 Cloudflare 查询您的公网 IP 和 ISP 名称。",
-    "clear_alerts": "提醒历史记录", "clear_alerts_d": "删除所有提醒和设备活动。",
-    "logout": "退出登录", "logout_d": "结束此浏览器上的会话。",
+    "public_ip": "公网 IP 与服务商查询",
+    "public_ip_d": "向 Cloudflare 查询您的公网 IP 和 ISP 名称。",
+    "clear_alerts": "提醒历史记录",
+    "clear_alerts_d": "删除所有提醒和设备活动。",
+    "logout": "退出登录",
+    "logout_d": "结束此浏览器上的会话。",
     "saved": "已保存",
     "legal": "NET Sniffer 旨在监控和保护您拥有或获授权管理的网络，仅使用标准的发现协议和连接检测。",
     "oss": "基于 Python、FastAPI、zeroconf、psutil、httpx、pywebview 及其他开源软件构建。MAC 厂商数据 © IEEE Registration Authority。"
   },
   "update": {
-    "current": "版本 {v}", "available": "版本 {v} 可用", "ready_title": "更新 {v} 已就绪",
-    "ready_text": "重启 NET Sniffer 以完成更新。", "restart": "立即重启", "restarting": "正在重启…",
-    "downloading": "正在下载更新… {p}%", "checking": "正在检查更新…", "uptodate": "已是最新版本",
-    "error": "无法检查更新", "check": "立即检查", "install": "安装并重启", "checked": "检查于 {ago}",
-    "auto": "自动更新", "auto_d": "自动下载并安装新版本。",
-    "notes": "更新内容", "source_mode": "当前从源码运行：请使用 git pull 更新，或下载最新发行版。"
+    "current": "版本 {v}",
+    "available": "版本 {v} 可用",
+    "ready_title": "更新 {v} 已就绪",
+    "ready_text": "重启 NET Sniffer 以完成更新。",
+    "restart": "立即重启",
+    "restarting": "正在重启…",
+    "downloading": "正在下载更新… {p}%",
+    "checking": "正在检查更新…",
+    "uptodate": "已是最新版本",
+    "error": "无法检查更新",
+    "check": "立即检查",
+    "install": "安装并重启",
+    "checked": "检查于 {ago}",
+    "auto": "自动更新",
+    "auto_d": "自动下载并安装新版本。",
+    "notes": "更新内容",
+    "source_mode": "当前从源码运行：请使用 git pull 更新，或下载最新发行版。"
   },
-  "report": { "title": "网络报告" },
+  "report": {
+    "title": "网络报告"
+  },
   "errors": {
-    "title": "出了点问题", "generic": "意外错误。", "offline": "无法连接到 NET Sniffer。它还在运行吗？",
-    "unauthorized": "您的会话已过期。", "pro_required": "此功能需要 NET Sniffer Pro。",
-    "not_local": "只能扫描本地网络中的设备。", "device_not_found": "未找到设备。",
-    "bad_profile": "未知的扫描方案。", "no_mac": "此设备没有 MAC 地址。",
+    "title": "出了点问题",
+    "generic": "意外错误。",
+    "offline": "无法连接到 NET Sniffer。它还在运行吗？",
+    "unauthorized": "您的会话已过期。",
+    "not_local": "只能扫描本地网络中的设备。",
+    "device_not_found": "未找到设备。",
+    "bad_profile": "未知的扫描方案。",
+    "no_mac": "此设备没有 MAC 地址。",
     "cannot_block_self": "您不能阻止这台电脑或路由器。",
-    "block_not_configured": "尚未配置路由器连接。", "block_failed": "路由器未接受此更改。",
-    "block_connect_failed": "无法连接到路由器。", "block_hostkey_changed": "路由器的 SSH 密钥已更改。请重新输入路由器地址以再次信任。",
-    "block_command_failed": "路由器命令执行失败。", "block_local_linux_only": "此方式仅适用于 Linux。",
+    "block_not_configured": "尚未配置路由器连接。",
+    "block_failed": "路由器未接受此更改。",
+    "block_connect_failed": "无法连接到路由器。",
+    "block_hostkey_changed": "路由器的 SSH 密钥已更改。请重新输入路由器地址以再次信任。",
+    "block_command_failed": "路由器命令执行失败。",
+    "block_local_linux_only": "此方式仅适用于 Linux。",
     "block_local_needs_root": "NET Sniffer 必须以 root 身份运行才能管理防火墙。",
-    "speedtest_running": "网速测试正在进行中。", "speedtest_unreachable": "无法连接到测速服务器。",
-    "speedtest_failed": "网速测试失败。", "audit_running": "审计正在进行中。", "audit_failed": "审计失败。",
-    "already_configured": "已配置密码。", "bad_setup_token": "设置码错误。",
-    "password_short": "请至少使用 8 个字符。", "password_mismatch": "两次输入的密码不一致。",
-    "too_many_attempts": "尝试次数过多，请等待几分钟。", "bad_password": "密码错误。", "bad_url": "请输入有效的 http(s) 网址。",
-    "license_invalid": "许可证密钥无效。", "license_expired": "此许可证已过期。",
-    "update_not_ready": "更新尚未就绪。", "no_network": "未检测到本地网络连接。"
+    "speedtest_running": "网速测试正在进行中。",
+    "speedtest_unreachable": "无法连接到测速服务器。",
+    "speedtest_failed": "网速测试失败。",
+    "audit_running": "审计正在进行中。",
+    "audit_failed": "审计失败。",
+    "already_configured": "已配置密码。",
+    "bad_setup_token": "设置码错误。",
+    "password_short": "请至少使用 8 个字符。",
+    "password_mismatch": "两次输入的密码不一致。",
+    "too_many_attempts": "尝试次数过多，请等待几分钟。",
+    "bad_password": "密码错误。",
+    "bad_url": "请输入有效的 http(s) 网址。",
+    "update_not_ready": "更新尚未就绪。",
+    "no_network": "未检测到本地网络连接。"
   }
 }

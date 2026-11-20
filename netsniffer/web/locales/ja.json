@@ -1,321 +1,785 @@
 {
-  "app": { "tagline": "ネットワークインテリジェンス" },
+  "app": {
+    "tagline": "ネットワークインテリジェンス"
+  },
   "nav": {
-    "dashboard": "ダッシュボード", "devices": "デバイス", "monitor": "インターネットモニター", "speed": "速度テスト",
-    "security": "セキュリティ", "parental": "ペアレンタルコントロール", "alerts": "通知", "settings": "設定",
-    "g_overview": "概要", "g_network": "ネットワーク", "g_protection": "保護", "g_system": "システム"
+    "dashboard": "ダッシュボード",
+    "devices": "デバイス",
+    "monitor": "インターネットモニター",
+    "speed": "速度テスト",
+    "security": "セキュリティ",
+    "parental": "ペアレンタルコントロール",
+    "alerts": "通知",
+    "settings": "設定",
+    "g_overview": "概要",
+    "g_network": "ネットワーク",
+    "g_protection": "保護",
+    "g_system": "システム"
   },
   "common": {
-    "cancel": "キャンセル", "change": "変更", "close": "閉じる", "confirm": "確認", "connecting": "接続中…",
-    "copied": "クリップボードにコピーしました", "copy": "コピー", "delete": "削除", "details": "詳細", "edit": "編集",
-    "just_now": "たった今", "learn_more": "詳しく見る", "live": "ライブ", "more": "その他", "rename": "名前を変更",
-    "save": "保存", "search": "検索", "see_all": "すべて表示", "set": "設定"
-  },
-  "plan": {
-    "free": "無料", "trial": "トライアル", "free_title": "無料プラン", "free_sub": "基本的な監視機能",
-    "trial_title": "Proトライアル"
-  },
-  "pro": {
-    "title": "NET Sniffer Pro を解放", "subtitle": "高度な保護、自動化、リモートアクセスでネットワークをさらに安心に。",
-    "upgrade": "Pro にアップグレード", "locked_title": "Pro 機能",
-    "names": {
-      "audit": "セキュリティ監査", "cameras": "隠しカメラ検出", "blocking": "デバイスのブロック",
-      "parental": "ペアレンタルコントロール", "remote": "リモートアクセス", "notifications": "プッシュ通知とデスクトップ通知",
-      "watcher": "リアルタイム侵入監視", "history": "全履歴", "export": "レポートとエクスポート",
-      "full_ports": "フルポート解析", "custom_interval": "スキャン間隔のカスタマイズ"
-    },
-    "features": {
-      "audit": "ネットワークをスコア化し、危険な公開サービス、脆弱な Wi-Fi 設定、ルーターの露出を検出して、手順付きの対処方法を案内します。",
-      "cameras": "ONVIF ディスカバリー、RTSP/DVR サービス、メーカー固有の特徴から、ネットワーク上のカメラを検出します。",
-      "blocking": "お使いのルーターの管理インターフェース経由で、任意のデバイスのインターネット接続を遮断します。",
-      "parental": "就寝時間や学校の時間などのスケジュールに加え、ワンタップで任意のデバイスを一時停止できます。",
-      "remote": "パスワードで保護された安全な Web アプリで、スマートフォン、別の PC、Raspberry Pi からネットワークを監視できます。",
-      "notifications": "デスクトップ通知に加え、Telegram、ntfy、webhook によるプッシュ通知に対応します。",
-      "watcher": "90 秒ごとに新しいデバイスを確認し、侵入者をほぼ即座に検知します。",
-      "history": "遅延、障害、速度の履歴を 30 日間保存します。",
-      "export": "デバイス一覧を CSV で、セキュリティレポートを完全な形式でエクスポートします。",
-      "full_ports": "デバイスごとに 100～1,100 個の TCP ポートを検査し、サービスを識別します。",
-      "custom_interval": "最短 1 分ごとのスキャンが可能です。"
-    }
-  },
-  "license": {
-    "enter": "ライセンスキーをお持ちですか？", "activate": "有効化", "activated": "NET Sniffer Pro を有効化しました。ありがとうございます！",
-    "hint": "キーは NS1 で始まります。このデバイス上でオフライン検証されます。",
-    "trial_left_one": "Pro トライアルの残り期間：{count} 日", "trial_left_other": "Pro トライアルの残り期間：{count} 日",
-    "until": "有効期限：{date}", "lifetime": "永久ライセンス", "remove": "ライセンスを削除",
-    "remove_d": "このデバイスは無料プランに戻ります。"
+    "cancel": "キャンセル",
+    "change": "変更",
+    "close": "閉じる",
+    "confirm": "確認",
+    "connecting": "接続中…",
+    "copied": "クリップボードにコピーしました",
+    "copy": "コピー",
+    "delete": "削除",
+    "details": "詳細",
+    "edit": "編集",
+    "just_now": "たった今",
+    "learn_more": "詳しく見る",
+    "live": "ライブ",
+    "more": "その他",
+    "rename": "名前を変更",
+    "save": "保存",
+    "search": "検索",
+    "see_all": "すべて表示",
+    "set": "設定"
   },
   "onb": {
-    "title": "NET Sniffer へようこそ", "subtitle": "ネットワーク上のすべてのデバイスを把握し、安全に保ち、変化をいち早くお知らせします。",
-    "f1_t": "デバイスを検出", "f1_d": "接続中のすべての機器の IP、MAC、メーカー、モデル、種類を表示します。",
-    "f2_t": "セキュリティを監査", "f2_d": "脆弱な Wi-Fi 設定や危険な公開サービスを見つけます。",
-    "f3_t": "速度をテスト", "f3_d": "ダウンロード、アップロード、遅延、ジッターを履歴付きで測定します。",
-    "f4_t": "通知を受け取る", "f4_d": "新しいデバイス、障害、セキュリティ問題をリアルタイムでお知らせします。",
+    "title": "NET Sniffer へようこそ",
+    "subtitle": "ネットワーク上のすべてのデバイスを把握し、安全に保ち、変化をいち早くお知らせします。",
+    "f1_t": "デバイスを検出",
+    "f1_d": "接続中のすべての機器の IP、MAC、メーカー、モデル、種類を表示します。",
+    "f2_t": "セキュリティを監査",
+    "f2_d": "脆弱な Wi-Fi 設定や危険な公開サービスを見つけます。",
+    "f3_t": "速度をテスト",
+    "f3_d": "ダウンロード、アップロード、遅延、ジッターを履歴付きで測定します。",
+    "f4_t": "通知を受け取る",
+    "f4_d": "新しいデバイス、障害、セキュリティ問題をリアルタイムでお知らせします。",
     "legal_t": "ご自身が所有または管理するネットワークでご利用ください",
     "legal_d": "NET Sniffer は標準的なディスカバリープロトコルと接続確認のみを使用します。検査の許可を得ていないネットワークをスキャンすることは違法となる場合があります。",
     "accept": "NET Sniffer は、自分が所有している、または管理を許可されているネットワークでのみ使用します。",
     "start": "ネットワークをスキャン"
   },
   "login": {
-    "title": "サインイン", "subtitle": "ホストで設定したリモートアクセス用パスワードを入力してください。",
-    "setup_title": "NET Sniffer を保護", "setup_d": "ホストのコンソールに表示されたセットアップコードを入力し、パスワード（8 文字以上）を設定してください。",
-    "setup_code": "セットアップコード", "password": "パスワード", "repeat": "パスワードを再入力", "create": "パスワードを作成",
-    "enter": "サインイン", "footer": "セッションはこのデバイスで 30 日間保持されます。"
+    "title": "サインイン",
+    "subtitle": "ホストで設定したリモートアクセス用パスワードを入力してください。",
+    "setup_title": "NET Sniffer を保護",
+    "setup_d": "ホストのコンソールに表示されたセットアップコードを入力し、パスワード（8 文字以上）を設定してください。",
+    "setup_code": "セットアップコード",
+    "password": "パスワード",
+    "repeat": "パスワードを再入力",
+    "create": "パスワードを作成",
+    "enter": "サインイン",
+    "footer": "セッションはこのデバイスで 30 日間保持されます。"
   },
-  "scan": { "button": "スキャン", "scanning": "スキャン中", "failed": "スキャンに失敗しました" },
+  "scan": {
+    "button": "スキャン",
+    "scanning": "スキャン中",
+    "failed": "スキャンに失敗しました"
+  },
   "network": {
-    "ethernet": "有線ネットワーク", "your_network": "お使いのネットワーク", "public_ip": "パブリック IP", "isp": "プロバイダー",
-    "gateway": "ゲートウェイ", "local_ip": "このデバイス", "signal": "電波強度", "wired": "有線", "band": "周波数帯"
+    "ethernet": "有線ネットワーク",
+    "your_network": "お使いのネットワーク",
+    "public_ip": "パブリック IP",
+    "isp": "プロバイダー",
+    "gateway": "ゲートウェイ",
+    "local_ip": "このデバイス",
+    "signal": "電波強度",
+    "wired": "有線",
+    "band": "周波数帯"
   },
   "dash": {
-    "security_score": "セキュリティスコア", "health": "ネットワークの状態",
-    "health_hint": "推定値です。正確なスコアはセキュリティ監査で確認できます。", "run_audit": "セキュリティ監査を実行",
-    "devices_online": "オンラインのデバイス", "last_scan": "最終スキャン：{ago}", "never_scanned": "未スキャン",
-    "new_24h": "新しいデバイス（24 時間）", "new_hint": "過去 1 日以内に初めて検出",
-    "untrusted": "未確認", "untrusted_hint": "確認して信頼済みに設定してください", "all_trusted": "すべてのデバイスを確認済みです",
-    "last_speed": "前回の速度テスト", "run_speed": "最初の速度テストを実行",
-    "internet": "インターネット接続", "throughput": "リアルタイムスループット（このデバイス）", "by_type": "種類別のデバイス",
-    "no_devices": "デバイスはまだありません", "scan_hint": "スキャンを実行して、ネットワークに接続されているすべての機器を検出しましょう。",
-    "activity": "最近のアクティビティ", "no_activity": "アクティビティはまだありません", "no_activity_hint": "新しいデバイスや障害などのイベントがここに表示されます。",
+    "security_score": "セキュリティスコア",
+    "health": "ネットワークの状態",
+    "health_hint": "推定値です。正確なスコアはセキュリティ監査で確認できます。",
+    "run_audit": "セキュリティ監査を実行",
+    "devices_online": "オンラインのデバイス",
+    "last_scan": "最終スキャン：{ago}",
+    "never_scanned": "未スキャン",
+    "new_24h": "新しいデバイス（24 時間）",
+    "new_hint": "過去 1 日以内に初めて検出",
+    "untrusted": "未確認",
+    "untrusted_hint": "確認して信頼済みに設定してください",
+    "all_trusted": "すべてのデバイスを確認済みです",
+    "last_speed": "前回の速度テスト",
+    "run_speed": "最初の速度テストを実行",
+    "internet": "インターネット接続",
+    "throughput": "リアルタイムスループット（このデバイス）",
+    "by_type": "種類別のデバイス",
+    "no_devices": "デバイスはまだありません",
+    "scan_hint": "スキャンを実行して、ネットワークに接続されているすべての機器を検出しましょう。",
+    "activity": "最近のアクティビティ",
+    "no_activity": "アクティビティはまだありません",
+    "no_activity_hint": "新しいデバイスや障害などのイベントがここに表示されます。",
     "recent_devices": "最近参加したデバイス"
   },
   "devices": {
-    "search": "デバイス、IP、MAC、メーカーを検索…", "all_types": "すべての種類",
-    "f_all": "すべて", "f_online": "オンライン", "f_offline": "オフライン", "f_untrusted": "未確認", "f_new": "新規", "f_blocked": "ブロック中",
-    "results_one": "「{q}」の検索結果：{count} 件", "results_other": "「{q}」の検索結果：{count} 件",
-    "none_match": "一致するデバイスがありません", "none_match_hint": "別の検索語またはフィルターをお試しください。",
-    "deep_scan": "ディープスキャン（すべて再識別）", "trust_all": "すべて信頼済みにする",
+    "search": "デバイス、IP、MAC、メーカーを検索…",
+    "all_types": "すべての種類",
+    "f_all": "すべて",
+    "f_online": "オンライン",
+    "f_offline": "オフライン",
+    "f_untrusted": "未確認",
+    "f_new": "新規",
+    "f_blocked": "ブロック中",
+    "results_one": "「{q}」の検索結果：{count} 件",
+    "results_other": "「{q}」の検索結果：{count} 件",
+    "none_match": "一致するデバイスがありません",
+    "none_match_hint": "別の検索語またはフィルターをお試しください。",
+    "deep_scan": "ディープスキャン（すべて再識別）",
+    "trust_all": "すべて信頼済みにする",
     "trust_all_text": "現在リストにあるすべてのデバイスが確認済みになります。新しいデバイスは引き続き侵入アラートの対象です。",
-    "trusted_ok": "すべてのデバイスを信頼済みにしました", "export_csv": "CSV をエクスポート",
+    "trusted_ok": "すべてのデバイスを信頼済みにしました",
+    "export_csv": "CSV をエクスポート",
     "forget_offline": "オフラインのデバイスを削除",
-    "forget_offline_text_one": "オフラインのデバイス {count} 台とその履歴を削除しますか？", "forget_offline_text_other": "オフラインのデバイス {count} 台とその履歴を削除しますか？",
+    "forget_offline_text_one": "オフラインのデバイス {count} 台とその履歴を削除しますか？",
+    "forget_offline_text_other": "オフラインのデバイス {count} 台とその履歴を削除しますか？",
     "no_offline": "オフラインのデバイスはありません"
   },
   "device": {
-    "name": "名前", "ip": "IP アドレス", "vendor": "メーカー", "model": "モデル", "type": "種類", "os": "オペレーティングシステム",
-    "hostname": "ホスト名", "server": "サーバー", "services": "サービス", "status": "ステータス",
-    "first_seen": "初回検出", "last_seen": "最終確認", "online": "オンライン", "offline": "オフライン", "online_now": "現在オンライン",
-    "this_device": "このデバイス", "gateway": "ルーター", "blocked": "ブロック中", "untrusted": "未確認", "new": "新規",
-    "trusted": "信頼済み", "mark_trusted": "信頼済みにする", "private": "プライベート", "private_mac": "プライベートアドレス",
+    "name": "名前",
+    "ip": "IP アドレス",
+    "vendor": "メーカー",
+    "model": "モデル",
+    "type": "種類",
+    "os": "オペレーティングシステム",
+    "hostname": "ホスト名",
+    "server": "サーバー",
+    "services": "サービス",
+    "status": "ステータス",
+    "first_seen": "初回検出",
+    "last_seen": "最終確認",
+    "online": "オンライン",
+    "offline": "オフライン",
+    "online_now": "現在オンライン",
+    "this_device": "このデバイス",
+    "gateway": "ルーター",
+    "blocked": "ブロック中",
+    "untrusted": "未確認",
+    "new": "新規",
+    "trusted": "信頼済み",
+    "mark_trusted": "信頼済みにする",
+    "private": "プライベート",
+    "private_mac": "プライベートアドレス",
     "private_mac_hint": "ランダム化された MAC アドレスです（iOS、Android、Windows のプライバシー機能）。メーカーは特定できません。",
-    "unknown_vendor": "不明なメーカー", "notes": "メモ", "notes_ph": "所有者、設置場所など、お好きなメモ…",
-    "block": "ブロック", "unblock": "ブロック解除", "block_confirm_t": "{name} をブロックしますか？",
+    "unknown_vendor": "不明なメーカー",
+    "notes": "メモ",
+    "notes_ph": "所有者、設置場所など、お好きなメモ…",
+    "block": "ブロック",
+    "unblock": "ブロック解除",
+    "block_confirm_t": "{name} をブロックしますか？",
     "block_confirm": "ブロックを解除するまで、このデバイスはインターネットに接続できません。ルールはルーターに適用されます。",
-    "blocked_ok": "デバイスをブロックしました", "unblocked_ok": "デバイスのブロックを解除しました",
-    "wake": "起動", "wol_sent": "Wake-on-LAN パケットを送信しました", "open_web": "Web インターフェース",
-    "favorite": "お気に入り", "favorite_hint": "お気に入りのデバイスがオンライン/オフラインになると通知します",
-    "forget": "デバイスを削除", "forget_text": "デバイスとその履歴が削除されます。再度接続すると新規デバイスとして表示されます。",
+    "blocked_ok": "デバイスをブロックしました",
+    "unblocked_ok": "デバイスのブロックを解除しました",
+    "wake": "起動",
+    "wol_sent": "Wake-on-LAN パケットを送信しました",
+    "open_web": "Web インターフェース",
+    "favorite": "お気に入り",
+    "favorite_hint": "お気に入りのデバイスがオンライン/オフラインになると通知します",
+    "forget": "デバイスを削除",
+    "forget_text": "デバイスとその履歴が削除されます。再度接続すると新規デバイスとして表示されます。",
     "no_events": "記録されたアクティビティはまだありません。",
-    "ping_ok": "応答あり・平均 {avg} ms（最小 {min} / 最大 {max}）", "ping_fail": "応答なし",
+    "ping_ok": "応答あり・平均 {avg} ms（最小 {min} / 最大 {max}）",
+    "ping_fail": "応答なし",
     "ping_detail": "{method} 経由で {recv}/{sent} 件応答",
-    "tab_overview": "概要", "tab_ports": "ポートとサービス", "tab_activity": "アクティビティ"
+    "tab_overview": "概要",
+    "tab_ports": "ポートとサービス",
+    "tab_activity": "アクティビティ"
   },
   "ports": {
-    "quick": "クイックスキャン", "common": "一般的なポート", "full": "フルスキャン", "scanned": "スキャン：{ago}", "never": "未スキャン",
-    "port": "ポート", "service": "サービス", "risk": "リスク", "none_open": "選択したプロファイルでは開いている TCP ポートは見つかりませんでした。",
+    "quick": "クイックスキャン",
+    "common": "一般的なポート",
+    "full": "フルスキャン",
+    "scanned": "スキャン：{ago}",
+    "never": "未スキャン",
+    "port": "ポート",
+    "service": "サービス",
+    "risk": "リスク",
+    "none_open": "選択したプロファイルでは開いている TCP ポートは見つかりませんでした。",
     "hint": "このデバイスをスキャンして、ネットワークに公開しているサービスを一覧表示します。",
     "legal": "接続確認のみを行います。攻撃やパスワードの試行は行いません。ご自身が所有または管理するデバイスでご利用ください。"
   },
-  "risk": { "none": "安全", "low": "低", "medium": "中", "high": "高", "critical": "重大" },
-  "severity": { "critical": "重大", "high": "高", "medium": "中", "low": "低", "info": "情報" },
+  "risk": {
+    "none": "安全",
+    "low": "低",
+    "medium": "中",
+    "high": "高",
+    "critical": "重大"
+  },
+  "severity": {
+    "critical": "重大",
+    "high": "高",
+    "medium": "中",
+    "low": "低",
+    "info": "情報"
+  },
   "types": {
-    "router": "ルーター", "mesh": "アクセスポイント / メッシュ", "phone": "スマートフォン", "tablet": "タブレット", "laptop": "ノートパソコン",
-    "desktop": "コンピューター", "server": "サーバー", "tv": "テレビ", "streamer": "ストリーミングデバイス", "speaker": "スピーカー",
-    "camera": "カメラ", "printer": "プリンター", "console": "ゲーム機", "iot": "スマートデバイス", "light": "照明",
-    "plug": "スマートプラグ", "hub": "スマートハブ", "nas": "NAS ストレージ", "watch": "ウォッチ", "car": "車",
-    "raspberry": "Raspberry Pi", "voip": "VoIP 電話", "unknown": "不明"
+    "router": "ルーター",
+    "mesh": "アクセスポイント / メッシュ",
+    "phone": "スマートフォン",
+    "tablet": "タブレット",
+    "laptop": "ノートパソコン",
+    "desktop": "コンピューター",
+    "server": "サーバー",
+    "tv": "テレビ",
+    "streamer": "ストリーミングデバイス",
+    "speaker": "スピーカー",
+    "camera": "カメラ",
+    "printer": "プリンター",
+    "console": "ゲーム機",
+    "iot": "スマートデバイス",
+    "light": "照明",
+    "plug": "スマートプラグ",
+    "hub": "スマートハブ",
+    "nas": "NAS ストレージ",
+    "watch": "ウォッチ",
+    "car": "車",
+    "raspberry": "Raspberry Pi",
+    "voip": "VoIP 電話",
+    "unknown": "不明"
   },
   "security": {
-    "title": "セキュリティ監査", "score": "セキュリティスコア", "grade": "評価", "not_run": "未監査",
+    "title": "セキュリティ監査",
+    "score": "セキュリティスコア",
+    "grade": "評価",
+    "not_run": "未監査",
     "intro": "Wi-Fi、ルーター、すべてのデバイスの危険な設定をチェックします。",
     "intro_long": "監査では、Wi-Fi の暗号化、UPnP の露出、ルーターの管理設定、オンラインの各デバイスが公開しているサービスを確認します。所要時間は約 1 分です。",
-    "run": "監査を実行", "rerun": "再実行", "running": "監査中…", "report": "レポートをダウンロード",
-    "good": "ネットワークは十分に保護されています", "fair": "ネットワークの安全性を高められます", "poor": "ネットワークに対処が必要です",
-    "summary_one": "{devices} 台のデバイスで {count} 件の検出事項・{ago}", "summary_other": "{devices} 台のデバイスで {count} 件の検出事項・{ago}",
-    "findings": "検出事項", "passed": "合格した項目", "no_findings": "問題は見つかりませんでした", "no_findings_d": "お見事です。現時点で対処が必要な項目はありません。",
-    "checking": "{name} を確認中…", "phase_network": "ネットワーク設定を分析中…", "phase_ports": "デバイスを確認中…",
-    "ethics_t": "設計段階から非侵入型", "ethics_d": "チェックでは公開されている内容を検出するだけです。攻撃、パスワードの試行、通信の傍受は一切行いません。"
+    "run": "監査を実行",
+    "rerun": "再実行",
+    "running": "監査中…",
+    "report": "レポートをダウンロード",
+    "good": "ネットワークは十分に保護されています",
+    "fair": "ネットワークの安全性を高められます",
+    "poor": "ネットワークに対処が必要です",
+    "summary_one": "{devices} 台のデバイスで {count} 件の検出事項・{ago}",
+    "summary_other": "{devices} 台のデバイスで {count} 件の検出事項・{ago}",
+    "findings": "検出事項",
+    "passed": "合格した項目",
+    "no_findings": "問題は見つかりませんでした",
+    "no_findings_d": "お見事です。現時点で対処が必要な項目はありません。",
+    "checking": "{name} を確認中…",
+    "phase_network": "ネットワーク設定を分析中…",
+    "phase_ports": "デバイスを確認中…",
+    "ethics_t": "設計段階から非侵入型",
+    "ethics_d": "チェックでは公開されている内容を検出するだけです。攻撃、パスワードの試行、通信の傍受は一切行いません。"
   },
   "audit": {
-    "how_to_fix": "対処方法", "banner": "サービスバナー", "view_device": "デバイスを開く",
+    "how_to_fix": "対処方法",
+    "banner": "サービスバナー",
+    "view_device": "デバイスを開く",
     "pass": {
-      "wifi_wpa3": "Wi-Fi は WPA3 暗号化を使用しています", "upnp_disabled": "ルーターは UPnP ポートマッピングを公開していません",
-      "all_trusted": "ネットワーク上のすべてのデバイスを確認済みです", "no_risky_services": "高リスクのサービスは公開されていません"
+      "wifi_wpa3": "Wi-Fi は WPA3 暗号化を使用しています",
+      "upnp_disabled": "ルーターは UPnP ポートマッピングを公開していません",
+      "all_trusted": "ネットワーク上のすべてのデバイスを確認済みです",
+      "no_risky_services": "高リスクのサービスは公開されていません"
     },
     "f": {
-      "wifi_open": { "title": "Wi-Fi「{ssid}」はオープンです", "desc": "近くにいる誰でも接続でき、暗号化されていない通信を見られてしまいます。", "fix": "ルーターの Wi-Fi 設定で、強力なパスフレーズを使った WPA3-Personal（または WPA2/WPA3 混在）を有効にしてください。" },
-      "wifi_wep": { "title": "Wi-Fi「{ssid}」は WEP を使用しています", "desc": "WEP は数分で解読される可能性があります。", "fix": "ルーターの設定で WPA3-Personal、少なくとも WPA2-AES に切り替えてください。" },
-      "wifi_wpa": { "title": "Wi-Fi「{ssid}」は旧式の WPA を使用しています", "desc": "従来の WPA/TKIP は時代遅れで、脆弱性があります。", "fix": "WPA3-Personal または WPA2-AES（CCMP）に切り替えてください。" },
-      "wifi_wpa2": { "title": "Wi-Fi「{ssid}」は WPA2 を使用しています", "desc": "WPA2 は現在でも許容範囲ですが、WPA3 はオフラインでのパスワード推測に強くなっています。", "fix": "すべてのデバイスが対応している場合は、WPA3 または WPA2/WPA3 移行モードを有効にしてください。12 文字以上のパスフレーズを使用してください。" },
-      "wifi_tkip": { "title": "Wi-Fi は TKIP 暗号化を使用しています", "desc": "TKIP は非推奨であり、強度が不十分です。", "fix": "ルーターのワイヤレスセキュリティ設定で AES/CCMP のみを選択してください。" },
-      "upnp_enabled": { "title": "ルーター {router} で UPnP が有効です", "desc": "ネットワーク上のあらゆるデバイスやマルウェアが、インターネットに向けて自動的にポートを開放できてしまいます。", "fix": "ゲーム機やアプリで本当に必要な場合を除き、ルーターの UPnP を無効にしてください。代わりに、必要なポートだけを手動で転送します。" },
-      "router_http": { "title": "ルーターの管理ページが HTTPS ではありません", "desc": "{device}（{ip}）は、管理ページを暗号化されていない HTTP で提供しています。", "fix": "利用可能であれば HTTPS 管理を有効にし、強力な管理者パスワードを設定して、リモート（WAN）管理を無効にしてください。" },
-      "untrusted_devices": { "title": "未確認のデバイスが {count} 台オンラインです", "desc": "未確認：{names}。", "fix": "各デバイスを開いて内容を確認し、信頼済みに設定してください。見覚えのないデバイスはブロックし、Wi-Fi のパスワードを変更してください。" },
-      "cameras_present": { "title": "ネットワーク上にカメラが {count} 台あります", "desc": "検出：{names}。", "fix": "すべてのカメラを把握し、ファームウェアを更新して、初期パスワードを変更してください。" },
-      "port_telnet": { "title": "{device} で Telnet が開いています", "desc": "Telnet（ポート {port}）はパスワードを平文で送信し、IoT ボットネットに狙われやすいサービスです。", "fix": "デバイスの設定またはファームウェアで Telnet を無効にしてください。リモートシェルが必要な場合は SSH を使用します。" },
-      "port_ftp": { "title": "{device} で FTP が開いています", "desc": "FTP（ポート {port}）は認証情報とファイルを暗号化せずに送信します。", "fix": "FTP を無効にするか、SFTP/FTPS に置き換えてください。" },
-      "port_tftp": { "title": "{device} で TFTP が開いています", "desc": "TFTP には認証がまったくありません。", "fix": "デバイスのプロビジョニングを行わない間は TFTP を無効にしてください。" },
-      "port_smb": { "title": "{device} でファイル共有（SMB）が有効です", "desc": "ポート {port} が開いています。ファイルを共有するコンピューターや NAS では問題ありませんが、それ以外のデバイスでは想定外です。", "fix": "使用していない場合はファイル共有を無効にし、SMBv1 を無効のまま維持して、共有フォルダーをパスワードで保護してください。" },
-      "port_msrpc": { "title": "{device} で Windows RPC が公開されています", "desc": "プライベートネットワーク上の Windows PC では、ポート {port} が開いているのは通常の状態です。", "fix": "Windows を最新の状態に保ち、信頼できるネットワークの場合にのみプライベートに設定してください。" },
-      "port_rdp": { "title": "{device} でリモートデスクトップが開いています", "desc": "RDP（ポート {port}）は攻撃対象になりやすいサービスです。", "fix": "使用していない場合はリモートデスクトップを無効にし、ネットワークレベル認証を必須にして、インターネットには絶対に転送しないでください。" },
-      "port_vnc": { "title": "{device} で VNC が開いています", "desc": "VNC（ポート {port}）は、認証が弱いか、まったくない場合が多くあります。", "fix": "VNC を無効にするか、強力なパスワードで保護し、VPN 経由でのみ許可してください。" },
-      "port_docker": { "title": "{device} で Docker API が公開されています", "desc": "ポート {port} では、認証なしでホストを完全に制御できてしまいます。", "fix": "Docker デーモンを Unix ソケットのみにバインドするか、TLS クライアント認証（ポート 2376）を有効にしてください。" },
-      "port_adb": { "title": "{device} で Android デバッグ（ADB）が開いています", "desc": "ネットワーク経由の ADB（ポート {port}）では、Android デバイスを完全に制御できてしまいます。", "fix": "開発者向けオプションで「ワイヤレスデバッグ/ネットワーク経由の ADB」をオフにしてください。" },
-      "port_mqtt": { "title": "{device} で暗号化されていない MQTT が動作しています", "desc": "MQTT（ポート {port}）はスマートホームのデバイスを制御し、匿名アクセスを許可している場合があります。", "fix": "ユーザー名とパスワードを必須にし、TLS 上の MQTT（ポート 8883）を使用してください。" },
-      "port_rtsp": { "title": "{device} で映像ストリーム（RTSP）が動作しています", "desc": "RTSP（ポート {port}）では、カメラのライブ映像が見られてしまう可能性があります。", "fix": "カメラに強力なパスワードを設定し、ファームウェアを更新してください。メーカーのアプリしか使わない場合は RTSP を無効にします。" },
-      "port_database": { "title": "{device} でデータベース {service} が公開されています", "desc": "ポート {port} はネットワーク全体から到達可能です。", "fix": "データベースを localhost にバインドするかファイアウォールで制限し、認証を必須にしてください。" },
-      "port_x11": { "title": "{device} で X11 ディスプレイサーバーが開いています", "desc": "ポート {port} では、画面やキー入力を取得される可能性があります。", "fix": "X11 の TCP 待ち受けを無効にしてください（-nolisten tcp を使用）。" },
-      "port_rpcbind": { "title": "{device} で RPCbind が開いています", "desc": "ポート {port} は RPC サービスを明らかにし、攻撃に悪用されます。", "fix": "NFS を使用していない場合は rpcbind を無効にしてください。" },
-      "port_proxy": { "title": "{device} でオープンプロキシが動作しています", "desc": "ポート {port} の SOCKS プロキシは、通信を中継できてしまいます。", "fix": "プロキシを無効にするか、認証を必須にしてください。" },
-      "port_pptp": { "title": "{device} で PPTP VPN が動作しています", "desc": "PPTP（ポート {port}）は、破られた暗号化方式を使用しています。", "fix": "WireGuard または OpenVPN に置き換えてください。" },
-      "port_modbus": { "title": "{device} で Modbus が開いています", "desc": "ポート {port} の産業用プロトコルは、認証がありません。", "fix": "デバイスを別のネットワークセグメントに隔離してください。" },
-      "port_dvr": { "title": "{device} で DVR/NVR サービスが動作しています", "desc": "ポート {port} は、脆弱性で知られるビデオレコーダー用プロトコルのものです。", "fix": "ファームウェアを更新し、初期パスワードを変更して、インターネットには絶対に公開しないでください。" },
-      "port_suspicious": { "title": "{device} で通常と異なるサービスが動作しています", "desc": "ポート {port} は、バックドアやテストツールでよく使われます。", "fix": "このポートで待ち受けているプログラムを確認し、不明な場合は削除してください。" },
-      "port_webmin": { "title": "{device} で Webmin が動作しています", "desc": "ポート {port} の管理パネルです。", "fix": "最新の状態に保ち、信頼できるホストのみにアクセスを制限してください。" },
-      "port_tr069": { "title": "{device} で TR-069 管理が動作しています", "desc": "ISP が使用するリモート管理ポート {port} です。", "fix": "ISP のルーターでは通常の状態です。必要でない場合は、LAN 内のデバイスから到達できないようにしてください。" },
-      "port_rsync": { "title": "{device} で rsync が開いています", "desc": "ポート {port} では、認証なしでファイルにアクセスできる可能性があります。", "fix": "認証を必須にするか、デーモンを無効にしてください。" },
-      "port_nfs": { "title": "{device} で NFS が開いています", "desc": "ポート {port} は、ネットワーク経由でフォルダーを共有します。", "fix": "エクスポートを特定のホストに制限し、使用していない場合は無効にしてください。" },
-      "port_mail_plain": { "title": "{device} で暗号化されていないメールサービスが動作しています", "desc": "ポート {port} の {service} は、認証情報を平文で送信します。", "fix": "TLS 対応版（IMAPS 993 / POP3S 995）を使用してください。" },
-      "port_winrm": { "title": "{device} で WinRM が動作しています", "desc": "ポート {port} の Windows リモート管理です。", "fix": "使用していない場合は無効にするか、管理者のみに制限してください。" }
+      "wifi_open": {
+        "title": "Wi-Fi「{ssid}」はオープンです",
+        "desc": "近くにいる誰でも接続でき、暗号化されていない通信を見られてしまいます。",
+        "fix": "ルーターの Wi-Fi 設定で、強力なパスフレーズを使った WPA3-Personal（または WPA2/WPA3 混在）を有効にしてください。"
+      },
+      "wifi_wep": {
+        "title": "Wi-Fi「{ssid}」は WEP を使用しています",
+        "desc": "WEP は数分で解読される可能性があります。",
+        "fix": "ルーターの設定で WPA3-Personal、少なくとも WPA2-AES に切り替えてください。"
+      },
+      "wifi_wpa": {
+        "title": "Wi-Fi「{ssid}」は旧式の WPA を使用しています",
+        "desc": "従来の WPA/TKIP は時代遅れで、脆弱性があります。",
+        "fix": "WPA3-Personal または WPA2-AES（CCMP）に切り替えてください。"
+      },
+      "wifi_wpa2": {
+        "title": "Wi-Fi「{ssid}」は WPA2 を使用しています",
+        "desc": "WPA2 は現在でも許容範囲ですが、WPA3 はオフラインでのパスワード推測に強くなっています。",
+        "fix": "すべてのデバイスが対応している場合は、WPA3 または WPA2/WPA3 移行モードを有効にしてください。12 文字以上のパスフレーズを使用してください。"
+      },
+      "wifi_tkip": {
+        "title": "Wi-Fi は TKIP 暗号化を使用しています",
+        "desc": "TKIP は非推奨であり、強度が不十分です。",
+        "fix": "ルーターのワイヤレスセキュリティ設定で AES/CCMP のみを選択してください。"
+      },
+      "upnp_enabled": {
+        "title": "ルーター {router} で UPnP が有効です",
+        "desc": "ネットワーク上のあらゆるデバイスやマルウェアが、インターネットに向けて自動的にポートを開放できてしまいます。",
+        "fix": "ゲーム機やアプリで本当に必要な場合を除き、ルーターの UPnP を無効にしてください。代わりに、必要なポートだけを手動で転送します。"
+      },
+      "router_http": {
+        "title": "ルーターの管理ページが HTTPS ではありません",
+        "desc": "{device}（{ip}）は、管理ページを暗号化されていない HTTP で提供しています。",
+        "fix": "利用可能であれば HTTPS 管理を有効にし、強力な管理者パスワードを設定して、リモート（WAN）管理を無効にしてください。"
+      },
+      "untrusted_devices": {
+        "title": "未確認のデバイスが {count} 台オンラインです",
+        "desc": "未確認：{names}。",
+        "fix": "各デバイスを開いて内容を確認し、信頼済みに設定してください。見覚えのないデバイスはブロックし、Wi-Fi のパスワードを変更してください。"
+      },
+      "cameras_present": {
+        "title": "ネットワーク上にカメラが {count} 台あります",
+        "desc": "検出：{names}。",
+        "fix": "すべてのカメラを把握し、ファームウェアを更新して、初期パスワードを変更してください。"
+      },
+      "port_telnet": {
+        "title": "{device} で Telnet が開いています",
+        "desc": "Telnet（ポート {port}）はパスワードを平文で送信し、IoT ボットネットに狙われやすいサービスです。",
+        "fix": "デバイスの設定またはファームウェアで Telnet を無効にしてください。リモートシェルが必要な場合は SSH を使用します。"
+      },
+      "port_ftp": {
+        "title": "{device} で FTP が開いています",
+        "desc": "FTP（ポート {port}）は認証情報とファイルを暗号化せずに送信します。",
+        "fix": "FTP を無効にするか、SFTP/FTPS に置き換えてください。"
+      },
+      "port_tftp": {
+        "title": "{device} で TFTP が開いています",
+        "desc": "TFTP には認証がまったくありません。",
+        "fix": "デバイスのプロビジョニングを行わない間は TFTP を無効にしてください。"
+      },
+      "port_smb": {
+        "title": "{device} でファイル共有（SMB）が有効です",
+        "desc": "ポート {port} が開いています。ファイルを共有するコンピューターや NAS では問題ありませんが、それ以外のデバイスでは想定外です。",
+        "fix": "使用していない場合はファイル共有を無効にし、SMBv1 を無効のまま維持して、共有フォルダーをパスワードで保護してください。"
+      },
+      "port_msrpc": {
+        "title": "{device} で Windows RPC が公開されています",
+        "desc": "プライベートネットワーク上の Windows PC では、ポート {port} が開いているのは通常の状態です。",
+        "fix": "Windows を最新の状態に保ち、信頼できるネットワークの場合にのみプライベートに設定してください。"
+      },
+      "port_rdp": {
+        "title": "{device} でリモートデスクトップが開いています",
+        "desc": "RDP（ポート {port}）は攻撃対象になりやすいサービスです。",
+        "fix": "使用していない場合はリモートデスクトップを無効にし、ネットワークレベル認証を必須にして、インターネットには絶対に転送しないでください。"
+      },
+      "port_vnc": {
+        "title": "{device} で VNC が開いています",
+        "desc": "VNC（ポート {port}）は、認証が弱いか、まったくない場合が多くあります。",
+        "fix": "VNC を無効にするか、強力なパスワードで保護し、VPN 経由でのみ許可してください。"
+      },
+      "port_docker": {
+        "title": "{device} で Docker API が公開されています",
+        "desc": "ポート {port} では、認証なしでホストを完全に制御できてしまいます。",
+        "fix": "Docker デーモンを Unix ソケットのみにバインドするか、TLS クライアント認証（ポート 2376）を有効にしてください。"
+      },
+      "port_adb": {
+        "title": "{device} で Android デバッグ（ADB）が開いています",
+        "desc": "ネットワーク経由の ADB（ポート {port}）では、Android デバイスを完全に制御できてしまいます。",
+        "fix": "開発者向けオプションで「ワイヤレスデバッグ/ネットワーク経由の ADB」をオフにしてください。"
+      },
+      "port_mqtt": {
+        "title": "{device} で暗号化されていない MQTT が動作しています",
+        "desc": "MQTT（ポート {port}）はスマートホームのデバイスを制御し、匿名アクセスを許可している場合があります。",
+        "fix": "ユーザー名とパスワードを必須にし、TLS 上の MQTT（ポート 8883）を使用してください。"
+      },
+      "port_rtsp": {
+        "title": "{device} で映像ストリーム（RTSP）が動作しています",
+        "desc": "RTSP（ポート {port}）では、カメラのライブ映像が見られてしまう可能性があります。",
+        "fix": "カメラに強力なパスワードを設定し、ファームウェアを更新してください。メーカーのアプリしか使わない場合は RTSP を無効にします。"
+      },
+      "port_database": {
+        "title": "{device} でデータベース {service} が公開されています",
+        "desc": "ポート {port} はネットワーク全体から到達可能です。",
+        "fix": "データベースを localhost にバインドするかファイアウォールで制限し、認証を必須にしてください。"
+      },
+      "port_x11": {
+        "title": "{device} で X11 ディスプレイサーバーが開いています",
+        "desc": "ポート {port} では、画面やキー入力を取得される可能性があります。",
+        "fix": "X11 の TCP 待ち受けを無効にしてください（-nolisten tcp を使用）。"
+      },
+      "port_rpcbind": {
+        "title": "{device} で RPCbind が開いています",
+        "desc": "ポート {port} は RPC サービスを明らかにし、攻撃に悪用されます。",
+        "fix": "NFS を使用していない場合は rpcbind を無効にしてください。"
+      },
+      "port_proxy": {
+        "title": "{device} でオープンプロキシが動作しています",
+        "desc": "ポート {port} の SOCKS プロキシは、通信を中継できてしまいます。",
+        "fix": "プロキシを無効にするか、認証を必須にしてください。"
+      },
+      "port_pptp": {
+        "title": "{device} で PPTP VPN が動作しています",
+        "desc": "PPTP（ポート {port}）は、破られた暗号化方式を使用しています。",
+        "fix": "WireGuard または OpenVPN に置き換えてください。"
+      },
+      "port_modbus": {
+        "title": "{device} で Modbus が開いています",
+        "desc": "ポート {port} の産業用プロトコルは、認証がありません。",
+        "fix": "デバイスを別のネットワークセグメントに隔離してください。"
+      },
+      "port_dvr": {
+        "title": "{device} で DVR/NVR サービスが動作しています",
+        "desc": "ポート {port} は、脆弱性で知られるビデオレコーダー用プロトコルのものです。",
+        "fix": "ファームウェアを更新し、初期パスワードを変更して、インターネットには絶対に公開しないでください。"
+      },
+      "port_suspicious": {
+        "title": "{device} で通常と異なるサービスが動作しています",
+        "desc": "ポート {port} は、バックドアやテストツールでよく使われます。",
+        "fix": "このポートで待ち受けているプログラムを確認し、不明な場合は削除してください。"
+      },
+      "port_webmin": {
+        "title": "{device} で Webmin が動作しています",
+        "desc": "ポート {port} の管理パネルです。",
+        "fix": "最新の状態に保ち、信頼できるホストのみにアクセスを制限してください。"
+      },
+      "port_tr069": {
+        "title": "{device} で TR-069 管理が動作しています",
+        "desc": "ISP が使用するリモート管理ポート {port} です。",
+        "fix": "ISP のルーターでは通常の状態です。必要でない場合は、LAN 内のデバイスから到達できないようにしてください。"
+      },
+      "port_rsync": {
+        "title": "{device} で rsync が開いています",
+        "desc": "ポート {port} では、認証なしでファイルにアクセスできる可能性があります。",
+        "fix": "認証を必須にするか、デーモンを無効にしてください。"
+      },
+      "port_nfs": {
+        "title": "{device} で NFS が開いています",
+        "desc": "ポート {port} は、ネットワーク経由でフォルダーを共有します。",
+        "fix": "エクスポートを特定のホストに制限し、使用していない場合は無効にしてください。"
+      },
+      "port_mail_plain": {
+        "title": "{device} で暗号化されていないメールサービスが動作しています",
+        "desc": "ポート {port} の {service} は、認証情報を平文で送信します。",
+        "fix": "TLS 対応版（IMAPS 993 / POP3S 995）を使用してください。"
+      },
+      "port_winrm": {
+        "title": "{device} で WinRM が動作しています",
+        "desc": "ポート {port} の Windows リモート管理です。",
+        "fix": "使用していない場合は無効にするか、管理者のみに制限してください。"
+      }
     }
   },
   "cams": {
-    "title": "隠しカメラ検出", "subtitle": "ONVIF、RTSP、DVR サービス、メーカー固有の特徴", "run": "カメラを検索",
+    "title": "隠しカメラ検出",
+    "subtitle": "ONVIF、RTSP、DVR サービス、メーカー固有の特徴",
+    "run": "カメラを検索",
     "hint": "オンラインのすべてのデバイスから、カメラやビデオレコーダーの痕跡を探します。",
-    "none": "カメラは見つかりませんでした", "none_d": "{count} 台のデバイスを確認しました。スマートフォンやノートパソコンには内蔵カメラがある場合があります。",
+    "none": "カメラは見つかりませんでした",
+    "none_d": "{count} 台のデバイスを確認しました。スマートフォンやノートパソコンには内蔵カメラがある場合があります。",
     "advice": "すべてのカメラに心当たりがありますか？ない場合は、設置場所を実際に確認し、デバイスパネルからブロックしてください。",
-    "conf_high": "可能性が高い", "conf_medium": "可能性あり",
-    "reason_classified": "カメラのメーカー/モデル", "reason_onvif": "ONVIF カメラ", "reason_mdns_rtsp": "RTSP を通知",
-    "reason_rtsp": "RTSP ストリーム", "reason_dvr": "DVR プロトコル", "reason_banner": "カメラの Web サーバー"
+    "conf_high": "可能性が高い",
+    "conf_medium": "可能性あり",
+    "reason_classified": "カメラのメーカー/モデル",
+    "reason_onvif": "ONVIF カメラ",
+    "reason_mdns_rtsp": "RTSP を通知",
+    "reason_rtsp": "RTSP ストリーム",
+    "reason_dvr": "DVR プロトコル",
+    "reason_banner": "カメラの Web サーバー"
   },
   "speed": {
-    "go": "GO", "ping": "Ping", "jitter": "ジッター", "download": "ダウンロード", "upload": "アップロード", "connect": "接続中",
-    "history": "履歴", "history_free": "直近 10 件のテスト（Pro ではすべて保存）", "date": "日付",
-    "no_history": "テストはまだありません", "no_history_d": "GO を押して接続速度を測定しましょう。"
+    "go": "GO",
+    "ping": "Ping",
+    "jitter": "ジッター",
+    "download": "ダウンロード",
+    "upload": "アップロード",
+    "connect": "接続中",
+    "history": "履歴",
+    "date": "日付",
+    "no_history": "テストはまだありません",
+    "no_history_d": "GO を押して接続速度を測定しましょう。"
   },
   "monitor": {
-    "status": { "online": "オンライン", "offline": "オフライン", "degraded": "低下", "unknown": "確認中…" },
-    "connection": "接続", "latency": "遅延", "loss": "パケットロス", "since": "開始", "since_ago": "{ago}から",
-    "avg": "平均", "uptime": "稼働率", "last_hours_one": "直近 1 時間", "last_hours_other": "直近 {count} 時間",
-    "outages": "障害", "gw_ok": "ルーター正常", "gw_down": "ルーターに到達できません", "latency_chart": "遅延とパケットロス",
-    "outage_log": "障害ログ", "lan_outage": "ローカルネットワーク障害", "inet_outage": "インターネット障害", "ongoing": "継続中",
-    "no_outages": "障害はありません", "no_outages_d": "この期間、接続は安定していました。",
-    "how_t": "モニタリングの仕組み", "how_d": "NET Sniffer は、ルーターと 3 つのパブリック DNS プロバイダーを継続的に確認します。2 回連続で失敗すると障害として記録されるため、オフラインだった時刻と時間を正確に把握できます。",
-    "targets": "ターゲット", "interval": "間隔", "samples": "サンプル"
+    "status": {
+      "online": "オンライン",
+      "offline": "オフライン",
+      "degraded": "低下",
+      "unknown": "確認中…"
+    },
+    "connection": "接続",
+    "latency": "遅延",
+    "loss": "パケットロス",
+    "since": "開始",
+    "since_ago": "{ago}から",
+    "avg": "平均",
+    "uptime": "稼働率",
+    "last_hours_one": "直近 1 時間",
+    "last_hours_other": "直近 {count} 時間",
+    "outages": "障害",
+    "gw_ok": "ルーター正常",
+    "gw_down": "ルーターに到達できません",
+    "latency_chart": "遅延とパケットロス",
+    "outage_log": "障害ログ",
+    "lan_outage": "ローカルネットワーク障害",
+    "inet_outage": "インターネット障害",
+    "ongoing": "継続中",
+    "no_outages": "障害はありません",
+    "no_outages_d": "この期間、接続は安定していました。",
+    "how_t": "モニタリングの仕組み",
+    "how_d": "NET Sniffer は、ルーターと 3 つのパブリック DNS プロバイダーを継続的に確認します。2 回連続で失敗すると障害として記録されるため、オフラインだった時刻と時間を正確に把握できます。",
+    "targets": "ターゲット",
+    "interval": "間隔",
+    "samples": "サンプル"
   },
   "alerts": {
-    "f_all": "すべて", "f_security": "セキュリティ", "f_devices": "デバイス", "f_internet": "インターネット",
-    "mark_read": "すべて既読にする", "clear": "履歴を消去", "clear_text": "すべての通知とデバイスのアクティビティ履歴が削除されます。",
-    "none": "通知はありません", "none_d": "新しいデバイス、障害、セキュリティ警告がここに表示されます。"
+    "f_all": "すべて",
+    "f_security": "セキュリティ",
+    "f_devices": "デバイス",
+    "f_internet": "インターネット",
+    "mark_read": "すべて既読にする",
+    "clear": "履歴を消去",
+    "clear_text": "すべての通知とデバイスのアクティビティ履歴が削除されます。",
+    "none": "通知はありません",
+    "none_d": "新しいデバイス、障害、セキュリティ警告がここに表示されます。"
   },
   "events": {
-    "device_new": { "title": "新しいデバイス：{name}", "text": "{ip} · {vendor} {mac}" },
-    "device_first_seen": { "title": "{name} を検出しました", "text": "{ip} · {vendor}" },
-    "device_online": { "title": "{name} がオンラインになりました", "text": "{ip}" },
-    "device_offline": { "title": "{name} がオフラインになりました", "text": "最後の IP：{ip}" },
-    "device_ip_changed": { "title": "{name} の IP が変更されました", "text": "{old} → {new}" },
-    "internet_down": { "title": "インターネット接続が切断されました", "text": "ルーターには到達できますが、インターネットには接続できません。" },
-    "internet_up": { "title": "インターネット接続が復旧しました", "text": "障害の継続時間：{duration}" },
-    "gateway_down": { "title": "ルーターに到達できません", "text": "このデバイスはローカルネットワークとの接続が失われました。" },
-    "security_issues": { "title": "セキュリティ監査：重要な問題が {count} 件あります", "text": "スコア {score}/100。検出事項をご確認ください。" },
-    "camera_detected": { "title": "カメラを検出しました：{name}", "text": "{ip} · {vendor}" },
-    "device_blocked": { "title": "{name} をブロックしました", "text": "インターネットアクセスを遮断しました" },
-    "device_unblocked": { "title": "{name} のブロックを解除しました", "text": "インターネットアクセスを復旧しました" },
-    "update_installed": { "title": "NET Sniffer を更新しました", "text": "最新バージョンで動作しています" }
+    "device_new": {
+      "title": "新しいデバイス：{name}",
+      "text": "{ip} · {vendor} {mac}"
+    },
+    "device_first_seen": {
+      "title": "{name} を検出しました",
+      "text": "{ip} · {vendor}"
+    },
+    "device_online": {
+      "title": "{name} がオンラインになりました",
+      "text": "{ip}"
+    },
+    "device_offline": {
+      "title": "{name} がオフラインになりました",
+      "text": "最後の IP：{ip}"
+    },
+    "device_ip_changed": {
+      "title": "{name} の IP が変更されました",
+      "text": "{old} → {new}"
+    },
+    "internet_down": {
+      "title": "インターネット接続が切断されました",
+      "text": "ルーターには到達できますが、インターネットには接続できません。"
+    },
+    "internet_up": {
+      "title": "インターネット接続が復旧しました",
+      "text": "障害の継続時間：{duration}"
+    },
+    "gateway_down": {
+      "title": "ルーターに到達できません",
+      "text": "このデバイスはローカルネットワークとの接続が失われました。"
+    },
+    "security_issues": {
+      "title": "セキュリティ監査：重要な問題が {count} 件あります",
+      "text": "スコア {score}/100。検出事項をご確認ください。"
+    },
+    "camera_detected": {
+      "title": "カメラを検出しました：{name}",
+      "text": "{ip} · {vendor}"
+    },
+    "device_blocked": {
+      "title": "{name} をブロックしました",
+      "text": "インターネットアクセスを遮断しました"
+    },
+    "device_unblocked": {
+      "title": "{name} のブロックを解除しました",
+      "text": "インターネットアクセスを復旧しました"
+    },
+    "update_installed": {
+      "title": "NET Sniffer を更新しました",
+      "text": "最新バージョンで動作しています"
+    }
   },
   "notify": {
-    "device_new": { "title": "ネットワークに新しいデバイスがあります", "body": "{name}（{ip}）{vendor}" },
-    "device_online": { "title": "{name} がオンラインになりました", "body": "{ip}" },
-    "device_offline": { "title": "{name} がオフラインになりました", "body": "最後に確認された IP：{ip}" },
-    "internet_down": { "title": "インターネット接続が切断されました", "body": "復旧したら NET Sniffer がお知らせします。" },
-    "internet_up": { "title": "インターネットが復旧しました", "body": "障害は {duration} 続きました。" },
-    "gateway_down": { "title": "ルーターに到達できません", "body": "ローカルネットワークが応答していません。" },
-    "security_issues": { "title": "セキュリティ上の問題が見つかりました", "body": "重要な問題 {count} 件・スコア {score}/100" },
-    "camera_detected": { "title": "カメラを検出しました", "body": "{name}（{ip}）" },
-    "test": { "title": "NET Sniffer", "body": "通知は正常に動作しています 🎉" }
+    "device_new": {
+      "title": "ネットワークに新しいデバイスがあります",
+      "body": "{name}（{ip}）{vendor}"
+    },
+    "device_online": {
+      "title": "{name} がオンラインになりました",
+      "body": "{ip}"
+    },
+    "device_offline": {
+      "title": "{name} がオフラインになりました",
+      "body": "最後に確認された IP：{ip}"
+    },
+    "internet_down": {
+      "title": "インターネット接続が切断されました",
+      "body": "復旧したら NET Sniffer がお知らせします。"
+    },
+    "internet_up": {
+      "title": "インターネットが復旧しました",
+      "body": "障害は {duration} 続きました。"
+    },
+    "gateway_down": {
+      "title": "ルーターに到達できません",
+      "body": "ローカルネットワークが応答していません。"
+    },
+    "security_issues": {
+      "title": "セキュリティ上の問題が見つかりました",
+      "body": "重要な問題 {count} 件・スコア {score}/100"
+    },
+    "camera_detected": {
+      "title": "カメラを検出しました",
+      "body": "{name}（{ip}）"
+    },
+    "test": {
+      "title": "NET Sniffer",
+      "body": "通知は正常に動作しています 🎉"
+    }
   },
   "parental": {
-    "rules": "スケジュール", "rules_d": "指定した時間帯にインターネットアクセスを自動でブロックします。",
-    "new_rule": "新しいスケジュール", "edit_rule": "スケジュールを編集", "rule": "スケジュール", "rule_name": "名前", "rule_name_ph": "例：子どもの就寝時間",
-    "devices": "デバイス", "block_periods": "ブロック時間帯", "add_period": "時間帯を追加",
+    "rules": "スケジュール",
+    "rules_d": "指定した時間帯にインターネットアクセスを自動でブロックします。",
+    "new_rule": "新しいスケジュール",
+    "edit_rule": "スケジュールを編集",
+    "rule": "スケジュール",
+    "rule_name": "名前",
+    "rule_name_ph": "例：子どもの就寝時間",
+    "devices": "デバイス",
+    "block_periods": "ブロック時間帯",
+    "add_period": "時間帯を追加",
     "periods_hint": "各時間帯の間、インターネットがブロックされます。終了時刻が開始時刻より前の場合は、深夜をまたいで継続します。",
-    "preset_bedtime": "就寝時間", "preset_school": "学校の時間", "preset_homework": "宿題の時間",
-    "every_day": "毎日", "weekdays": "平日", "no_schedule": "時間帯なし", "no_devices": "デバイスが選択されていません",
-    "blocking_now": "ブロック中", "scheduled": "予定あり", "disabled": "無効", "enabled": "有効",
-    "none": "スケジュールはまだありません", "none_d": "スケジュールを作成するか、プリセットから始めましょう。",
-    "delete_rule": "スケジュールを削除", "delete_rule_d": "このスケジュールに含まれるデバイスは、今後このスケジュールではブロックされなくなります。",
-    "saved": "スケジュールを保存しました", "quick_pause": "インターネットを一時停止", "quick_pause_d": "ワンタップでデバイスを 1 時間停止します",
-    "pause": "一時停止", "pause_for": "{d} 一時停止", "resume": "今すぐ再開", "paused_ok": "インターネットを一時停止しました", "resumed_ok": "インターネットを再開しました",
+    "preset_bedtime": "就寝時間",
+    "preset_school": "学校の時間",
+    "preset_homework": "宿題の時間",
+    "every_day": "毎日",
+    "weekdays": "平日",
+    "no_schedule": "時間帯なし",
+    "no_devices": "デバイスが選択されていません",
+    "blocking_now": "ブロック中",
+    "scheduled": "予定あり",
+    "disabled": "無効",
+    "enabled": "有効",
+    "none": "スケジュールはまだありません",
+    "none_d": "スケジュールを作成するか、プリセットから始めましょう。",
+    "delete_rule": "スケジュールを削除",
+    "delete_rule_d": "このスケジュールに含まれるデバイスは、今後このスケジュールではブロックされなくなります。",
+    "saved": "スケジュールを保存しました",
+    "quick_pause": "インターネットを一時停止",
+    "quick_pause_d": "ワンタップでデバイスを 1 時間停止します",
+    "pause": "一時停止",
+    "pause_for": "{d} 一時停止",
+    "resume": "今すぐ再開",
+    "paused_ok": "インターネットを一時停止しました",
+    "resumed_ok": "インターネットを再開しました",
     "paused_until": "{time} まで一時停止中",
     "need_backend": "ブロックを有効にするにはルーターを接続してください",
     "need_backend_d": "ブロックはお使いのルーターで適用されます。設定で一度だけ接続を構成してください。",
     "backend_error": "ルーターが直前の変更を受け付けませんでした"
   },
   "block": {
-    "guide_title": "ルーターを接続", "guide_desc": "NET Sniffer は、ルーター自身の管理インターフェースを通じて、管理者の認証情報を使い、正規の方法でデバイスをブロックします。",
-    "backend": "ブロック方式", "backend_none": "未設定", "none_d": "NET Sniffer がルーターと通信する方法を選択してください。",
-    "backend_ssh": "SSH 経由のルーター（OpenWrt / Linux）", "backend_ssh_d": "OpenWrt、GL.iNet、Turris、DD-WRT などの Linux ルーターに対応します。デバイスの MAC をファイアウォールの破棄リストに追加します。",
-    "backend_fritz": "AVM FRITZ!Box", "backend_fritz_d": "公式の TR-064 インターフェースを使用します（FRITZ!Box で「アプリケーションによるアクセスを許可」を有効にしてください）。",
-    "backend_local": "このデバイスがゲートウェイ（Linux）", "backend_local_d": "ルーター/ホットスポットとして動作する Raspberry Pi や Linux マシン向けです。root 権限が必要です。",
-    "manual_t": "手動で設定しますか？", "manual_d": "ルーターの管理ページで、この MAC アドレスをブロックリスト / MAC フィルターに追加してください。",
-    "configure": "設定", "host": "ルーターのアドレス", "port": "SSH ポート", "user": "ユーザー名", "password": "パスワード",
-    "firewall": "ファイアウォール", "test": "接続テスト", "test_ok": "ルーターに接続しました", "applied": "ルールを適用しました：{ago}",
+    "guide_title": "ルーターを接続",
+    "guide_desc": "NET Sniffer は、ルーター自身の管理インターフェースを通じて、管理者の認証情報を使い、正規の方法でデバイスをブロックします。",
+    "backend": "ブロック方式",
+    "backend_none": "未設定",
+    "none_d": "NET Sniffer がルーターと通信する方法を選択してください。",
+    "backend_ssh": "SSH 経由のルーター（OpenWrt / Linux）",
+    "backend_ssh_d": "OpenWrt、GL.iNet、Turris、DD-WRT などの Linux ルーターに対応します。デバイスの MAC をファイアウォールの破棄リストに追加します。",
+    "backend_fritz": "AVM FRITZ!Box",
+    "backend_fritz_d": "公式の TR-064 インターフェースを使用します（FRITZ!Box で「アプリケーションによるアクセスを許可」を有効にしてください）。",
+    "backend_local": "このデバイスがゲートウェイ（Linux）",
+    "backend_local_d": "ルーター/ホットスポットとして動作する Raspberry Pi や Linux マシン向けです。root 権限が必要です。",
+    "manual_t": "手動で設定しますか？",
+    "manual_d": "ルーターの管理ページで、この MAC アドレスをブロックリスト / MAC フィルターに追加してください。",
+    "configure": "設定",
+    "host": "ルーターのアドレス",
+    "port": "SSH ポート",
+    "user": "ユーザー名",
+    "password": "パスワード",
+    "firewall": "ファイアウォール",
+    "test": "接続テスト",
+    "test_ok": "ルーターに接続しました",
+    "applied": "ルールを適用しました：{ago}",
     "intro": "デバイスのブロックとペアレンタルコントロールは、ルーターによって実施されます。認証情報はこのデバイス上で暗号化して保存され、ルーターとの通信にのみ使用されます。",
     "legal": "ルーターの SSH ホストキーは、初回接続時に固定されます。NET Sniffer がネットワーク上の他のデバイスになりすますことはありません。"
   },
   "settings": {
-    "general": "一般", "scanning": "スキャン", "notifications": "通知", "remote": "リモートアクセス",
-    "blocking": "ルーターとブロック", "license": "ライセンス", "updates": "アップデート", "privacy": "プライバシーとデータ", "about": "情報",
-    "language": "言語", "language_d": "「自動」はデバイスの言語を使用します。", "lang_auto": "自動",
-    "theme": "外観", "theme_d": "ライト、ダーク、またはシステムに合わせます。", "theme_system": "システム", "theme_light": "ライト", "theme_dark": "ダーク",
-    "auto_scan": "自動スキャン", "auto_scan_d": "バックグラウンドで定期的にネットワークを再スキャンします。",
-    "interval": "スキャン間隔", "interval_d": "フルスキャンを実行する頻度です。", "interval_free": "無料プラン：15 分ごと、またはそれ以上の間隔。",
-    "watcher": "リアルタイム侵入監視", "watcher_d": "90 秒ごとに簡易的な在席確認を行い、新しいデバイスをすばやく検出します。",
-    "monitor_interval": "インターネット確認の間隔", "monitor_interval_d": "接続をテストする頻度です。",
-    "n_desktop": "デスクトップ通知", "n_desktop_d": "このコンピューターにシステム通知を表示します。",
-    "n_new": "新しいデバイス", "n_new_d": "未知のデバイスが参加したときに通知します。",
-    "n_offline": "お気に入りデバイスのオンライン/オフライン", "n_offline_d": "お気に入りに設定したデバイスが接続または切断されたときに通知します。",
-    "n_internet": "インターネット障害", "n_internet_d": "接続が切断されたときと復旧したときに通知します。",
-    "n_security": "セキュリティ警告", "n_security_d": "監査で見つかった問題や検出されたカメラを通知します。",
-    "n_push": "スマートフォンへのプッシュ通知", "n_push_d": "ntfy、Telegram、webhook を自由に組み合わせて使用できます。",
-    "n_test": "テストを送信", "n_test_sent": "テスト通知を送信しました",
-    "remote_enable": "リモートアクセスを有効にする", "remote_enable_d": "このネットワーク上のスマートフォンや他のコンピューターに NET Sniffer を提供します。先にパスワードを設定してください。",
-    "remote_password": "アクセスパスワード", "remote_password_d": "他のデバイスから NET Sniffer を開くときに必要です。", "remote_password_set": "パスワードを設定済み",
-    "remote_port": "ポート", "remote_open": "スマートフォンで開く",
+    "general": "一般",
+    "scanning": "スキャン",
+    "notifications": "通知",
+    "remote": "リモートアクセス",
+    "blocking": "ルーターとブロック",
+    "updates": "アップデート",
+    "privacy": "プライバシーとデータ",
+    "about": "情報",
+    "language": "言語",
+    "language_d": "「自動」はデバイスの言語を使用します。",
+    "lang_auto": "自動",
+    "theme": "外観",
+    "theme_d": "ライト、ダーク、またはシステムに合わせます。",
+    "theme_system": "システム",
+    "theme_light": "ライト",
+    "theme_dark": "ダーク",
+    "auto_scan": "自動スキャン",
+    "auto_scan_d": "バックグラウンドで定期的にネットワークを再スキャンします。",
+    "interval": "スキャン間隔",
+    "interval_d": "フルスキャンを実行する頻度です。",
+    "watcher": "リアルタイム侵入監視",
+    "watcher_d": "90 秒ごとに簡易的な在席確認を行い、新しいデバイスをすばやく検出します。",
+    "monitor_interval": "インターネット確認の間隔",
+    "monitor_interval_d": "接続をテストする頻度です。",
+    "n_desktop": "デスクトップ通知",
+    "n_desktop_d": "このコンピューターにシステム通知を表示します。",
+    "n_new": "新しいデバイス",
+    "n_new_d": "未知のデバイスが参加したときに通知します。",
+    "n_offline": "お気に入りデバイスのオンライン/オフライン",
+    "n_offline_d": "お気に入りに設定したデバイスが接続または切断されたときに通知します。",
+    "n_internet": "インターネット障害",
+    "n_internet_d": "接続が切断されたときと復旧したときに通知します。",
+    "n_security": "セキュリティ警告",
+    "n_security_d": "監査で見つかった問題や検出されたカメラを通知します。",
+    "n_push": "スマートフォンへのプッシュ通知",
+    "n_push_d": "ntfy、Telegram、webhook を自由に組み合わせて使用できます。",
+    "n_test": "テストを送信",
+    "n_test_sent": "テスト通知を送信しました",
+    "remote_enable": "リモートアクセスを有効にする",
+    "remote_enable_d": "このネットワーク上のスマートフォンや他のコンピューターに NET Sniffer を提供します。先にパスワードを設定してください。",
+    "remote_password": "アクセスパスワード",
+    "remote_password_d": "他のデバイスから NET Sniffer を開くときに必要です。",
+    "remote_password_set": "パスワードを設定済み",
+    "remote_port": "ポート",
+    "remote_open": "スマートフォンで開く",
     "remote_hint": "同じ Wi-Fi に接続したデバイスで QR コードをスキャンしてください。外出先からアクセスする場合は、ルーターのポートを開放せず、VPN（WireGuard、Tailscale）を使用してください。",
     "remote_headless": "サーバーモードで実行中です。リモートアクセスは常にオンで、パスワードで保護されています。",
-    "public_ip": "パブリック IP とプロバイダーの照会", "public_ip_d": "Cloudflare に、パブリック IP と ISP 名を問い合わせます。",
-    "clear_alerts": "通知履歴", "clear_alerts_d": "すべての通知とデバイスのアクティビティを削除します。",
-    "logout": "サインアウト", "logout_d": "このブラウザーでのセッションを終了します。",
+    "public_ip": "パブリック IP とプロバイダーの照会",
+    "public_ip_d": "Cloudflare に、パブリック IP と ISP 名を問い合わせます。",
+    "clear_alerts": "通知履歴",
+    "clear_alerts_d": "すべての通知とデバイスのアクティビティを削除します。",
+    "logout": "サインアウト",
+    "logout_d": "このブラウザーでのセッションを終了します。",
     "saved": "保存しました",
     "legal": "NET Sniffer は、ご自身が所有または管理を許可されているネットワークの監視と保護を目的としています。標準的なディスカバリープロトコルと接続確認のみを使用します。",
     "oss": "Python、FastAPI、zeroconf、psutil、httpx、pywebview、その他のオープンソースソフトウェアで構築されています。MAC ベンダーデータ © IEEE Registration Authority。"
   },
   "update": {
-    "current": "バージョン {v}", "available": "バージョン {v} が利用可能です", "ready_title": "アップデート {v} の準備ができました",
-    "ready_text": "NET Sniffer を再起動してアップデートを完了してください。", "restart": "今すぐ再起動", "restarting": "再起動中…",
-    "downloading": "アップデートをダウンロード中… {p}%", "checking": "アップデートを確認中…", "uptodate": "最新の状態です",
-    "error": "アップデートを確認できませんでした", "check": "今すぐ確認", "install": "インストールして再起動", "checked": "確認：{ago}",
-    "auto": "自動アップデート", "auto_d": "新しいバージョンを自動的にダウンロードしてインストールします。",
-    "notes": "新機能", "source_mode": "ソースから実行中です。git pull でアップデートするか、最新のリリースをダウンロードしてください。"
+    "current": "バージョン {v}",
+    "available": "バージョン {v} が利用可能です",
+    "ready_title": "アップデート {v} の準備ができました",
+    "ready_text": "NET Sniffer を再起動してアップデートを完了してください。",
+    "restart": "今すぐ再起動",
+    "restarting": "再起動中…",
+    "downloading": "アップデートをダウンロード中… {p}%",
+    "checking": "アップデートを確認中…",
+    "uptodate": "最新の状態です",
+    "error": "アップデートを確認できませんでした",
+    "check": "今すぐ確認",
+    "install": "インストールして再起動",
+    "checked": "確認：{ago}",
+    "auto": "自動アップデート",
+    "auto_d": "新しいバージョンを自動的にダウンロードしてインストールします。",
+    "notes": "新機能",
+    "source_mode": "ソースから実行中です。git pull でアップデートするか、最新のリリースをダウンロードしてください。"
   },
-  "report": { "title": "ネットワークレポート" },
+  "report": {
+    "title": "ネットワークレポート"
+  },
   "errors": {
-    "title": "問題が発生しました", "generic": "予期しないエラーが発生しました。", "offline": "NET Sniffer に接続できません。まだ実行中ですか？",
-    "unauthorized": "セッションの有効期限が切れました。", "pro_required": "この機能には NET Sniffer Pro が必要です。",
-    "not_local": "スキャンできるのは、ローカルネットワーク上のデバイスのみです。", "device_not_found": "デバイスが見つかりません。",
-    "bad_profile": "不明なスキャンプロファイルです。", "no_mac": "このデバイスには MAC アドレスがありません。",
+    "title": "問題が発生しました",
+    "generic": "予期しないエラーが発生しました。",
+    "offline": "NET Sniffer に接続できません。まだ実行中ですか？",
+    "unauthorized": "セッションの有効期限が切れました。",
+    "not_local": "スキャンできるのは、ローカルネットワーク上のデバイスのみです。",
+    "device_not_found": "デバイスが見つかりません。",
+    "bad_profile": "不明なスキャンプロファイルです。",
+    "no_mac": "このデバイスには MAC アドレスがありません。",
     "cannot_block_self": "このコンピューターやルーターはブロックできません。",
-    "block_not_configured": "ルーターの接続が設定されていません。", "block_failed": "ルーターが変更を受け付けませんでした。",
-    "block_connect_failed": "ルーターに接続できませんでした。", "block_hostkey_changed": "ルーターの SSH キーが変更されました。再度信頼するには、ルーターのアドレスを入力し直してください。",
-    "block_command_failed": "ルーターのコマンドが失敗しました。", "block_local_linux_only": "この方式は Linux でのみ動作します。",
+    "block_not_configured": "ルーターの接続が設定されていません。",
+    "block_failed": "ルーターが変更を受け付けませんでした。",
+    "block_connect_failed": "ルーターに接続できませんでした。",
+    "block_hostkey_changed": "ルーターの SSH キーが変更されました。再度信頼するには、ルーターのアドレスを入力し直してください。",
+    "block_command_failed": "ルーターのコマンドが失敗しました。",
+    "block_local_linux_only": "この方式は Linux でのみ動作します。",
     "block_local_needs_root": "ファイアウォールを管理するには、NET Sniffer を root として実行する必要があります。",
-    "speedtest_running": "速度テストはすでに実行中です。", "speedtest_unreachable": "速度テストのサーバーに到達できません。",
-    "speedtest_failed": "速度テストに失敗しました。", "audit_running": "監査はすでに実行中です。", "audit_failed": "監査に失敗しました。",
-    "already_configured": "パスワードはすでに設定されています。", "bad_setup_token": "セットアップコードが正しくありません。",
-    "password_short": "8 文字以上で入力してください。", "password_mismatch": "パスワードが一致しません。",
-    "too_many_attempts": "試行回数が多すぎます。数分お待ちください。", "bad_password": "パスワードが正しくありません。", "bad_url": "有効な http(s) の URL を入力してください。",
-    "license_invalid": "ライセンスキーが無効です。", "license_expired": "このライセンスは有効期限が切れています。",
-    "update_not_ready": "アップデートの準備がまだできていません。", "no_network": "ローカルネットワーク接続が検出されませんでした。"
+    "speedtest_running": "速度テストはすでに実行中です。",
+    "speedtest_unreachable": "速度テストのサーバーに到達できません。",
+    "speedtest_failed": "速度テストに失敗しました。",
+    "audit_running": "監査はすでに実行中です。",
+    "audit_failed": "監査に失敗しました。",
+    "already_configured": "パスワードはすでに設定されています。",
+    "bad_setup_token": "セットアップコードが正しくありません。",
+    "password_short": "8 文字以上で入力してください。",
+    "password_mismatch": "パスワードが一致しません。",
+    "too_many_attempts": "試行回数が多すぎます。数分お待ちください。",
+    "bad_password": "パスワードが正しくありません。",
+    "bad_url": "有効な http(s) の URL を入力してください。",
+    "update_not_ready": "アップデートの準備がまだできていません。",
+    "no_network": "ローカルネットワーク接続が検出されませんでした。"
   }
 }

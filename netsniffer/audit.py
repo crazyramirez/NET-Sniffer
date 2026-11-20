@@ -8,7 +8,6 @@ from __future__ import annotations
 import asyncio
 import time
 
-from . import licensing
 from .net import names
 from .net.ports import SERVICES, scan_host
 
@@ -53,8 +52,7 @@ class Auditor:
             self.running = False
 
     async def _run(self) -> dict:
-        s = self.db.settings()
-        profile = "common" if licensing.has(s, "full_ports") else "quick"
+        profile = "common"
         await self.hub.broadcast("audit", {"phase": "network", "progress": 0.03})
         net = await self.engine.refresh_network(public=True)
         devices = [d for d in self.engine.devices() if d["online"]]

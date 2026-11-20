@@ -2,7 +2,7 @@ import { api } from "../api.js";
 import { lineChart } from "../charts.js";
 import { emptyState, showError } from "../common.js";
 import { fmt, t } from "../i18n.js";
-import { S, can } from "../store.js";
+import { S } from "../store.js";
 import { $, html, ico } from "../ui.js";
 
 let root, data = null, hours = 24;
@@ -28,7 +28,7 @@ function paint() {
   root.innerHTML = html`<div class="stack">${statusHero()}
     <div class="card"><div class="card-h"><h3>${t("monitor.latency_chart")}</h3>
       <div class="right"><div class="seg">${[[1, "1h"], [24, "24h"], [168, "7d"], [720, "30d"]].map(([h, l]) =>
-        html`<button class="${hours === h ? "on" : ""}" data-h="${h}">${l}${h > 24 && !can("history") ? " ·PRO" : ""}</button>`)}</div></div></div>
+        html`<button class="${hours === h ? "on" : ""}" data-h="${h}">${l}</button>`)}</div></div></div>
       <div class="card-b"><div id="lat-chart" style="min-height:220px">${data ? "" : html`<div class="skeleton" style="height:220px"></div>`}</div></div></div>
     <div class="grid g-2" style="align-items:start">
       <div class="card"><div class="card-h"><h3>${t("monitor.outage_log")}</h3></div><div class="card-b">
@@ -63,7 +63,6 @@ function render(el) {
     const b = e.target.closest("[data-h]");
     if (b) {
       const h = +b.dataset.h;
-      if (h > 24 && !can("history")) return document.querySelector("[data-upgrade]")?.click();
       hours = h; data = null; paint(); load();
     }
   };

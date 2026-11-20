@@ -2,7 +2,7 @@ import { api } from "../api.js";
 import { barChart } from "../charts.js";
 import { emptyState, showError } from "../common.js";
 import { fmt, t } from "../i18n.js";
-import { S, can } from "../store.js";
+import { S } from "../store.js";
 import { $, html, ico, raw } from "../ui.js";
 
 let root, hist = [], run = null, shown = 0, target = 0, raf = 0;
@@ -77,7 +77,7 @@ function paint() {
       ${metric("ping", t("speed.ping"), v.ping != null ? fmt.num(v.ping, 0) : null, "ms", "activity")}
       ${metric("jitter", t("speed.jitter"), v.jitter != null ? fmt.num(v.jitter, 1) : null, "ms", "zap")}
     </div>
-    <div class="card"><div class="card-h"><h3>${t("speed.history")}</h3><span class="sub">${can("history") ? "" : t("speed.history_free")}</span>
+    <div class="card"><div class="card-h"><h3>${t("speed.history")}</h3>
       <div class="right legend"><span><i style="background:#06B6D4"></i>${t("speed.download")}</span><span><i style="background:#A855F7"></i>${t("speed.upload")}</span></div></div>
       <div class="card-b">${hist.length ? html`<div id="hist-chart"></div>
         <div style="overflow-x:auto;margin-top:12px"><table class="table"><thead><tr><th>${t("speed.date")}</th><th>${t("speed.download")}</th><th>${t("speed.upload")}</th><th>${t("speed.ping")}</th><th class="hide-s">${t("speed.jitter")}</th><th class="hide-s">${t("network.isp")}</th></tr></thead>

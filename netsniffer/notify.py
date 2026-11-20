@@ -6,7 +6,7 @@ import logging
 
 import httpx
 
-from . import __app_name__, i18n, licensing
+from . import __app_name__, i18n
 from .db import Database
 from .hub import Hub
 
@@ -74,8 +74,6 @@ class Notifier:
         s = self.db.settings()
         toggle = NOTIFY_TOGGLES.get(kind, "missing")
         if toggle == "missing" or (toggle and not s.get(toggle, True)):
-            return ev
-        if not licensing.has(s, "notifications"):
             return ev
         lang = i18n.resolve(s.get("language"))
         title = i18n.tr(lang, f"notify.{kind}.title", **params)

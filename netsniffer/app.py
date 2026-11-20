@@ -17,7 +17,7 @@ from fastapi import Body, Depends, FastAPI, HTTPException, Request, WebSocket, W
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
-from . import __app_name__, __version__, i18n, licensing
+from . import __app_name__, __version__, i18n
 from .audit import Auditor
 from .auth import COOKIE, RateLimiter, hash_password, new_token, verify_password
 from .blocking import BlockError, BlockManager
@@ -40,9 +40,6 @@ class Context:
     def __init__(self, headless: bool = False) -> None:
         self.headless = headless
         self.db = Database()
-        s = self.db.settings()
-        if not s.get("first_run"):
-            self.db.set_settings({"first_run": time.time()})
         self.hub = Hub()
         self.notifier = Notifier(self.db, self.hub, desktop=not headless)
         self.engine = Engine(self.db, self.hub, self.notifier)
@@ -68,7 +65,7 @@ class Context:
         if self.headless:
             return
         s = self.db.settings()
-        want = bool(s.get("remote_enabled")) and licensing.has(s, "remote") and bool(s.get("remote_password"))
+        want = bool(s.get("remote_enabled")) and bool(s.get("remote_password"))
         port = int(s.get("remote_port") or 8765)
         if self.remote_server:
             if want and self.remote_server.config.port == port:
@@ -90,8 +87,7 @@ class Context:
         running = self.headless or bool(self.remote_server and self.remote_server.started)
         return {"enabled": bool(s.get("remote_enabled")) or self.headless, "running": running,
                 "password_set": bool(s.get("remote_password")), "port": port,
-                "urls": [f"http://{ip}:{port}"] if ip else [], "hostname": socket.gethostname(),
-                "allowed": licensing.has(s, "remote") or self.headless}
+                "urls": [f"http://{ip}:{port}"] if ip else [], "hostname": socket.gethostname()}
 
     # ------------------------------------------------------------------ lifecycle
     async def startup(self) -> None:
@@ -133,13 +129,12 @@ class Context:
         return out
 
     def snapshot(self) -> dict:
-        s = self.db.settings()
         devices = self.engine.devices()
         return {
             "app": {"name": __app_name__, "version": __version__, "platform": platform_name(),
                     "headless": self.headless, "os_language": i18n.os_language(), "languages": SUPPORTED_LANGUAGES},
             "network": self.engine.net, "scan": self.engine.state, "devices": devices,
-            "monitor": self.monitor.state, "license": licensing.status(s), "settings": self.public_settings(),
+            "monitor": self.monitor.state, "settings": self.public_settings(),
             "update": self.updater.state, "unread": self.db.unread_count(), "blocking": self.blocker.status(),
             "remote": self.remote_status(), "speed_last": (self.db.speedtests(1) or [None])[0],
             "audit_last": self.audit_last, "bandwidth": self.monitor.bandwidth,
@@ -172,12 +167,6 @@ def create_app(ctx: Context) -> FastAPI:
     async def auth_dep(request: Request) -> None:
         if not session_ok(request):
             raise err(401, "unauthorized")
-
-    def feature(name: str):
-        async def dep() -> None:
-            if not licensing.has(ctx.db.settings(), name):
-                raise err(402, "pro_required", feature=name)
-        return Depends(dep)
 
     def set_cookie(resp: Response, request: Request) -> Response:
         tok = new_token()
@@ -311,8 +300,6 @@ def create_app(ctx: Context) -> FastAPI:
         profile = body.get("profile", "quick")
         if profile not in PROFILES:
             raise err(400, "bad_profile")
-        if profile != "quick" and not licensing.has(ctx.db.settings(), "full_ports"):
-            raise err(402, "pro_required", feature="full_ports")
 
         async def progress(done: int, total: int) -> None:
             await ctx.hub.broadcast("ports_progress", {"device_id": device_id, "done": done, "total": total})
@@ -371,7 +358,7 @@ def create_app(ctx: Context) -> FastAPI:
                         s.sendto(packet, (t, port))
         return {"ok": True}
 
-    @app.post("/api/devices/{device_id}/block", dependencies=[*A, feature("blocking")])
+    @app.post("/api/devices/{device_id}/block", dependencies=A)
     async def device_block(device_id: str, body: dict = Body(default={})):
         d = get_dev(device_id)
         if d["is_self"] or d["is_gateway"]:
@@ -391,7 +378,7 @@ def create_app(ctx: Context) -> FastAPI:
         await ctx.hub.broadcast("device", res)
         return res
 
-    @app.post("/api/devices/{device_id}/pause", dependencies=[*A, feature("parental")])
+    @app.post("/api/devices/{device_id}/pause", dependencies=A)
     async def device_pause(device_id: str, body: dict = Body(default={})):
         get_dev(device_id)
         if not ctx.blocker.backend():
@@ -449,8 +436,7 @@ def create_app(ctx: Context) -> FastAPI:
 
     @app.get("/api/speedtest/history", dependencies=A)
     async def speed_history():
-        lim = 200 if licensing.has(ctx.db.settings(), "history") else 10
-        return {"history": ctx.db.speedtests(lim), "running": ctx.speed.running, "last": ctx.speed_last}
+        return {"history": ctx.db.speedtests(200), "running": ctx.speed.running, "last": ctx.speed_last}
 
     # ------------------------------------------------------------------ monitor
     @app.get("/api/monitor", dependencies=A)
@@ -458,7 +444,7 @@ def create_app(ctx: Context) -> FastAPI:
         return ctx.monitor.summary(max(1, min(hours, 24 * 30)))
 
     # ------------------------------------------------------------------ security
-    @app.post("/api/audit", dependencies=[*A, feature("audit")])
+    @app.post("/api/audit", dependencies=A)
     async def audit():
         if ctx.auditor.running:
             raise err(409, "audit_running")
@@ -477,7 +463,7 @@ def create_app(ctx: Context) -> FastAPI:
     async def audit_get():
         return {"report": ctx.audit_last, "running": ctx.auditor.running}
 
-    @app.post("/api/cameras", dependencies=[*A, feature("cameras")])
+    @app.post("/api/cameras", dependencies=A)
     async def cameras():
         return await ctx.auditor.cameras()
 
@@ -501,13 +487,13 @@ def create_app(ctx: Context) -> FastAPI:
         return {"name": name, "devices": [str(x) for x in body.get("devices") or []][:100], "schedule": sched,
                 "enabled": bool(body.get("enabled", True)), "paused_until": float(body.get("paused_until") or 0)}
 
-    @app.post("/api/parental", dependencies=[*A, feature("parental")])
+    @app.post("/api/parental", dependencies=A)
     async def rule_create(body: dict = Body(...)):
         rid = ctx.db.save_rule(clean_rule(body))
         await ctx.blocker.reconcile()
         return {"id": rid}
 
-    @app.put("/api/parental/{rule_id}", dependencies=[*A, feature("parental")])
+    @app.put("/api/parental/{rule_id}", dependencies=A)
     async def rule_update(rule_id: int, body: dict = Body(...)):
         ctx.db.save_rule({**clean_rule(body), "id": rule_id})
         await ctx.blocker.reconcile()
@@ -519,7 +505,7 @@ def create_app(ctx: Context) -> FastAPI:
         await ctx.blocker.reconcile()
         return {"ok": True}
 
-    @app.post("/api/blocking/test", dependencies=[*A, feature("blocking")])
+    @app.post("/api/blocking/test", dependencies=A)
     async def blocking_test():
         b = ctx.blocker.backend()
         if not b:
@@ -599,35 +585,10 @@ def create_app(ctx: Context) -> FastAPI:
                                              dark="#E9EDF7" if dark else "#0E1525", light=None)
         return Response(buf.getvalue(), media_type="image/svg+xml")
 
-    @app.post("/api/settings/notify-test", dependencies=[*A, feature("notifications")])
+    @app.post("/api/settings/notify-test", dependencies=A)
     async def notify_test():
         await ctx.notifier.test()
         return {"ok": True}
-
-    # ------------------------------------------------------------------ license
-    @app.get("/api/license", dependencies=A)
-    async def license_get():
-        return licensing.status(ctx.db.settings())
-
-    @app.post("/api/license", dependencies=A)
-    async def license_set(body: dict = Body(...)):
-        key = str(body.get("key") or "").strip()
-        info = licensing.verify_key(key)
-        if not info:
-            raise err(400, "license_invalid")
-        if info.get("expired"):
-            raise err(400, "license_expired")
-        ctx.db.set_settings({"license_key": key})
-        st = licensing.status(ctx.db.settings())
-        await ctx.hub.broadcast("license", st)
-        return st
-
-    @app.delete("/api/license", dependencies=A)
-    async def license_del():
-        ctx.db.set_settings({"license_key": ""})
-        st = licensing.status(ctx.db.settings())
-        await ctx.hub.broadcast("license", st)
-        return st
 
     # ------------------------------------------------------------------ updates
     @app.get("/api/update", dependencies=A)
@@ -646,7 +607,7 @@ def create_app(ctx: Context) -> FastAPI:
         return {"ok": True}
 
     # ------------------------------------------------------------------ export
-    @app.get("/api/export/devices.csv", dependencies=[*A, feature("export")])
+    @app.get("/api/export/devices.csv", dependencies=A)
     async def export_csv():
         buf = io.StringIO()
         w = csv.writer(buf)
@@ -661,7 +622,7 @@ def create_app(ctx: Context) -> FastAPI:
         return Response(buf.getvalue(), media_type="text/csv",
                         headers={"Content-Disposition": 'attachment; filename="netsniffer-devices.csv"'})
 
-    @app.get("/api/export/report.html", dependencies=[*A, feature("export")])
+    @app.get("/api/export/report.html", dependencies=A)
     async def export_report(lang: str = "auto"):
         lg = lang if lang in SUPPORTED_LANGUAGES else i18n.resolve(ctx.db.get_setting("language"))
         t = lambda k, **p: html.escape(i18n.tr(lg, k, **p))  # noqa: E731

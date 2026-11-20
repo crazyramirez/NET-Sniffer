@@ -3,7 +3,7 @@ import { api } from "../api.js";
 import { deviceAvatar, deviceBadges, deviceSub, EVENT_ICON, eventClass, eventText, showError } from "../common.js";
 import { fmt, t } from "../i18n.js";
 import { TYPES } from "../icons.js";
-import { S, can, on, upsertDevice } from "../store.js";
+import { S, on, upsertDevice } from "../store.js";
 import { closeDrawer, confirmDialog, copyText, html, ico, loadingBtn, openDrawer, openMenu, openModal, toast } from "../ui.js";
 
 let cur = null, tab = "overview", drawer = null, off = [], portProgress = null, pingRes = null;
@@ -44,8 +44,8 @@ function ports(d) {
   const riskCls = { critical: "danger", high: "danger", medium: "warn", low: "info", none: "ok" };
   return html`<div class="row wrap" style="margin-bottom:14px">
       <button class="btn sm primary" data-ports="quick">${ico("scan")} ${t("ports.quick")}</button>
-      <button class="btn sm" data-ports="common">${ico("scan")} ${t("ports.common")}${can("full_ports") ? "" : " · PRO"}</button>
-      <button class="btn sm" data-ports="full">${ico("scan")} ${t("ports.full")}${can("full_ports") ? "" : " · PRO"}</button>
+      <button class="btn sm" data-ports="common">${ico("scan")} ${t("ports.common")}</button>
+      <button class="btn sm" data-ports="full">${ico("scan")} ${t("ports.full")}</button>
       <span class="faint" style="font-size:12.5px">${d.ports_scanned ? t("ports.scanned", { ago: fmt.ago(d.ports_scanned) }) : t("ports.never")}</span></div>
     ${portProgress ? html`<div class="progress" style="margin-bottom:14px"><i style="width:${Math.round((portProgress.done / portProgress.total) * 100)}%"></i></div>` : ""}
     ${list.length ? html`<div class="card" style="box-shadow:none"><table class="table"><thead><tr><th>${t("ports.port")}</th><th>${t("ports.service")}</th><th>${t("ports.risk")}</th></tr></thead><tbody>
@@ -83,8 +83,8 @@ function view() {
     <div class="actions" style="margin-top:16px">
       <button class="btn sm ${d.trusted ? "" : "primary"}" data-act="trust">${ico(d.trusted ? "shieldCheck" : "shield")} ${d.trusted ? t("device.trusted") : t("device.mark_trusted")}</button>
       <button class="btn sm" data-act="ping">${ico("activity")} Ping</button>
-      ${!d.is_self && !d.is_gateway ? html`<button class="btn sm ${d.blocked ? "danger solid" : "danger"}" data-act="block">${ico(d.blocked ? "unlock" : "ban")} ${d.blocked ? t("device.unblock") : t("device.block")}${can("blocking") ? "" : " · PRO"}</button>
-        <button class="btn sm" data-act="pause">${ico("pause")} ${t("parental.pause")}${can("parental") ? "" : " · PRO"}</button>` : ""}
+      ${!d.is_self && !d.is_gateway ? html`<button class="btn sm ${d.blocked ? "danger solid" : "danger"}" data-act="block">${ico(d.blocked ? "unlock" : "ban")} ${d.blocked ? t("device.unblock") : t("device.block")}</button>
+        <button class="btn sm" data-act="pause">${ico("pause")} ${t("parental.pause")}</button>` : ""}
       ${d.mac && !d.is_self ? html`<button class="btn sm" data-act="wol">${ico("wake")} ${t("device.wake")}</button>` : ""}
       ${web ? html`<a class="btn sm" href="${web.port === 443 || web.port === 8443 ? "https" : "http"}://${d.ip}${[80, 443].includes(web.port) ? "" : ":" + web.port}" target="_blank" rel="noopener noreferrer">${ico("external")} ${t("device.open_web")}</a>` : ""}
       <button class="btn sm icon" data-act="fav" aria-label="${t("device.favorite")}" title="${t("device.favorite_hint")}" style="${d.favorite ? "color:var(--warn)" : ""}">${ico("star")}</button>
@@ -145,7 +145,6 @@ async function act(name, btn) {
       case "ping": loadingBtn(btn, true); pingRes = await api(`/devices/${id}/ping`, { method: "POST" }); tab = "overview"; paint(); break;
       case "wol": await api(`/devices/${id}/wol`, { method: "POST" }); toast({ kind: "ok", title: t("device.wol_sent"), text: d.mac }); break;
       case "block": {
-        if (!can("blocking")) return document.querySelector("[data-upgrade]")?.click();
         if (!d.blocked && !(await confirmDialog({ title: t("device.block_confirm_t", { name: d.display_name }), text: t("device.block_confirm"), ok: t("device.block"), cancel: t("common.cancel"), danger: true }))) return;
         loadingBtn(btn, true);
         const r = await api(`/devices/${id}/block`, { method: "POST", body: { blocked: !d.blocked } });
@@ -154,7 +153,6 @@ async function act(name, btn) {
         break;
       }
       case "pause": {
-        if (!can("parental")) return document.querySelector("[data-upgrade]")?.click();
         const opts = [[15, "15 min"], [60, "1 h"], [120, "2 h"], [480, "8 h"]];
         openMenu(btn, [...opts.map(([m, l]) => ({ label: t("parental.pause_for", { d: l }), icon: "pause", action: () => pause(m) })),
           { sep: true }, { label: t("parental.resume"), icon: "play", action: () => pause(0) }]);
@@ -190,7 +188,6 @@ async function forget() {
 }
 
 async function scanPorts(profile, btn) {
-  if (profile !== "quick" && !can("full_ports")) return document.querySelector("[data-upgrade]")?.click();
   loadingBtn(btn, true);
   portProgress = { done: 0, total: 1 }; paint();
   try { const r = await api(`/devices/${encodeURIComponent(cur.id)}/ports`, { method: "POST", body: { profile } }); cur = { ...cur, ...r }; }
@@ -204,7 +201,7 @@ export function openDevice(id) {
   history.replaceState(null, "", `#/devices/${encodeURIComponent(id)}`);
   drawer = openDrawer(view, () => {
     off.forEach((f) => f()); off = []; drawer = null; cur = null;
-    history.replaceState(null, "", prevHash);
+    if (location.hash.startsWith("#/devices/")) history.replaceState(null, "", prevHash);
   });
   const el = drawer.el;
   el.addEventListener("click", (e) => {

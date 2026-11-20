@@ -4,7 +4,7 @@ import { deviceAvatar, deviceSub, emptyState, EVENT_ICON, eventClass, eventText,
 import { fmt, t } from "../i18n.js";
 import { avatar, TYPE_COLORS } from "../icons.js";
 import { startScan } from "../main.js";
-import { S, can } from "../store.js";
+import { S } from "../store.js";
 import { $, html, ico, raw } from "../ui.js";
 import { openDevice } from "./device.js";
 

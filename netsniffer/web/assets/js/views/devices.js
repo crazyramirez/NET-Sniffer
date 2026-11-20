@@ -3,7 +3,7 @@ import { deviceAvatar, deviceBadges, deviceStatus, deviceSub, emptyState, showEr
 import { fmt, t } from "../i18n.js";
 import { TYPES } from "../icons.js";
 import { startScan } from "../main.js";
-import { S, can, on } from "../store.js";
+import { S, on } from "../store.js";
 import { $, html, ico, openMenu, toast, confirmDialog } from "../ui.js";
 import { openDevice } from "./device.js";
 
@@ -99,7 +99,7 @@ function bind() {
       openMenu(e.target.closest("#more"), [
         { label: t("devices.deep_scan"), icon: "radar", action: () => startScan(true) },
         { label: t("devices.trust_all"), icon: "shieldCheck", action: trustAll },
-        { label: t("devices.export_csv") + (can("export") ? "" : " · PRO"), icon: "download", action: () => can("export") ? (location.href = "/api/export/devices.csv") : document.querySelector("[data-upgrade]")?.click() },
+        { label: t("devices.export_csv"), icon: "download", action: () => (location.href = "/api/export/devices.csv") },
         { sep: true },
         { label: t("devices.forget_offline"), icon: "trash", action: forgetOffline },
       ]);
