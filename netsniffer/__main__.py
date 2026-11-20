@@ -17,11 +17,11 @@ from .config import FROZEN, IS_WINDOWS, PACKAGE_DIR, data_dir
 INSTANCE_PORT = 47391
 
 
-def setup_logging(debug: bool) -> None:
+def setup_logging(debug: bool, console: bool = False) -> None:
     handler = logging.handlers.RotatingFileHandler(data_dir() / "netsniffer.log", maxBytes=1_000_000,
                                                    backupCount=1, encoding="utf-8")
     handlers: list[logging.Handler] = [handler]
-    if sys.stderr is not None and (not FROZEN or debug):
+    if sys.stderr is not None and (not FROZEN or debug or console):
         handlers.append(logging.StreamHandler())
     logging.basicConfig(level=logging.DEBUG if debug else logging.INFO, handlers=handlers,
                         format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -152,9 +152,9 @@ def main() -> int:
     p.add_argument("--updated", action="store_true", help=argparse.SUPPRESS)
     p.add_argument("--version", action="version", version=__version__)
     args = p.parse_args()
-    setup_logging(args.debug)
     if os.environ.get("NETSNIFFER_HEADLESS") == "1":
         args.headless = True
+    setup_logging(args.debug, console=args.headless)
     return run_headless(args) if args.headless else run_desktop(args)
 
 

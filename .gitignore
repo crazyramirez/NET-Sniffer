@@ -11,3 +11,6 @@ dist/
 *.old
 *.new
 .env
+
+# brand art cache
+docs/assets/art-wide.png

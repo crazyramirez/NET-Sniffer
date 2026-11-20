@@ -105,7 +105,7 @@ function sideStatus() {
   return html`<a class="plan-card" href="#/monitor" style="display:block;color:inherit;text-decoration:none">
     <div class="row"><span class="status-dot ${dot} ${st === "online" ? "pulse" : ""}"></span><div class="title">${t("dash.internet")}</div>
       <span class="faint num" style="margin-left:auto;font-size:12px">${m.latency ? `${fmt.num(m.latency, 0)} ms` : ""}</span></div>
-    <div class="sub">${t(`monitor.status.${st}`)} · ${on} ${t("device.online").toLowerCase()}</div></a>`;
+    <div class="sub">${t(`monitor.status.${st}`)} · ${on} ${t("nav.devices").toLowerCase()}</div></a>`;
 }
 function updateSideStatus() { const el = $("#side-status"); if (el) el.innerHTML = sideStatus(); }
 
