@@ -7,6 +7,11 @@ import { S, on, upsertDevice } from "../store.js";
 import { closeDrawer, confirmDialog, copyText, html, ico, loadingBtn, openDrawer, openMenu, openModal, toast } from "../ui.js";
 
 let cur = null, tab = "overview", drawer = null, off = [], portProgress = null, pingRes = null;
+let order = [], editing = false, slide = null;
+const ipNum = (ip) => (ip || "0.0.0.0").split(".").reduce((a, b) => a * 256 + +b, 0);
+const defaultOrder = () => [...S.devices].sort((a, b) => (b.online - a.online) || (b.is_gateway - a.is_gateway)
+  || ipNum(a.ip) - ipNum(b.ip)).map((d) => d.id);
+const position = () => order.indexOf(cur?.id);
 
 function kv(label, value, copy) {
   return html`<div>${label}</div><div>${value || html`<span class="faint">—</span>`}${copy && value ? html`<span class="copy" data-copy="${copy}" title="${t("common.copy")}">${ico("copy")}</span>` : ""}</div>`;
@@ -70,36 +75,84 @@ function view() {
   if (!d) return html`<div class="drawer-b"><div class="skeleton" style="height:60px;margin-bottom:16px"></div><div class="skeleton" style="height:240px"></div></div>`;
   const web = (d.ports || []).concat((d.open_hint || []).map((p) => ({ port: p }))).find((p) => [80, 443, 8080, 8443, 5000, 8123, 32400].includes(p.port));
   const paused = d.pause_until && d.pause_until > Date.now() / 1000;
+  const idx = position(), total = order.length;
   return html`<div class="drawer-h">
-    <div class="row" style="align-items:flex-start;gap:14px">${deviceAvatar(d, "lg")}
+    <div class="dnav">
+      <span class="dnav-pos num">${idx >= 0 ? html`<b>${idx + 1}</b> / ${total}` : ""}</span>
+      <div class="dnav-btns">
+        <button class="icon-btn" data-act="prev" ${idx <= 0 ? "disabled" : ""} title="${t("device.prev")} (←)" aria-label="${t("device.prev")}">${ico("chevL")}</button>
+        <button class="icon-btn" data-act="next" ${idx < 0 || idx >= total - 1 ? "disabled" : ""} title="${t("device.next")} (→)" aria-label="${t("device.next")}">${ico("chevR")}</button>
+        <span class="dnav-sep"></span>
+        <button class="icon-btn" data-act="close" aria-label="${t("common.close")}">${ico("x")}</button>
+      </div>
+    </div>
+    <div class="row slide-target" style="align-items:flex-start;gap:14px">${deviceAvatar(d, "lg")}
       <div style="flex:1;min-width:0">
-        <div class="row" style="gap:6px"><h3 style="margin:0;font-size:19px;letter-spacing:-.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="d-name">${d.display_name}</h3>
-          <button class="btn ghost xs" data-act="rename" aria-label="${t("common.rename")}">${ico("edit")}</button></div>
+        ${editing ? html`<div class="name-edit"><input class="input" id="d-name-input" value="${d.name || d.display_name}" maxlength="64"
+            placeholder="${d.display_name}" aria-label="${t("common.rename")}" autocomplete="off" spellcheck="false">
+            <button class="btn sm primary icon" data-act="name-save" aria-label="${t("common.save")}">${ico("check")}</button>
+            <button class="btn sm icon" data-act="name-cancel" aria-label="${t("common.cancel")}">${ico("x")}</button></div>
+            <div class="faint" style="font-size:11.5px;margin-top:4px">${t("device.rename_hint")}</div>`
+          : html`<div class="row" style="gap:4px"><h3 class="d-title" id="d-name" title="${t("common.rename")} (F2)">${d.display_name}</h3>
+          <button class="btn ghost xs" data-act="rename" aria-label="${t("common.rename")}" title="${t("common.rename")} (F2)">${ico("edit")}</button></div>`}
         <div class="faint" style="font-size:13px">${deviceSub(d)}</div>
         <div class="row wrap" style="gap:6px;margin-top:8px">${d.online ? html`<span class="badge ok"><span class="status-dot on"></span>${t("device.online")}</span>` : html`<span class="badge">${t("device.offline")} · ${fmt.ago(d.last_seen)}</span>`}
           ${deviceBadges(d)}${paused ? html`<span class="badge warn">${ico("pause")} ${t("parental.paused_until", { time: fmt.time(d.pause_until) })}</span>` : ""}</div>
-      </div>
-      <button class="icon-btn" data-act="close" aria-label="${t("common.close")}">${ico("x")}</button></div>
-    <div class="actions" style="margin-top:16px">
+      </div></div>
+    <div class="actions slide-target" style="margin-top:16px">
       <button class="btn sm ${d.trusted ? "" : "primary"}" data-act="trust">${ico(d.trusted ? "shieldCheck" : "shield")} ${d.trusted ? t("device.trusted") : t("device.mark_trusted")}</button>
       <button class="btn sm" data-act="ping">${ico("activity")} Ping</button>
       ${!d.is_self && !d.is_gateway ? html`<button class="btn sm ${d.blocked ? "danger solid" : "danger"}" data-act="block">${ico(d.blocked ? "unlock" : "ban")} ${d.blocked ? t("device.unblock") : t("device.block")}</button>
         <button class="btn sm" data-act="pause">${ico("pause")} ${t("parental.pause")}</button>` : ""}
       ${d.mac && !d.is_self ? html`<button class="btn sm" data-act="wol">${ico("wake")} ${t("device.wake")}</button>` : ""}
       ${web ? html`<a class="btn sm" href="${web.port === 443 || web.port === 8443 ? "https" : "http"}://${d.ip}${[80, 443].includes(web.port) ? "" : ":" + web.port}" target="_blank" rel="noopener noreferrer">${ico("external")} ${t("device.open_web")}</a>` : ""}
-      <button class="btn sm icon" data-act="fav" aria-label="${t("device.favorite")}" title="${t("device.favorite_hint")}" style="${d.favorite ? "color:var(--warn)" : ""}">${ico("star")}</button>
+      <button class="btn sm icon fav-toggle ${d.favorite ? "on" : ""}" data-act="fav" aria-label="${t("device.favorite")}" title="${t("device.favorite_hint")}">${ico("star")}</button>
       <button class="btn sm icon" data-act="more" aria-label="${t("common.more")}">${ico("more")}</button>
     </div>
     <div class="tabs" style="margin-top:16px;margin-bottom:-15px">${["overview", "ports", "activity"].map((x) => html`<button class="${tab === x ? "on" : ""}" data-tab="${x}">${t(`device.tab_${x}`)}${x === "ports" && d.ports?.length ? html` <span class="badge">${d.ports.length}</span>` : ""}</button>`)}</div>
   </div>
-  <div class="drawer-b">${tab === "overview" ? overview(d) : tab === "ports" ? ports(d) : activity(d)}</div>`;
+  <div class="drawer-b slide-target">${tab === "overview" ? overview(d) : tab === "ports" ? ports(d) : activity(d)}</div>`;
 }
 
-function paint() { drawer?.set(view()); }
+function paint() {
+  if (!drawer) return;
+  drawer.set(view());
+  if (slide) {
+    drawer.el.querySelectorAll(".slide-target").forEach((n) => n.classList.add(`slide-${slide}`));
+    slide = null;
+  }
+  if (editing) {
+    const inp = drawer.el.querySelector("#d-name-input");
+    if (inp && document.activeElement !== inp) { inp.focus(); inp.select(); }
+  }
+}
+
+function go(delta) {
+  const idx = position(), next = order[idx + delta];
+  if (idx < 0 || !next) return;
+  editing = false; pingRes = null; portProgress = null;
+  cur = S.devices.find((d) => d.id === next) || { id: next, display_name: "…" };
+  slide = delta > 0 ? "next" : "prev";
+  history.replaceState(null, "", `#/devices/${encodeURIComponent(next)}`);
+  paint();
+  load(next);
+}
+
+async function saveName() {
+  const inp = drawer?.el.querySelector("#d-name-input");
+  if (!inp) return;
+  const value = inp.value.trim();
+  editing = false;
+  if (value === (cur.name || cur.display_name)) return paint();
+  await patch({ name: value });  // empty → back to the automatically detected name
+}
 
 async function load(id) {
-  try { cur = await api(`/devices/${encodeURIComponent(id)}`); upsertDevice(cur); paint(); }
-  catch (e) { showError(e); closeDrawer(); }
+  try {
+    const d = await api(`/devices/${encodeURIComponent(id)}`);
+    upsertDevice(d);
+    if (cur?.id === id) { cur = d; paint(); }  // ignore late answers after fast navigation
+  } catch (e) { showError(e); if (cur?.id === id) closeDrawer(); }
 }
 
 async function patch(fields) {
@@ -130,18 +183,11 @@ async function act(name, btn) {
       case "close": closeDrawer(); break;
       case "trust": await patch({ trusted: !d.trusted }); break;
       case "fav": await patch({ favorite: !d.favorite }); break;
-      case "rename": {
-        const m = openModal({
-          title: t("common.rename"), body: html`<input class="input" id="nm" value="${d.name || d.display_name}" maxlength="64">`,
-          footer: html`<button class="btn" data-close>${t("common.cancel")}</button><button class="btn primary" id="ok">${t("common.save")}</button>`,
-          onMount: (el, close) => {
-            const save = () => { patch({ name: el.querySelector("#nm").value }); close(); };
-            el.querySelector("#ok").onclick = save; el.querySelector("#nm").onkeydown = (e) => e.key === "Enter" && save();
-          },
-        });
-        m.el.querySelector("#nm").select();
-        break;
-      }
+      case "rename": editing = true; paint(); break;
+      case "name-save": await saveName(); break;
+      case "name-cancel": editing = false; paint(); break;
+      case "prev": go(-1); break;
+      case "next": go(1); break;
       case "ping": loadingBtn(btn, true); pingRes = await api(`/devices/${id}/ping`, { method: "POST" }); tab = "overview"; paint(); break;
       case "wol": await api(`/devices/${id}/wol`, { method: "POST" }); toast({ kind: "ok", title: t("device.wol_sent"), text: d.mac }); break;
       case "block": {
@@ -195,7 +241,16 @@ async function scanPorts(profile, btn) {
   finally { portProgress = null; tab = "ports"; paint(); }
 }
 
-export function openDevice(id) {
+/** Open the detail panel. `ids` = the list the user is browsing (for previous / next). */
+export function openDevice(id, ids) {
+  order = ids?.length ? [...ids] : defaultOrder();
+  if (!order.includes(id)) order.unshift(id);
+  editing = false; slide = null;
+  if (drawer && cur) {  // already open: just switch device
+    cur = S.devices.find((d) => d.id === id) || cur;
+    history.replaceState(null, "", `#/devices/${encodeURIComponent(id)}`);
+    paint(); load(id); return;
+  }
   cur = S.devices.find((d) => d.id === id) || null; tab = "overview"; pingRes = null; portProgress = null;
   const prevHash = location.hash.startsWith("#/devices/") ? "#/devices" : location.hash || "#/dashboard";
   history.replaceState(null, "", `#/devices/${encodeURIComponent(id)}`);
@@ -210,7 +265,30 @@ export function openDevice(id) {
     const p = e.target.closest("[data-ports]"); if (p) return scanPorts(p.dataset.ports, p);
     const c = e.target.closest("[data-copy]"); if (c) copyText(c.dataset.copy).then(() => toast({ kind: "ok", title: t("common.copied") }));
   });
+  el.addEventListener("dblclick", (e) => { if (e.target.closest("#d-name")) { editing = true; paint(); } });
+  el.addEventListener("keydown", (e) => {
+    if (e.target.id !== "d-name-input") return;
+    if (e.key === "Enter") { e.preventDefault(); saveName(); }
+    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); editing = false; paint(); }
+  });
   el.addEventListener("change", (e) => { if (e.target.id === "d-type") patch({ type: e.target.value }); });
+  // keyboard: ← / → previous / next, F2 rename
+  const onKey = (e) => {
+    if (document.querySelector(".modal-wrap, .menu") || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.target.closest?.("input, textarea, select, [contenteditable]")) return;
+    if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+    else if (e.key === "F2") { e.preventDefault(); editing = true; paint(); }
+  };
+  document.addEventListener("keydown", onKey);
+  off.push(() => document.removeEventListener("keydown", onKey));
+  // touch: swipe left / right to move between devices
+  let sx = 0, sy = 0, st = 0;
+  el.addEventListener("touchstart", (e) => { const p = e.touches[0]; sx = p.clientX; sy = p.clientY; st = Date.now(); }, { passive: true });
+  el.addEventListener("touchend", (e) => {
+    const p = e.changedTouches[0], dx = p.clientX - sx, dy = p.clientY - sy;
+    if (Date.now() - st < 600 && Math.abs(dx) > 70 && Math.abs(dy) < 50 && !e.target.closest("input, textarea, .table")) go(dx < 0 ? 1 : -1);
+  }, { passive: true });
   el.addEventListener("focusout", (e) => { if (e.target.id === "d-notes" && e.target.value !== (cur.notes || "")) patch({ notes: e.target.value }); });
   off.push(on("ports_progress", (p) => { if (cur && p.device_id === cur.id && portProgress) { portProgress = p; const bar = el.querySelector(".progress i"); if (bar) bar.style.width = Math.round((p.done / p.total) * 100) + "%"; } }));
   off.push(on("device", (d) => { if (cur && d.id === cur.id && !el.contains(document.activeElement)) { cur = { ...cur, ...d }; paint(); } }));

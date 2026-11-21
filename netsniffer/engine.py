@@ -97,12 +97,13 @@ class Engine:
                 await self._phase("discover", 38)
                 await asyncio.sleep(1.6 if full else 1.2)
                 table = await arp.neighbor_table()
-                await self._phase("identify", 50)
                 target_set = set(targets)
                 alive = {ip: e["mac"] for ip, e in table.items()
                          if ip in target_set and arp.is_fresh(e) and is_local_ip(ip)}
                 if self.net.get("ip") and self.net.get("mac"):
                     alive[self.net["ip"]] = self.net["mac"]
+                self.state["found"] = len(alive)  # live count for the scan animation
+                await self._phase("identify", 50)
                 if side:
                     ssdp, wsd = await asyncio.gather(*side, return_exceptions=True)
                     if isinstance(ssdp, dict):
@@ -312,12 +313,24 @@ class Engine:
 
     # ------------------------------------------------------------------ background loops
     async def _demo_scan(self) -> dict:
-        now = time.time()
-        for d in self.db.devices():
-            if d["online"]:
-                self.db.update_device(d["id"], last_seen=now)
-        found = sum(1 for d in self.db.devices() if d["online"])
-        self.state.update(running=False, last=now, last_full=now, found=found, duration=6.2, progress=100)
+        if self.lock.locked():
+            return self.state
+        async with self.lock:
+            found = sum(1 for d in self.db.devices() if d["online"])
+            self.state.update(running=True, kind="full", found=0)
+            # same phases and pacing as a real scan, so the UI animation can be previewed
+            for phase, pct, wait in (("network", 2, .6), ("discover", 8, 1.2), ("discover", 22, 1.2),
+                                     ("discover", 38, 1.0), ("identify", 50, 1.2), ("identify", 70, 1.0),
+                                     ("merge", 92, .6)):
+                if phase == "identify":
+                    self.state["found"] = found
+                await self._phase(phase, pct)
+                await asyncio.sleep(wait)
+            now = time.time()
+            for d in self.db.devices():
+                if d["online"]:
+                    self.db.update_device(d["id"], last_seen=now)
+        self.state.update(running=False, phase=None, last=now, last_full=now, found=found, duration=6.8, progress=100)
         await self.hub.broadcast("scan", self.state)
         await self.hub.broadcast("devices", self.devices())
         return {"found": found, "new": 0, "online": 0, "offline": 0}
@@ -325,6 +338,8 @@ class Engine:
     async def auto_loop(self) -> None:
         await asyncio.sleep(2)
         await self.scan(full=True)
+        if demo.ENABLED:
+            return  # demo: only manual scans
         last_full = time.time()
         while True:
             await asyncio.sleep(30)

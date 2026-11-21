@@ -82,6 +82,7 @@
 
 | | |
 |---|---|
+| ![Escaneo en vivo](docs/assets/screens/scan-dark.webp) | ![Tarjetas de dispositivos](docs/assets/screens/devices-grid-light.webp) |
 | ![Dispositivos](docs/assets/screens/devices-dark.webp) | ![Detalle de dispositivo](docs/assets/screens/device-detail-dark.webp) |
 | ![Auditoría de seguridad](docs/assets/screens/security-dark.webp) | ![Test de velocidad](docs/assets/screens/speed-light.webp) |
 | ![Monitor de internet](docs/assets/screens/monitor-light.webp) | ![Ajustes de notificaciones](docs/assets/screens/notifications-light.webp) |

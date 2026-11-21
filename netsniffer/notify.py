@@ -60,7 +60,8 @@ class Notifier:
             from desktop_notifier import DesktopNotifier, Icon
             if self._desktop is None:
                 icon = PACKAGE_DIR / "web" / "icon.png"
-                self._desktop = DesktopNotifier(app_name=__app_name__,
+                # notification_limit=1: a new notification replaces the previous one (no pile-up)
+                self._desktop = DesktopNotifier(app_name=__app_name__, notification_limit=1,
                                                 app_icon=Icon(path=Path(icon)) if icon.exists() else None)
             kwargs = {"title": title, "message": body, "sound": None}
             if sound:

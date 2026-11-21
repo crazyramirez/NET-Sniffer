@@ -36,12 +36,13 @@ export function toast({ title, text = "", kind = "info", iconName, timeout = 420
     <div style="flex:1;min-width:0"><div class="t-t">${title}</div>${text ? html`<div class="t-d">${text}</div>` : ""}
     ${action ? html`<button class="btn xs" style="margin-top:8px" data-act>${action.label}</button>` : ""}</div>
     <button class="icon-btn" style="width:26px;height:26px" aria-label="close">${ico("x")}</button>`;
+  // one notification at a time: a new toast replaces the current one instead of stacking
+  box.querySelectorAll(".toast").forEach((old) => old.remove());
   box.appendChild(el);
   const close = () => { el.classList.add("out"); setTimeout(() => el.remove(), 260); };
   el.querySelector("button[aria-label]").onclick = close;
   if (action) el.querySelector("[data-act]").onclick = () => { action.run(); close(); };
   if (timeout) setTimeout(close, timeout);
-  while (box.children.length > 4) box.firstChild.remove();
   return close;
 }
 

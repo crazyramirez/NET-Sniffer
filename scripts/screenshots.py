@@ -36,10 +36,16 @@ CHROME = [
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     "google-chrome", "chromium", "chromium-browser",
 ]
-# name, route, theme, (width, height), mobile
+# JS run after the page loads (before the capture) and the extra wait it needs
+SCAN = ("document.getElementById('scan-btn').click()", 3.4)
+GRID = ("document.querySelector('[data-view=\"grid\"]').click()", 1.0)
+LIST = ("document.querySelector('[data-view=\"list\"]').click()", 1.0)
+# name, route, theme, (width, height), mobile[, (js, wait)]
 SHOTS = [
     ("dashboard-dark", "#/dashboard", "dark", (1440, 900), False),
-    ("devices-dark", "#/devices", "dark", (1440, 900), False),
+    ("scan-dark", "#/dashboard", "dark", (1440, 900), False, SCAN),
+    ("devices-dark", "#/devices", "dark", (1440, 900), False, LIST),
+    ("devices-grid-light", "#/devices", "light", (1440, 900), False, GRID),
     ("device-detail-dark", "#/devices/f0%3A18%3A98%3A5e%3A7a%3A01", "dark", (1440, 900), False),
     ("security-dark", "#/security", "dark", (1440, 900), False),
     ("dashboard-light", "#/dashboard", "light", (1440, 900), False),
@@ -47,7 +53,7 @@ SHOTS = [
     ("monitor-light", "#/monitor", "light", (1440, 900), False),
     ("notifications-light", "#/settings/notifications", "light", (1440, 900), False),
     ("mobile-dashboard-dark", "#/dashboard", "dark", (390, 844), True),
-    ("mobile-devices-light", "#/devices", "light", (390, 844), True),
+    ("mobile-devices-light", "#/devices", "light", (390, 844), True, LIST),
     ("mobile-security-dark", "#/security", "dark", (390, 844), True),
     ("mobile-speed-light", "#/speed", "light", (390, 844), True),
 ]
@@ -109,12 +115,13 @@ def main() -> int:
                 break
             except httpx.HTTPError:
                 time.sleep(0.5)
-        time.sleep(4)  # let the monitor collect a couple of live samples
+        time.sleep(12)  # initial demo scan animation + a couple of live monitor samples
         OUT.mkdir(parents=True, exist_ok=True)
         only = {s for s in a.only.split(",") if s}
-        for name, route, theme, (w, h), mobile in SHOTS:
+        for name, route, theme, (w, h), mobile, *extra in SHOTS:
             if only and name not in only:
                 continue
+            js, js_wait = extra[0] if extra else (None, 0)
             client.put("/api/settings", json={"theme": theme, "language": a.lang})
             target = httpx.put(f"http://127.0.0.1:{CDP_PORT}/json/new?about:blank", timeout=10).json()
             cdp = CDP(target["webSocketDebuggerUrl"])
@@ -128,6 +135,9 @@ def main() -> int:
                 url = f"{base}/launch?token={TOKEN}&next={urllib.parse.quote(route, safe='')}"
                 cdp.call("Page.navigate", url=url)
                 time.sleep(6)
+                if js:
+                    cdp.call("Runtime.evaluate", expression=js)
+                    time.sleep(js_wait)
                 shot = cdp.call("Page.captureScreenshot", format="png")
                 overflow = cdp.call("Runtime.evaluate", expression="document.documentElement.scrollWidth - innerWidth",
                                     returnByValue=True)["result"].get("value")

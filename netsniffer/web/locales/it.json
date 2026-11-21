@@ -68,7 +68,16 @@
   "scan": {
     "button": "Scansiona",
     "scanning": "Scansione",
-    "failed": "Scansione non riuscita"
+    "failed": "Scansione non riuscita",
+    "devices": "dispositivi",
+    "live": "Scansione live",
+    "title": "Scansione della rete…",
+    "phase_network": "Lettura della rete",
+    "phase_discover": "Ricerca dispositivi",
+    "phase_identify": "Identificazione",
+    "phase_merge": "Salvataggio",
+    "done_title": "Scansione completata",
+    "done_text": "{count} dispositivi online · {s} s"
   },
   "network": {
     "ethernet": "Rete cablata",
@@ -177,7 +186,10 @@
     "ping_detail": "{recv}/{sent} risposte via {method}",
     "tab_overview": "Panoramica",
     "tab_ports": "Porte e servizi",
-    "tab_activity": "Attività"
+    "tab_activity": "Attività",
+    "prev": "Dispositivo precedente",
+    "next": "Dispositivo successivo",
+    "rename_hint": "Invio per salvare · Esc per annullare · vuoto per il nome rilevato"
   },
   "ports": {
     "quick": "Scansione rapida",

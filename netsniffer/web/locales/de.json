@@ -68,7 +68,16 @@
   "scan": {
     "button": "Scannen",
     "scanning": "Scan läuft",
-    "failed": "Scan fehlgeschlagen"
+    "failed": "Scan fehlgeschlagen",
+    "devices": "Geräte",
+    "live": "Live-Scan",
+    "title": "Netzwerk wird gescannt…",
+    "phase_network": "Netzwerk lesen",
+    "phase_discover": "Geräte finden",
+    "phase_identify": "Identifizieren",
+    "phase_merge": "Ergebnisse speichern",
+    "done_title": "Scan abgeschlossen",
+    "done_text": "{count} Geräte online · {s} s"
   },
   "network": {
     "ethernet": "Kabelnetzwerk",
@@ -177,7 +186,10 @@
     "ping_detail": "{recv}/{sent} Antworten via {method}",
     "tab_overview": "Übersicht",
     "tab_ports": "Ports & Dienste",
-    "tab_activity": "Aktivität"
+    "tab_activity": "Aktivität",
+    "prev": "Vorheriges Gerät",
+    "next": "Nächstes Gerät",
+    "rename_hint": "Enter zum Speichern · Esc zum Abbrechen · leer für den erkannten Namen"
   },
   "ports": {
     "quick": "Schnellscan",

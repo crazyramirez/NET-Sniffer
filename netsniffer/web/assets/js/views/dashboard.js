@@ -5,10 +5,101 @@ import { fmt, t } from "../i18n.js";
 import { avatar, TYPE_COLORS } from "../icons.js";
 import { startScan } from "../main.js";
 import { S } from "../store.js";
-import { $, html, ico, raw } from "../ui.js";
+import { $, $$, html, ico, raw } from "../ui.js";
 import { openDevice } from "./device.js";
 
-let root, lat = [], events = [];
+let root, lat = [], events = [], celebrating = false, deferred = false, countUpNext = false;
+
+// ------------------------------------------------------------------ scan experience
+const PHASES = ["network", "discover", "identify", "merge"];
+function hash(str) { let h = 2166136261; for (const c of str) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function blipPos(d) {
+  const h = hash(d.id), angle = (h % 360) * Math.PI / 180, r = 18 + ((h >>> 9) % 26);  // radius 18–43 % of the radar
+  return { x: 50 + r * Math.cos(angle), y: 50 + r * Math.sin(angle) };
+}
+function scanTargets() {
+  return [...S.devices].sort((a, b) => (b.online - a.online) || hash(a.id) - hash(b.id));
+}
+function revealed() {
+  const sc = S.scan || {}, known = S.devices.filter((d) => d.online).length;
+  if (sc.found) return sc.found;
+  return Math.round(known * Math.min(1, (sc.progress || 0) / 45));  // before the count is known: grow with progress
+}
+
+function scanHero() {
+  const sc = S.scan || {}, n = S.network || {}, pct = Math.max(2, sc.progress || 0);
+  const idx = Math.max(0, PHASES.indexOf(sc.phase));
+  const blips = scanTargets().slice(0, 48);
+  const shown = revealed();
+  return html`<div class="card hero scan-hero" id="scan-hero">
+    <div class="radar-xl" id="radar">
+      <svg class="radar-grid" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="34"/><circle cx="100" cy="100" r="60"/><circle cx="100" cy="100" r="86"/>
+        <path d="M100 8v184M8 100h184"/></svg>
+      <div class="radar-sweep"></div>
+      <i class="radar-pulse"></i><i class="radar-pulse d2"></i><i class="radar-pulse d3"></i>
+      <svg class="radar-progress" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="96" pathLength="100"/>
+        <circle class="bar" id="radar-bar" cx="100" cy="100" r="96" pathLength="100" style="stroke-dashoffset:${100 - pct}"/></svg>
+      <div class="blips" id="blips">${blips.map((d, i) => {
+        const p = blipPos(d);
+        return html`<i class="blip ${i < shown ? "on" : ""}" style="left:${p.x}%;top:${p.y}%;--c:${TYPE_COLORS[d.type] || TYPE_COLORS.unknown}"></i>`;
+      })}</div>
+      <div class="radar-core"><b class="num" id="scan-count">${shown}</b><span>${t("scan.devices")}</span></div>
+    </div>
+    <div style="min-width:0;position:relative;z-index:1">
+      <div class="row" style="gap:8px;margin-bottom:6px"><span class="badge accent"><span class="spinner" style="width:10px;height:10px"></span>${t("scan.live")}</span></div>
+      <h2>${t("scan.title")}</h2>
+      <div class="muted">${n.wifi?.ssid ? `${n.wifi.ssid} · ` : ""}${n.cidr || ""}</div>
+      <ol class="scan-steps" id="scan-steps">${PHASES.map((p, i) => html`<li class="${i < idx ? "done" : i === idx ? "now" : ""}">
+        <span class="st-ico">${i < idx ? ico("check") : html`<i></i>`}</span>${t(`scan.phase_${p}`)}</li>`)}</ol>
+      <div class="row" style="gap:12px;margin-top:16px"><div class="progress" style="flex:1"><i id="scan-bar" style="width:${pct}%"></i></div>
+        <b class="num" id="scan-pct" style="min-width:42px;text-align:right">${pct}%</b></div>
+    </div></div>`;
+}
+
+let shownCount = 0;
+function updateScan() {
+  const sc = S.scan || {}, pct = Math.max(2, sc.progress || 0), idx = Math.max(0, PHASES.indexOf(sc.phase));
+  const bar = $("#radar-bar"); if (bar) bar.style.strokeDashoffset = String(100 - pct);
+  const lin = $("#scan-bar"); if (lin) lin.style.width = pct + "%";
+  const pc = $("#scan-pct"); if (pc) pc.textContent = pct + "%";
+  $$(".scan-steps li").forEach((li, i) => {
+    const state = i < idx ? "done" : i === idx ? "now" : "";
+    if (li.className !== state) {
+      li.className = state;
+      li.querySelector(".st-ico").innerHTML = i < idx ? ico("check").s : "<i></i>";
+    }
+  });
+  const target = revealed();
+  $$("#blips .blip").forEach((b, i) => b.classList.toggle("on", i < target));
+  const cnt = $("#scan-count");
+  if (cnt && target !== shownCount) { countUp(cnt, shownCount, target, 500); shownCount = target; }
+}
+
+function countUp(el, from, to, ms = 700) {
+  const t0 = performance.now();
+  const step = (now) => {
+    const k = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = fmt.num(Math.round(from + (to - from) * e));
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function celebrate() {
+  const radar = $("#radar");
+  celebrating = true;
+  if (radar) {
+    updateScan();
+    radar.classList.add("done");
+    const bar = $("#radar-bar"); if (bar) bar.style.strokeDashoffset = "0";
+  }
+  setTimeout(() => {
+    celebrating = false; countUpNext = true; shownCount = 0;
+    if (root && document.body.contains(root)) paint();
+  }, radar ? 1100 : 0);
+}
 
 function health() {
   if (S.audit_last?.score !== undefined) return { score: S.audit_last.score, label: t("dash.security_score"), audited: true };
@@ -28,8 +119,9 @@ function statusInfo() {
 }
 
 function heroCard() {
+  if (S.scan?.running || celebrating) return scanHero();
   const n = S.network, h = health(), wifi = n.wifi || {};
-  const scanning = S.scan?.running;
+  const scanning = false;
   const sig = wifi.signal ?? null;
   return html`<div class="card hero">
     <div class="ring-wrap" id="ring">${raw(ring(h.score))}${scanning ? html`<div class="radar"></div>` : ""}
@@ -99,7 +191,7 @@ function typesCard() {
   S.devices.filter((d) => d.online).forEach((d) => (counts[d.type || "unknown"] = (counts[d.type || "unknown"] || 0) + 1));
   const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   return html`<div class="card"><div class="card-h"><h3>${t("dash.by_type")}</h3></div><div class="card-b">
-    ${entries.length ? html`<div class="type-chips">${entries.map(([k, v]) => html`<a class="type-chip" href="#/devices" data-type="${k}" style="color:inherit;text-decoration:none">${raw(avatar(k))}${t(`types.${k}`)} <b>${v}</b></a>`)}</div>`
+    ${entries.length ? html`<div class="type-chips">${entries.map(([k, v]) => html`<a class="type-chip" href="#/devices?type=${k}" data-type="${k}" style="color:inherit;text-decoration:none">${raw(avatar(k))}${t(`types.${k}`)} <b>${v}</b></a>`)}</div>`
       : html`<div class="faint">${t("dash.no_devices")}</div>`}</div></div>`;
 }
 
@@ -153,11 +245,25 @@ function paint() {
     ${activityCard()}
   </div>`;
   drawBw();
+  if (S.scan?.running) { shownCount = revealed(); }
+  if (countUpNext) {  // after a scan: numbers roll up to their new values
+    countUpNext = false;
+    $$(".kpi .k-val").forEach((k) => {
+      const node = k.firstChild, txt = (node?.textContent || "").trim(), to = /^\d+$/.test(txt) ? +txt : NaN;
+      if (node && Number.isFinite(to) && to > 0) { const span = document.createElement("span"); node.replaceWith(span); countUp(span, 0, to, 800); }
+    });
+    el.querySelector(".hero")?.classList.add("hero-reveal");
+  }
   el.onclick = (e) => {
     const dev = e.target.closest("[data-dev]");
     if (dev?.dataset.dev) { openDevice(dev.dataset.dev); return; }
     if (e.target.closest("[data-scan]")) startScan();
   };
+}
+
+function repaint() {
+  if (!root || !document.body.contains(root)) return;
+  const st = $("#content").scrollTop; paint(); $("#content").scrollTop = st;
 }
 
 let pending = false;
@@ -173,9 +279,18 @@ function onEvent(type, data) {
     if (lat.length > 240) lat.shift();
   }
   if (type === "event") { events.unshift(data); events = events.slice(0, 20); }
-  if (["devices", "device", "scan", "network", "monitor", "event", "resync", "theme"].includes(type) && !pending) {
+  if (type === "scan") {
+    const radar = $("#radar");
+    if (data.running && radar) return updateScan();          // update in place: animations keep running
+    if (data.running && !radar) return repaint();            // scan just started → show the radar
+    if (!data.running && radar && !celebrating) { celebrate(); return; }
+    if (!data.running && deferred) { deferred = false; return repaint(); }
+    return;
+  }
+  if (S.scan?.running || celebrating) { deferred = true; return; }  // don't interrupt the scan animation
+  if (["devices", "device", "network", "monitor", "event", "resync", "theme"].includes(type) && !pending) {
     pending = true;
-    requestAnimationFrame(() => { pending = false; if (root && document.body.contains(root)) { const st = $("#content").scrollTop; paint(); $("#content").scrollTop = st; } });
+    requestAnimationFrame(() => { pending = false; repaint(); });
   }
 }
 

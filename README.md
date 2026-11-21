@@ -72,6 +72,7 @@
 
 | | |
 |---|---|
+| ![Live network scan](docs/assets/screens/scan-dark.webp) | ![Device cards](docs/assets/screens/devices-grid-light.webp) |
 | ![Devices](docs/assets/screens/devices-dark.webp) | ![Device details](docs/assets/screens/device-detail-dark.webp) |
 | ![Security audit](docs/assets/screens/security-dark.webp) | ![Speed test](docs/assets/screens/speed-light.webp) |
 | ![Internet monitor](docs/assets/screens/monitor-light.webp) | ![Notification settings](docs/assets/screens/notifications-light.webp) |

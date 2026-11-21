@@ -68,7 +68,16 @@
   "scan": {
     "button": "スキャン",
     "scanning": "スキャン中",
-    "failed": "スキャンに失敗しました"
+    "failed": "スキャンに失敗しました",
+    "devices": "台",
+    "live": "ライブスキャン",
+    "title": "ネットワークをスキャン中…",
+    "phase_network": "ネットワーク確認",
+    "phase_discover": "デバイス検出",
+    "phase_identify": "デバイス識別",
+    "phase_merge": "結果を保存",
+    "done_title": "スキャン完了",
+    "done_text": "{count} 台がオンライン · {s} 秒"
   },
   "network": {
     "ethernet": "有線ネットワーク",
@@ -177,7 +186,10 @@
     "ping_detail": "{method} 経由で {recv}/{sent} 件応答",
     "tab_overview": "概要",
     "tab_ports": "ポートとサービス",
-    "tab_activity": "アクティビティ"
+    "tab_activity": "アクティビティ",
+    "prev": "前のデバイス",
+    "next": "次のデバイス",
+    "rename_hint": "Enter で保存 · Esc でキャンセル · 空欄で検出名を使用"
   },
   "ports": {
     "quick": "クイックスキャン",

@@ -68,7 +68,16 @@
   "scan": {
     "button": "Scan",
     "scanning": "Scanning",
-    "failed": "Scan failed"
+    "failed": "Scan failed",
+    "devices": "devices",
+    "live": "Live scan",
+    "title": "Scanning your network…",
+    "phase_network": "Reading network",
+    "phase_discover": "Discovering devices",
+    "phase_identify": "Identifying",
+    "phase_merge": "Saving results",
+    "done_title": "Scan complete",
+    "done_text": "{count} devices online · {s} s"
   },
   "network": {
     "ethernet": "Wired network",
@@ -177,7 +186,10 @@
     "ping_detail": "{recv}/{sent} replies via {method}",
     "tab_overview": "Overview",
     "tab_ports": "Ports & services",
-    "tab_activity": "Activity"
+    "tab_activity": "Activity",
+    "prev": "Previous device",
+    "next": "Next device",
+    "rename_hint": "Enter to save · Esc to cancel · leave empty to use the detected name"
   },
   "ports": {
     "quick": "Quick scan",

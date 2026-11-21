@@ -68,7 +68,16 @@
   "scan": {
     "button": "Analyser",
     "scanning": "Analyse en cours",
-    "failed": "Échec de l'analyse"
+    "failed": "Échec de l'analyse",
+    "devices": "appareils",
+    "live": "Analyse en direct",
+    "title": "Analyse de votre réseau…",
+    "phase_network": "Lecture du réseau",
+    "phase_discover": "Découverte des appareils",
+    "phase_identify": "Identification",
+    "phase_merge": "Enregistrement",
+    "done_title": "Analyse terminée",
+    "done_text": "{count} appareils en ligne · {s} s"
   },
   "network": {
     "ethernet": "Réseau filaire",
@@ -177,7 +186,10 @@
     "ping_detail": "{recv}/{sent} réponses via {method}",
     "tab_overview": "Aperçu",
     "tab_ports": "Ports et services",
-    "tab_activity": "Activité"
+    "tab_activity": "Activité",
+    "prev": "Appareil précédent",
+    "next": "Appareil suivant",
+    "rename_hint": "Entrée pour enregistrer · Échap pour annuler · vide pour le nom détecté"
   },
   "ports": {
     "quick": "Analyse rapide",

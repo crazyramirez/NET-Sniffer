@@ -137,7 +137,10 @@ function updateNav() {
 // ------------------------------------------------------------------ routing
 function route() {
   if (drawerOpen() && !location.hash.startsWith("#/devices/")) closeDrawer();
-  const [, name = "dashboard", arg] = location.hash.split("/");
+  // "#/devices/<id>?type=camera" → name "devices", arg "<id>", params {type: "camera"}
+  const [path, query = ""] = location.hash.split("?");
+  const [, name = "dashboard", arg] = path.split("/");
+  const params = new URLSearchParams(query);
   const view = VIEWS[name] || dashboard;
   const vname = VIEWS[name] ? name : "dashboard";
   if (vname !== currentName) { current?.destroy?.(); current = view; currentName = vname; }
@@ -146,8 +149,8 @@ function route() {
   updateNav();
   const root = $("#content");
   root.innerHTML = `<div class="page" id="page"></div>`;
-  view.render($("#page"), arg);
-  if (vname === "devices" && arg) openDevice(decodeURIComponent(arg));
+  view.render($("#page"), arg, params);
+  if (vname === "devices" && arg) openDevice(decodeURIComponent(arg), devices.order?.());
 }
 
 export function rerender() {
@@ -164,7 +167,12 @@ async function refreshState() {
 // ------------------------------------------------------------------ realtime
 function onWS(type, data) {
   switch (type) {
-    case "scan": S.scan = data; renderScanBtn(); break;
+    case "scan": {
+      const finished = S.scan?.running && !data.running && data.kind === "full";
+      S.scan = data; renderScanBtn();
+      if (finished) toast({ kind: "ok", iconName: "radar", title: t("scan.done_title"), text: t("scan.done_text", { count: data.found || 0, s: fmt.num(data.duration || 0, 1) }) });
+      break;
+    }
     case "scan_error": toast({ kind: "error", title: t("scan.failed"), text: t(`errors.${data.error}`) }); break;
     case "devices": S.devices = data; updateSideStatus(); break;
     case "device": upsertDevice(data); break;

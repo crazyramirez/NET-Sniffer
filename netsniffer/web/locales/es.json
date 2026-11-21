@@ -68,7 +68,16 @@
   "scan": {
     "button": "Escanear",
     "scanning": "Escaneando",
-    "failed": "Error al escanear"
+    "failed": "Error al escanear",
+    "devices": "dispositivos",
+    "live": "Escaneo en vivo",
+    "title": "Escaneando tu red…",
+    "phase_network": "Leyendo la red",
+    "phase_discover": "Descubriendo dispositivos",
+    "phase_identify": "Identificando",
+    "phase_merge": "Guardando resultados",
+    "done_title": "Escaneo completado",
+    "done_text": "{count} dispositivos en línea · {s} s"
   },
   "network": {
     "ethernet": "Red cableada",
@@ -177,7 +186,10 @@
     "ping_detail": "{recv}/{sent} respuestas mediante {method}",
     "tab_overview": "Resumen",
     "tab_ports": "Puertos y servicios",
-    "tab_activity": "Actividad"
+    "tab_activity": "Actividad",
+    "prev": "Dispositivo anterior",
+    "next": "Dispositivo siguiente",
+    "rename_hint": "Enter para guardar · Esc para cancelar · vacío para usar el nombre detectado"
   },
   "ports": {
     "quick": "Escaneo rápido",
