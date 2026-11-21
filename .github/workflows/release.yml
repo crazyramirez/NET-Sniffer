@@ -2,7 +2,7 @@ name: Release builds (macOS & Linux)
 
 # Triggered when the Windows build is published locally with scripts/release.ps1.
 # Builds the macOS .dmg (arm64 + x64) and Linux .deb + binary (x64 + arm64/Raspberry Pi), attaches them to the
-# same release, then deletes every older release, tag and workflow run: only the latest exists.
+# same release and, only if every build succeeded, deletes every older release, tag and workflow run.
 on:
   release:
     types: [published]
@@ -65,7 +65,8 @@ jobs:
   cleanup:
     name: Keep only the latest version
     needs: build
-    if: always()
+    # only once every installer of the new version is built and attached: a failed build keeps the old release
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - name: Delete older releases and their tags

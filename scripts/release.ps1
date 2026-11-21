@@ -80,19 +80,26 @@ gh release create $Tag $Exe --repo $Repo --title "NET Sniffer $Version" --notes-
 Check "gh release create"
 Remove-Item $NotesFile
 
-# ---------------------------------------------------------------- never keep old versions
-Step "Deleting previous releases, tags and workflow runs on GitHub"
-$tags = gh release list --repo $Repo --limit 200 --json tagName -q ".[].tagName"
-foreach ($t in $tags) { if ($t -and $t -ne $Tag) { gh release delete $t --repo $Repo --cleanup-tag --yes } }
-foreach ($t in (git tag)) { if ($t -ne $Tag) { git tag -d $t | Out-Null; git push origin ":refs/tags/$t" 2>$null } }
-$runs = gh run list --repo $Repo --limit 500 --json databaseId,status,headBranch -q '.[] | select(.status == "completed") | .databaseId'
-foreach ($id in $runs) { if ($id) { gh run delete $id --repo $Repo | Out-Null } }
-
 Step "Waiting for the macOS & Linux builds (GitHub Actions)"
 Start-Sleep 10
 $RunId = gh run list --repo $Repo --workflow release.yml --limit 1 --json databaseId -q ".[0].databaseId"
-if ($RunId) { gh run watch $RunId --repo $Repo --exit-status --interval 30 | Out-Null }
-if ($LASTEXITCODE -ne 0) { Write-Host "GitHub Actions build failed: https://github.com/$Repo/actions/runs/$RunId" -ForegroundColor Red }
+$CiOk = $false
+if ($RunId) { gh run watch $RunId --repo $Repo --exit-status --interval 30 | Out-Null; $CiOk = ($LASTEXITCODE -eq 0) }
+if (-not $CiOk) { Write-Host "GitHub Actions build failed: https://github.com/$Repo/actions/runs/$RunId" -ForegroundColor Red }
+
+# ---------------------------------------------------------------- never keep old versions
+# only once every installer of the new version exists: a failed build keeps the previous release available
+if ($CiOk) {
+  Step "Deleting previous releases, tags and workflow runs on GitHub"
+  $tags = gh release list --repo $Repo --limit 200 --json tagName -q ".[].tagName"
+  foreach ($t in $tags) { if ($t -and $t -ne $Tag) { gh release delete $t --repo $Repo --cleanup-tag --yes } }
+  foreach ($t in (git tag)) { if ($t -ne $Tag) { git tag -d $t | Out-Null; git push origin ":refs/tags/$t" 2>$null } }
+  $runs = (gh run list --repo $Repo --limit 500 --json databaseId,status | ConvertFrom-Json) |
+    Where-Object { $_.status -eq "completed" -and "$($_.databaseId)" -ne "$RunId" }
+  foreach ($r in $runs) { gh run delete $r.databaseId --repo $Repo | Out-Null }
+} else {
+  Write-Host "Previous releases kept because the new version is incomplete." -ForegroundColor Yellow
+}
 
 Step "Downloading every installer of $Tag into dist\"
 gh release download $Tag --repo $Repo --dir (Join-Path $Root "dist") --clobber
