@@ -88,6 +88,16 @@ foreach ($t in (git tag)) { if ($t -ne $Tag) { git tag -d $t | Out-Null; git pus
 $runs = gh run list --repo $Repo --limit 500 --json databaseId,status,headBranch -q '.[] | select(.status == "completed") | .databaseId'
 foreach ($id in $runs) { if ($id) { gh run delete $id --repo $Repo | Out-Null } }
 
-Step "Done: $Tag published. macOS & Linux builds are running in GitHub Actions:"
-Write-Host "  https://github.com/$Repo/actions"
+Step "Waiting for the macOS & Linux builds (GitHub Actions)"
+Start-Sleep 10
+$RunId = gh run list --repo $Repo --workflow release.yml --limit 1 --json databaseId -q ".[0].databaseId"
+if ($RunId) { gh run watch $RunId --repo $Repo --exit-status --interval 30 | Out-Null }
+if ($LASTEXITCODE -ne 0) { Write-Host "GitHub Actions build failed: https://github.com/$Repo/actions/runs/$RunId" -ForegroundColor Red }
+
+Step "Downloading every installer of $Tag into dist\"
+gh release download $Tag --repo $Repo --dir (Join-Path $Root "dist") --clobber
+Check "gh release download"
+Get-ChildItem (Join-Path $Root "dist") | ForEach-Object { "  {0,-36} {1,7:N1} MB" -f $_.Name, ($_.Length / 1MB) }
+
+Step "Done: $Tag published"
 Write-Host "  https://github.com/$Repo/releases/latest"

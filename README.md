@@ -126,7 +126,7 @@ Publishing the release triggers [`.github/workflows/release.yml`](.github/workfl
 - attaches them to the same release
 - deletes every older release, tag and workflow run
 
-Local builds always wipe previous artifacts first.
+`release.ps1` then waits for that workflow and downloads every installer of the new release into `dist/`. Local builds always wipe previous artifacts first.
 
 ## Architecture
 

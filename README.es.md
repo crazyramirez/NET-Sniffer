@@ -141,7 +141,7 @@ Al publicarse, [`.github/workflows/release.yml`](.github/workflows/release.yml):
 2. Los añade a la misma release.
 3. Borra todas las releases, tags y ejecuciones anteriores.
 
-Las compilaciones locales siempre eliminan antes los artefactos previos.
+Después, `release.ps1` espera a que termine ese workflow y descarga en `dist/` todos los instaladores de la nueva release. Las compilaciones locales siempre eliminan antes los artefactos previos.
 
 ## Arquitectura
 
