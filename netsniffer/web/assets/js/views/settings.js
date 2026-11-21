@@ -8,6 +8,11 @@ import { $, confirmDialog, copyText, html, ico, loadingBtn, openModal, toast } f
 let root;
 const SECTIONS = ["general", "background", "scanning", "notifications", "remote", "blocking", "updates", "privacy", "about"];
 
+// keep browser/WebView autofill away from settings fields: a text input next to a password one
+// looks like a login form, autofill then fires `change` on every repaint → endless "Saved" loop
+const NOFILL = html`autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore`;
+const TEXTLIKE = new Set(["text", "url", "password", "number", "time", "email"]);
+
 const sw = (key, { disabled = false } = {}) => html`<label class="switch"><input type="checkbox" data-key="${key}" ${S.settings[key] ? "checked" : ""} ${disabled ? "disabled" : ""}><span></span></label>`;
 const row = (title, desc, ctl) => html`<div class="setting"><div class="txt"><div class="t">${title}</div>${desc ? html`<div class="d">${desc}</div>` : ""}</div><div class="ctl">${ctl}</div></div>`;
 const card = (id, iconName, title, body, sub = "") => html`<section class="card" id="sec-${id}"><div class="card-h"><span class="ev-ico info">${ico(iconName)}</span><div><h3>${title}</h3>${sub ? html`<div class="sub">${sub}</div>` : ""}</div></div><div class="card-b">${body}</div></section>`;
@@ -68,10 +73,10 @@ function notifications() {
     </div>
     <div class="sep"></div><div class="label" style="margin-bottom:10px">${t("settings.n_push")}</div>
     <div class="form-grid">
-      <div class="field"><label>ntfy URL</label><input class="input" data-key="notify_ntfy_url" value="${s.notify_ntfy_url}" placeholder="https://ntfy.sh/my-home-alerts"></div>
-      <div class="field"><label>Webhook URL</label><input class="input" data-key="notify_webhook_url" value="${s.notify_webhook_url}" placeholder="https://…"></div>
-      <div class="field"><label>Telegram bot token</label><input class="input" type="password" data-key="notify_telegram_token" value="${s.notify_telegram_token}" autocomplete="off"></div>
-      <div class="field"><label>Telegram chat ID</label><input class="input" data-key="notify_telegram_chat" value="${s.notify_telegram_chat}"></div>
+      <div class="field"><label>ntfy URL</label><input class="input" type="url" ${NOFILL} data-key="notify_ntfy_url" value="${s.notify_ntfy_url}" placeholder="https://ntfy.sh/my-home-alerts"></div>
+      <div class="field"><label>Webhook URL</label><input class="input" type="url" ${NOFILL} data-key="notify_webhook_url" value="${s.notify_webhook_url}" placeholder="https://…"></div>
+      <div class="field"><label>Telegram bot token</label><input class="input secret" type="text" ${NOFILL} data-key="notify_telegram_token" value="${s.notify_telegram_token}"></div>
+      <div class="field"><label>Telegram chat ID</label><input class="input" type="text" ${NOFILL} data-key="notify_telegram_chat" value="${s.notify_telegram_chat}"></div>
     </div>
     <div class="row" style="margin-top:14px"><button class="btn sm" id="n-test">${ico("bell")} ${t("settings.n_test")}</button><span class="faint" style="font-size:12.5px">${t("settings.n_push_d")}</span></div>`);
 }
@@ -102,8 +107,8 @@ function blocking() {
     ${b === "ssh" || b === "fritz" ? html`<div class="form-grid" style="margin-top:14px">
       <div class="field"><label>${t("block.host")}</label><input class="input mono" data-key="block_host" value="${s.block_host}" placeholder="${S.network.gateway || "192.168.1.1"}"></div>
       ${b === "ssh" ? html`<div class="field"><label>${t("block.port")}</label><input class="input" type="number" data-key="block_port" value="${s.block_port}"></div>` : html`<div></div>`}
-      <div class="field"><label>${t("block.user")}</label><input class="input" data-key="block_user" value="${s.block_user}" autocomplete="off"></div>
-      <div class="field"><label>${t("block.password")}</label><input class="input" type="password" data-key="block_password" value="${s.block_password}" autocomplete="new-password"></div>
+      <div class="field"><label>${t("block.user")}</label><input class="input" type="text" ${NOFILL} data-key="block_user" value="${s.block_user}"></div>
+      <div class="field"><label>${t("block.password")}</label><input class="input secret" type="text" ${NOFILL} data-key="block_password" value="${s.block_password}"></div>
     </div>` : ""}
     ${b === "ssh" || b === "local" ? html`<div class="field" style="margin-top:14px"><label>${t("block.firewall")}</label><select class="input" data-key="block_firewall" style="width:220px">
       <option value="nft" ${s.block_firewall === "nft" ? "selected" : ""}>nftables (OpenWrt 22+)</option><option value="iptables" ${s.block_firewall === "iptables" ? "selected" : ""}>iptables</option></select></div>` : ""}
@@ -148,8 +153,8 @@ function paint() {
   $("#content").scrollTop = y;
 }
 
-async function save(patch) {
-  try { await saveSettings(patch); toast({ kind: "ok", title: t("settings.saved"), timeout: 1600 }); paint(); }
+async function save(patch, { repaint = true } = {}) {
+  try { await saveSettings(patch); toast({ kind: "ok", title: t("settings.saved"), timeout: 1600 }); if (repaint) paint(); }
   catch (e) { showError(e); paint(); }
 }
 
@@ -175,9 +180,14 @@ function render(el, arg) {
   root = el; paint();
   if (arg) setTimeout(() => $(`#sec-${arg}`)?.scrollIntoView({ behavior: "instant", block: "start" }), 60);
   el.onclick = async (e) => {
-    const go = e.target.closest("[data-go]"); if (go) return $(`#sec-${go.dataset.go}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    const th = e.target.closest("[data-theme]"); if (th) { applyTheme(th.dataset.theme); return save({ theme: th.dataset.theme }); }
-    const cp = e.target.closest("[data-copy]"); if (cp) return copyText(cp.dataset.copy).then(() => toast({ kind: "ok", title: t("common.copied") }));
+    // only match inside this view: <html> itself carries data-theme, so an unscoped closest() hit it on every click
+    const hit = (sel) => { const n = e.target.closest(sel); return n && el.contains(n) ? n : null; };
+    const go = hit("[data-go]"); if (go) return $(`#sec-${go.dataset.go}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const th = hit("button[data-theme]"); if (th) {
+      if (th.dataset.theme === (S.settings.theme || "system")) return;
+      applyTheme(th.dataset.theme); return save({ theme: th.dataset.theme });
+    }
+    const cp = hit("[data-copy]"); if (cp) return copyText(cp.dataset.copy).then(() => toast({ kind: "ok", title: t("common.copied") }));
     const id = e.target.closest("button")?.id;
     try {
       if (id === "n-test") { await api("/settings/notify-test", { method: "POST" }); toast({ kind: "ok", title: t("settings.n_test_sent") }); }
@@ -196,6 +206,11 @@ function render(el, arg) {
     if (tgt.matches("[data-lang]")) return changeLang(tgt.value);
     const key = tgt.dataset.key; if (!key) return;
     const v = tgt.type === "checkbox" ? tgt.checked : tgt.type === "number" || tgt.tagName === "SELECT" && /^\d+$/.test(tgt.value) ? +tgt.value : tgt.value;
+    if (tgt.tagName === "INPUT" && TEXTLIKE.has(tgt.type)) {
+      // typed fields: save only real edits, and don't rebuild the view (it would steal focus from the next field)
+      if (String(v) === String(S.settings[key] ?? "")) return;
+      return save({ [key]: v }, { repaint: false });
+    }
     save({ [key]: v });
   };
 }
